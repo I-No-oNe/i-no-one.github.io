@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 repoLink.target = '_blank';
                 repoElement.appendChild(repoLink);
 
-                // Add Modrinth links for specific repositories
                 if (repo.name === 'View-Model') {
                     const modrinthLink = document.createElement('a');
                     modrinthLink.href = 'https://modrinth.com/mod/no-ones-view-model';
@@ -62,5 +61,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cc-link').addEventListener('click', function(event) {
     event.preventDefault();
     window.open('https://clickcrystals.xyz/', '_blank');
-});
+    });
+
+    document.getElementById('tools-link').addEventListener('click', function(event) {
+        event.preventDefault();
+        window.open('https://i-no-one.github.io/tools/tools.html', '_blank');
+        });
+
+        var link = document.createElement('link');
+        link.rel = 'icon';
+        link.href = 'https://avatars.githubusercontent.com/u/145749961?s=40&v=4';
+        document.head.appendChild(link);
+            var link = document.createElement('link');
+            
 });

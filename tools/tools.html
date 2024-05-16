@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java CI with Gradle</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+    <style>
+        section {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+</head>
+<body>
+
+<header>
+    <h1>Java CI with Gradle</h1>
+</header>
+
+<main>
+    <section>
+        <h2>Build Job For Minecraft 1.20.4</h2>
+        <pre><code class="language-yml">name: Java CI with Gradle
+
+on: [ push,pull_request ]
+
+concurrency:
+  group: "latest"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+          java-package: 'jdk'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build
+        run: ./gradlew build
+
+      - name: Remove *-sources.jar
+        run: rm ./build/libs/*-sources.jar || true
+
+      - uses: "shxrklol/action-auto-releases-n20@v1.1"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          title: "Latest Build"
+          files: |
+            ./build/libs/*.jar
+</code></pre>
+    </section>
+
+    <section>
+        <h2>Build Job For Minecraft 1.20.6</h2>
+        <pre><code class="language-yml">name: Java CI with Gradle
+
+on: [ push,pull_request ]
+
+concurrency:
+  group: "latest"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'zulu'
+          java-package: 'jdk'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build
+        run: ./gradlew build
+
+      - name: Remove *-sources.jar
+        run: rm ./build/libs/*-sources.jar || true
+
+      - uses: "shxrklol/action-auto-releases-n20@v1.1"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          title: "Latest Build"
+          files: |
+            ./build/libs/*.jar
+</code></pre>
+    </section>
+</main>
+
+<footer>
+    Use this YML file for easy jar building on Github
+</footer>
+
+</body>
+</html>
