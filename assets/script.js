@@ -68,10 +68,14 @@ document.addEventListener('DOMContentLoaded', function() {
         window.open('https://i-no-one.github.io/tools/tools.html', '_blank');
         });
 
+    document.getElementById('modrinth-link').addEventListener('click', function(event) {
+        event.preventDefault();
+        window.open('https://modrinth.com/user/I-No-oNe', '_blank');
+        });
+
         var link = document.createElement('link');
         link.rel = 'icon';
         link.href = 'https://avatars.githubusercontent.com/u/145749961?s=40&v=4';
         document.head.appendChild(link);
             var link = document.createElement('link');
-            
 });
