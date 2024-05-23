@@ -2,10 +2,18 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch GitHub repositories data
     fetch('https://api.github.com/users/I-No-oNe/repos')
-        .then(response => response.json()) // Parse response as JSON
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json(); // Parse response as JSON
+        })
         .then(data => {
             // Get the container element where repositories will be displayed
             const reposContainer = document.getElementById('repos');
+            if (!reposContainer) {
+                throw new Error('Repos container element not found');
+            }
 
             // Iterate over each repository
             data.forEach(repo => {
@@ -82,10 +90,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to add a Modrinth link to a repository element
 function addModrinthLink(repoElement, modrinthUrl) {
-    const modrinthLink = document.createElement('a'); // Create a new link element
-    modrinthLink.href = modrinthUrl; // Set the href attribute to the Modrinth URL
-    modrinthLink.textContent = 'View on Modrinth'; // Set the link text
-    modrinthLink.target = '_blank'; // Open link in a new tab
-    modrinthLink.classList.add('modrinth-link'); // Add 'modrinth-link' class to the link
-    repoElement.appendChild(modrinthLink); // Append the link to the repository element
+    try {
+        const modrinthLink = document.createElement('a'); // Create a new link element
+        modrinthLink.href = modrinthUrl; // Set the href attribute to the Modrinth URL
+        modrinthLink.textContent = 'View on Modrinth'; // Set the link text
+        modrinthLink.target = '_blank'; // Open link in a new tab
+        modrinthLink.classList.add('modrinth-link'); // Add 'modrinth-link' class to the link
+        repoElement.appendChild(modrinthLink); // Append the link to the repository element
+    } catch (error) {
+        console.error('Error adding Modrinth link:', error);
+    }
 }

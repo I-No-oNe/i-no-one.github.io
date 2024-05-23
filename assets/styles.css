@@ -15,15 +15,19 @@ header {
 
 header h1 {
     margin: 0;
+    font-size: 2em;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 nav ul li {
-    display: inline;
     margin: 0 1em;
 }
 
@@ -53,7 +57,6 @@ section {
 
 h2 {
     color: #00cc00;
-    text-align: center;
 }
 
 ul {
@@ -65,7 +68,7 @@ a {
     color: #00cc00;
     text-decoration: none;
     border-bottom: 2px solid #00cc00;
-    margin-right: 10px; 
+    margin-right: 10px;
 }
 
 a:hover {
@@ -113,4 +116,31 @@ footer {
 
 .repo p {
     margin: 0;
+}
+
+
+@media (max-width: 600px) {
+    header {
+        padding: 0.5em 0;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin: 0.5em 0;
+    }
+
+    main {
+        padding: 1em;
+    }
+
+    .repo {
+        width: 100%;
+    }
 }
