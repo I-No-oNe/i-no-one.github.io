@@ -1,5 +1,17 @@
+# Custom 404 error page
 ErrorDocument 404 /404.html
 
+# Enable the rewrite engine
 RewriteEngine On
+
+# If the requested filename does not exist and does not have an extension
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.[a-zA-Z]{2,4}$
+
+# Append .html to the requested file
 RewriteRule ^(.*)$ $1.html [L,R=301]
+
+# If the .html file does not exist, show 404
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . /404.html [L]
