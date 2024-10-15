@@ -1,5 +1,3 @@
-// site/script.js
-
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         // Fetch GitHub Repositories and Modrinth Projects

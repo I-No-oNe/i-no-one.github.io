@@ -1,5 +1,3 @@
-/* site/styles.css */
-
 /* CSS Variables for Theming */
 :root {
     --primary-color: #00ff2a;
@@ -272,20 +270,26 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     nav ul {
-        flex-direction: column;
-        gap: 1em;
+        flex-direction: row; /* Change to row for horizontal layout */
+        gap: 1em; /* Adjust gap for smaller spacing */
     }
-    
+
     header .container {
         align-items: flex-start;
     }
-    
+
     main {
         padding: 1em;
     }
-    
+
     section {
         padding: 1em;
+    }
+
+    /* Reduce header size on mobile */
+    header h1 {
+        font-size: 1.8em; /* Decrease font size */
+        padding: 0.5em 0; /* Reduce padding */
     }
 }
 
