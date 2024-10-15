@@ -5,8 +5,10 @@ async function fetchPlayerNames() {
     try {
         const response = await fetch('https://i-no-one.github.io/info');
         if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-        if (data && data.PlayerNames) playerNamesArray = data.PlayerNames;
+        
+        const data = await response.text(); 
+        const firstLine = data.split('\n')[0]; 
+        if (firstLine) playerNamesArray.push(firstLine.trim()); 
         displayNames();
     } catch (error) {
         console.error('Failed to fetch player names:', error);
