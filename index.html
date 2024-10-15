@@ -3,34 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I-No-oNe Official Site</title>
-    <link rel="stylesheet" href="assets/styles.css">
-    <script defer src="assets/script.js"></script>
+    <title>No-oNe's Website</title>
+    <link rel="stylesheet" href="site/styles.css">
+    <script defer src="site/script.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/145749961?s=40&v=4" type="image/png">
 </head>
-<body>
+<body data-layer="0">
     <header>
-        <h1>I-No-oNe Official Website</h1>
-        <nav>
-            <ul>
-                <li><a href="#clickcrystals" id="cc-link">ClickCrystals</a></li>
-                <li><a href="#modrinth" id="modrinth-link">Modrinth</a></li>
-                <li><a href="#tools" id="tools-link">Tools</a></li>
-                <li><a href="#contact" id="contact-link">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <h1>No-oNe's Website</h1>
+            <nav>
+                <ul>
+                    <li><a href="#projects" id="projects">My Projects</a></li>
+                    <li><a href="#frc" id="frc-link">FRC</a></li>
+                    <li><a href="#tools" id="tools-link">Tools</a></li>
+                    <li><a href="#contact" id="contact-link">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
+    
     <main>
         <section id="home">
-            <h2>About I-No-oNe</h2>
-            <p>Welcome to my website! Here you'll discover all my public projects published on Github. If you need any assistance, just click on the contact button. Enjoy browsing!</p>
+            <div class="container">
+                <h2>About I-No-oNe</h2>
+                <p>Welcome to my website! Explore all my public projects published on GitHub and Modrinth. If you need any assistance, feel free to reach out via the contact section. Enjoy browsing!</p>
+            </div>
         </section>
+        
         <section id="projects">
-            <h2>Projects</h2>
-            <div id="repos"></div>
+            <div class="container">
+                <h2>Projects</h2>
+                <div id="repos" class="repos-grid"></div>
+            </div>
+        </section>
+                
+        <section id="frc">
+            <div class="container">
+                <h2>FIRST Robotics Competition</h2>
+                <p>The FIRST® Robotics Competition (FRC®) stages short games played by robots. The robots are designed and built in six weeks (from a common set of parts) by a team of high-school-aged young people and a handful of engineers-Mentors. The students program and remotely control the robots in competition rounds on the field.</p>
+            </div>
+        </section>
+        
+        <section id="tools">
+            <div class="container">
+                <h2>Tools</h2>
+                <p>Click <a href="https://i-no-one.github.io/tools" target="_blank" rel="noopener noreferrer">HERE</a> for useful tools and resources that I'm using.</p>
+            </div>
+        </section>
+        
+        <section id="contact">
+            <div class="container">
+                <h2>Contact</h2>
+                <p>Dm me on <a href="https://discord.com/users/1051897115447660697" target="_blank" rel="noopener noreferrer">Discord</a> if you need any help.</p>
+            </div>
         </section>
     </main>
+    
     <footer>
-        <p>&copy; 2024 Made By I-No-oNe</p>
+        <div class="container">
+            <p>&copy; 2024 I-No-oNe. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://discord.gg/QHFSDPajd6" target="_blank" rel=noopener noreferrer">Discord</a>
+                <a href="https://github.com/I-No-oNe" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://modrinth.com/user/I-No-oNe" target="_blank" rel="noopener noreferrer">Modrinth</a>
+            </div>
+        </div>
     </footer>
 </body>
 </html>

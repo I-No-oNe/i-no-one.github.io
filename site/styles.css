@@ -1,0 +1,298 @@
+/* site/styles.css */
+
+/* CSS Variables for Theming */
+:root {
+    --primary-color: #00ff2a;
+    --primary-dark: #009900;
+    --background-color: #1b1b1b;
+    --header-background: #004d00;
+    --text-color: #cfcfcf;
+    --link-color: var(--primary-color);
+    --link-hover-color: var(--primary-dark);
+    --container-width: 90%;
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1em;
+}
+
+header {
+    background-color: var(--header-background);
+    color: #fff;
+    padding: 1em 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+header .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header h1 {
+    margin-bottom: 0.5em;
+    font-size: 2.5em;
+    animation: fadeIn 1s ease-in-out;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5em;
+    animation: fadeIn 1s ease-in-out;
+}
+
+nav ul li a {
+    color: #aaffaa;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    padding-bottom: 4px; /* Added padding for better spacing */
+    transition: color var(--transition-speed);
+}
+
+/* Enhanced Underline Effect */
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px; /* Increased height for a more prominent underline */
+    background-color: var(--primary-color);
+    left: 0;
+    bottom: 0;
+    transition: width var(--transition-speed);
+    border-radius: 2px;
+}
+
+nav ul li a:hover {
+    color: var(--link-hover-color);
+}
+
+nav ul li a:hover::after {
+    width: 120%; /* Extended the width to make the underline longer */
+    left: -10%; /* Center the extended underline */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+main {
+    padding: 2em 0;
+    animation: fadeIn 1s ease-in-out;
+}
+
+section {
+    margin-bottom: 3em;
+    background-color: #262626;
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform var(--transition-speed), background-color var(--transition-speed);
+}
+
+section:hover {
+    transform: translateY(-5px);
+    background-color: #333333;
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 0.5em;
+    position: relative;
+    display: inline-block;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin-top: 5px;
+    border-radius: 2px;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 2px solid var(--link-color);
+    transition: color var(--transition-speed), border-color var(--transition-speed);
+    position: relative; /* Ensure the underline effect applies properly */
+}
+
+/* General Underline Effect for All Links */
+a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--link-color);
+    left: 0;
+    bottom: -3px;
+    transition: width var(--transition-speed);
+    border-radius: 2px;
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+a:hover::after {
+    width: 100%;
+}
+
+.repos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5em;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.repo {
+    background-color: #2e2e2e;
+    border: 1px solid var(--header-background);
+    border-radius: 8px;
+    padding: 1.5em;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.repo:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.repo h3 {
+    margin-bottom: 0.5em;
+    color: var(--primary-color);
+    transition: color var(--transition-speed);
+}
+
+.repo h3:hover {
+    color: var(--primary-dark);
+}
+
+.repo p {
+    margin-bottom: 1em;
+}
+
+.repo a {
+    display: inline-block;
+    margin-right: 1em;
+    transition: color var(--transition-speed);
+}
+
+.repo a.modrinth-link {
+    border-color: #038403;
+    color: #038403;
+}
+
+.repo a.modrinth-link:hover {
+    color: #038403;
+    border-color: #038403;
+}
+
+footer {
+    background-color: var(--header-background);
+    color: #fff;
+    text-align: center;
+    padding: 1.5em 0;
+    position: relative;
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.social-links {
+    margin-top: 0.5em;
+}
+
+.social-links a {
+    margin: 0 0.5em;
+    color: #aaffaa;
+    transition: color var(--transition-speed);
+}
+
+.social-links a:hover {
+    color: var(--primary-dark);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 1em;
+    }
+    
+    header .container {
+        align-items: flex-start;
+    }
+    
+    main {
+        padding: 1em;
+    }
+    
+    section {
+        padding: 1em;
+    }
+}
+
+/* Accessibility: Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

@@ -1,0 +1,98 @@
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #4caf50, #a5d6a7);
+    overflow: hidden;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Input Section */
+.input-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+}
+
+button {
+    background-color: #388e3c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2e7d32;
+}
+
+#output-section {
+    margin-top: 20px;
+}
+
+#output {
+    width: 100%;
+    height: 150px;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    resize: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.buttons {
+    margin-top: 10px;
+}
+
+.buttons button {
+    margin: 5px;
+}
+
+/* Star Animation */
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: moveStars 20s linear infinite;
+    z-index: -1;
+}
+
+@keyframes moveStars {
+    from { background-position: 0 0; }
+    to { background-position: -10000px 10000px; }
+}
