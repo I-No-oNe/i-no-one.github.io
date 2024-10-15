@@ -286,6 +286,15 @@ footer {
         padding: 1em;
     }
 
+    /* Center the repos grid on mobile */
+    .repos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5em;
+        justify-content: center; /* Center the grid items */
+        animation: fadeIn 1s ease-in-out;
+    }
+
     /* Reduce header size on mobile */
     header h1 {
         font-size: 1.8em; /* Decrease font size */

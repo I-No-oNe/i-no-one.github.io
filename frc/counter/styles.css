@@ -164,3 +164,22 @@ body {
     font-size: large;
     color: white; 
 }
+/* Add this to ensure proper scaling on mobile */
+.countdown-container {
+    width: 100%; /* Use full width for better scaling */
+    max-width: 600px; /* Set a max width to prevent it from becoming too wide on large screens */
+}
+
+#countdown {
+    font-size: 2em; /* Base font size for countdown */
+}
+
+@media (max-width: 768px) {
+    #countdown {
+        font-size: 1.5em; /* Adjust font size for smaller screens */
+    }
+
+    #switch-button, #textbox {
+        font-size: 1em; /* Adjust button and textarea font size */
+    }
+}
