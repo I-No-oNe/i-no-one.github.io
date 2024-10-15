@@ -300,6 +300,10 @@ footer {
         font-size: 1.8em; /* Decrease font size */
         padding: 0.5em 0; /* Reduce padding */
     }
+        /* Increase margin between Modrinth and GitHub links */
+        .repo a.modrinth-link {
+            margin-right: 2em; /* Increase right margin specifically */
+        }
 }
 
 /* Accessibility: Reduce Motion */
