@@ -4,9 +4,8 @@
 - [Main Site](https://i-no-one.github.io/)
 - [Online Tools](https://i-no-one.github.io/tools)
 ## No-oNe Addon🔮:
-- [CC Addon Name Formmatter](https://i-no-one.github.io/addon/formatter)  
-- [CC Addon Version](https://i-no-one.github.io/addon/version)
-- [CC Addon info](https://i-no-one.github.io/info )
+- [CC Addon API Info](https://api.tutla.net/cc/reg.json)
+- [CC Addon BACKUP Info](https://i-no-one.github.io/addon/info)
 ## FRC🤖:
 - [FRC Counter For District Matches](https://i-no-one.github.io/counter) 
 ------------------------------------------------------
