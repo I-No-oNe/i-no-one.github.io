@@ -1,6 +1,6 @@
 // Set the dates for the events
 const kickoffDate = new Date('January 4, 2025 12:00:00').getTime();
-const ios2Date = new Date('October 20, 2024 06:00:00 GMT+3').getTime();
+const dis1 = new Date(1740290400000);
 
 let currentEvent = 'kickoff'; 
 
@@ -32,11 +32,11 @@ function toggleCountdown() {
     if (currentEvent === 'kickoff') {
         currentEvent = 'ios2';
         document.getElementById('switch-button').textContent = 'Count to Kickoff';
-        document.getElementById('event-title').textContent = 'Countdown to IOS2';
-        updateCountdown(ios2Date);
+        document.getElementById('event-title').textContent = 'Countdown to DIS1';
+        updateCountdown(dis1);
     } else {
         currentEvent = 'kickoff';
-        document.getElementById('switch-button').textContent = 'Count to IOS2';
+        document.getElementById('switch-button').textContent = 'Count to DIS1';
         document.getElementById('event-title').textContent = 'Countdown to FRC 2025 Kickoff';
         updateCountdown(kickoffDate);
     }
@@ -46,7 +46,7 @@ const countdown = setInterval(() => {
     if (currentEvent === 'kickoff') {
         updateCountdown(kickoffDate);
     } else {
-        updateCountdown(ios2Date);
+        updateCountdown(dis1);
     }
 }, 1000);
 
