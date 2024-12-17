@@ -13,127 +13,54 @@ body {
 
 .countdown-container {
     text-align: center;
-    backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    max-width: 100%;
+    transform: scale(1.60); /* Scale */
+    transform-origin: center center;
 }
 
 #countdown {
     display: flex;
+    flex-direction: row;
     justify-content: center;
+    align-items: center;
     gap: 20px;
-    font-size: 2em;
 }
 
-#countdown div {
+.time-cube {
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
-    box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.5);
-}
-
-#ios2-container {
-    margin-top: 20px;
-}
-
-#ios2-text {
-    padding: 10px;
-    width: 300px;
-    border-radius: 5px;
-    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     text-align: center;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.time-number {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0px 0px 5px rgba(0, 255, 255, 0.8);
+}
+
+.time-label {
     font-size: 1em;
-}
-
-#ios2-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 1em;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#ios2-button:hover {
-    background-color: #0056b3;
-}
-
-/* Bubble animation */
-@keyframes bubble {
-    0% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-1000px);
-        opacity: 0;
-    }
-}
-
-.bubble {
-    position: absolute;
-    bottom: -50px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    animation: bubble 10s infinite;
-}
-
-.bubble:nth-child(1) {
-    width: 40px;
-    height: 40px;
-    left: 10%;
-    animation-duration: 8s;
-    animation-delay: 2s;
-}
-
-.bubble:nth-child(2) {
-    width: 20px;
-    height: 20px;
-    left: 25%;
-    animation-duration: 10s;
-    animation-delay: 4s;
-}
-
-.bubble:nth-child(3) {
-    width: 30px;
-    height: 30px;
-    left: 40%;
-    animation-duration: 7s;
-    animation-delay: 1s;
-}
-
-.bubble:nth-child(4) {
-    width: 50px;
-    height: 50px;
-    left: 55%;
-    animation-duration: 9s;
-    animation-delay: 3s;
-}
-
-.bubble:nth-child(5) {
-    width: 15px;
-    height: 15px;
-    left: 70%;
-    animation-duration: 6s;
-    animation-delay: 5s;
-}
-
-.bubble:nth-child(6) {
-    width: 35px;
-    height: 35px;
-    left: 85%;
-    animation-duration: 11s;
-    animation-delay: 7s;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
 }
 
 #switch-button {
     margin-top: 20px;
     padding: 10px 20px;
-    font-size: 1em;
+    font-size: 1.2em;
     background-color: #004c97;
     color: white;
     border: none;
@@ -146,21 +73,50 @@ body {
     background-color: #007bff;
 }
 
+/* Textbox styling */
 #textbox {
     margin-top: 20px;
     width: 100%;
-    font-size: large;
+    font-size: 1em;
     height: 100px;
     color: #ffffff;
     padding: 10px;
     border-radius: 5px;
     border: 2px solid #004c97;
-    resize: none; 
-    background-color: #004c97;
-    overflow: hidden; 
+    resize: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
 }
 
 #textbox::placeholder {
-    font-size: large;
-    color: white; 
+    font-size: 1em;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@media screen and (max-width: 600px) {
+    .countdown-container {
+        transform: scale(1);
+    }
+
+    #countdown {
+        flex-wrap: wrap; /* Wrap cubes on smaller screens */
+        gap: 10px;
+    }
+
+    .time-cube {
+        width: 60px;
+        height: 60px;
+    }
+
+    .time-number {
+        font-size: 1.5em;
+    }
+
+    .time-label {
+        font-size: 0.8em;
+    }
+
+    #textbox {
+        height: 80px;
+    }
 }

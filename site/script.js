@@ -81,7 +81,8 @@ function findMatchingModrinthProject(repoName, modrinthProjects) {
         'ClickCrystalPlus-Pack': 'clickcrystalplus-pack',
         'Auto-Disconnect' : 'auto-disconnect',
         'Attack-Blocker' : 'attack-blocker',
-        'Glowing-Entities' : 'glowing-entities'
+        'Glowing-Entities' : 'glowing-entities',
+        'Death-Effects' : 'death-effects'
     };
 
     if (specificMappings[repoName]) {
