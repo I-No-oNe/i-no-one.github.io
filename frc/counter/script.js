@@ -1,9 +1,7 @@
-const dis4 = new Date('January 4, 2025 12:00:00').getTime();
-// Changed for dis4 for easy replacement 
-const dis1 = new Date(1740290400000).getTime();
-// const dis4 = new Date('2025-03-10T00:00:00Z').getTime();
+const dis1 = new Date('February 23, 2025 00:00:00').getTime();
+const dis4 = new Date('March 10, 2025 00:00:00').getTime();
 
-let currentEvent = 'dis4'; // Changed the default event to dis4
+let currentEvent = 'dis4';
 
 function updateCountdown(targetDate) {
     const now = new Date().getTime();
@@ -30,16 +28,17 @@ function toggleCountdown() {
         currentEvent = 'dis1';
         document.getElementById('switch-button').textContent = 'Count to Kickoff';
         document.getElementById('event-title').textContent = 'Countdown to DIS1';
-        updateCountdown(dis4);
+        updateCountdown(dis1);
     } else {
         currentEvent = 'dis4';
         document.getElementById('switch-button').textContent = 'Count to DIS1';
-        document.getElementById('event-title').textContent = 'Countdown to FRC 2025 Kickoff';
-        updateCountdown(dis1);
+        document.getElementById('event-title').textContent = 'Countdown to DIS4';
+        updateCountdown(dis4);
     }
 }
 
 updateCountdown(dis4);
+
 const countdown = setInterval(() => {
     if (currentEvent === 'dis4') {
         updateCountdown(dis4);
