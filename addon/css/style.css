@@ -1,0 +1,158 @@
+/* Global Background & Layout */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0a0f1f, #031b33, #061a2e);
+  background-size: 600% 600%;
+  animation: gradientShift 20s ease infinite;
+  color: #e0e0e0;
+  overflow-x: hidden;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Title Styling */
+.glow-title {
+  color: #3effd1;
+  text-align: center;
+  font-size: 2.4rem;
+  margin: 40px 20px 20px;
+  text-shadow: 0 0 12px #00fcd3, 0 0 30px #00d8ff;
+}
+
+/* Container */
+.container {
+  max-width: 960px;
+  margin: auto;
+  padding: 0 20px 60px;
+  z-index: 1;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(20, 20, 20, 0.85);
+  margin: 30px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 14px #00000088;
+  animation: slideUp 1s ease forwards;
+  opacity: 0;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+thead {
+  background-color: #111;
+}
+
+th {
+  color: #3effd1;
+  font-weight: bold;
+}
+
+td {
+  color: #ddd;
+}
+
+tr:hover td {
+  background-color: #262626;
+  color: #fff;
+}
+
+/* Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.2s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.4s; }
+.delay-2 { animation-delay: 0.9s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .glow-title {
+    font-size: 1.8rem;
+  }
+
+  th, td {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+}
+
+/* Scrollbar Custom */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #111;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Download Button */
+.download-container {
+  text-align: center;
+  margin: 20px auto;
+}
+
+.download-btn {
+  display: inline-block;
+  background: #3effd1;
+  color: #0a0f1f;
+  padding: 12px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow: 0 0 12px #00fcd3;
+  transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+  background: #00d8ff;
+  box-shadow: 0 0 18px #00d8ff;
+}
+
+#modules, #commands {
+  text-align: center;
+}
+
+/* Ensure tables are centered */
+#modules table, #commands table {
+  margin: auto;
+}
