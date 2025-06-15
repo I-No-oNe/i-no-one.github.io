@@ -5,29 +5,29 @@
 ### Modules:
 | Name                    | Description                                                                              |
 |-------------------------|------------------------------------------------------------------------------------------|
-| Discord Screen Disabler | Cancel the annoying join discord sever screen.                                           |
+| Discord Screen Disabler | Cancel the annoying discord server screen.                                               |
 | Infinite Chat           | Removes the 256 character limit from the chat.                                           |
-| Cape Disabler           | Disable cc capes.                                                                        |
-| Middle Click Ping       | Press middle click on a player to get their ping.                                        |
-| Loot Keeper             | Throw every item on slot that isn't in the list.                                         |
-| No Potions Render       | disable the potions/effect hud.                                                          |
+| Cape Disabler           | Disable clickcrystals capes.                                                             |
+| Middle Click Ping       | Press middle click on a player's ping.                                                   |
+| Loot Keeper             | Keeps item in settings.                                                                  |
+| No Potions Render       | Disable the effecta hud.                                                                 |
 | Hit Color               | Change entity hit color.                                                                 |
 | Dm Spammer              | Spams private messages to selected players.                                              |
-| Mod Menu Disabler       | disable clickcrystals from showing on mod menu, re-launch game after enabling the module |
+| Mod Menu Disabler       | Disable clickcrystals from showing on mod menu, RELAUCNH THE GAME AFTER ENABLING.        |
 | Upside Down             | Make every player & entity upside down.                                                  |
-| Prevent                 | Prevent making common mistakes in crystal PvP                                            |
-| Anti Off Hand           | Cancel swapping items if certain conditions are met                                      |
-| Ghost Interactions      | Make it so closing a container will be only client side                                  |
-| Safe Walk               | crouch when the player in the edge of a block                                            |
-| Name Changer            | change your player name (client side)                                                    |
+| Prevent                 | Prevents accidental anchor or glowstone placement in crystal PvP.                        |
+| Anti Off Hand           | Disable swapping items in certian conditions.                                            |
+| Ghost Interactions      | Disable sending continar opening packets.                                                |
+| Safe Walk               | crouch when the player in the edge of a block.                                           |
+| Name Changer            | change player name in client side.                                                       |
 
 ### Commands:
 
 | Name       | Description                                                             |
 |------------|-------------------------------------------------------------------------|
-| findportal | Finds Nether portals nearby                                             |
-| free-ram   | Free the RAM of the local system                                        |
-| clean      | Clean specific lines in chat or logs                                    |
-| addon-info | Copy the add-on module' & commands' descriptions and names into a chart |
-| quit       | quit game                                                               |
-| hwid       | show you your hwid                                                      |
+| findportal | Finds nether portals nearby.                                            |
+| free-ram   | Free system memory.                                                     |
+| clean      | Clean specific lines in chat or logs.                                   |
+| addon-info | Copy the addon modules & commands descriptions and names into a chart.  |
+| quit       | Quit game/server.                                                       |
+| hwid       | display user hwid.                                                      |
