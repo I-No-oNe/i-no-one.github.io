@@ -4,7 +4,8 @@
 - [Main Site](https://i-no-one.github.io/)
 - [Online Tools](https://i-no-one.github.io/tools)
 ## No-oNe Addon🔮:
-- [CC Addon API Info](https://api.tutla.net/cc/reg.json)
+- [CC Addon Site](https://i-no-one.github.io/addon)
+- [CC Addon API Info](https://no-one-s-api-default-rtdb.firebaseio.com/.json)
 - [CC Addon BACKUP Info](https://i-no-one.github.io/addon/info)
 ## FRC🤖:
 - [FRC Counter For District Matches](https://i-no-one.github.io/counter) 
