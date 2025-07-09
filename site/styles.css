@@ -313,3 +313,78 @@ footer {
         transition: none !important;
     }
 }
+
+details {
+    background-color: var(--background-color);
+    border: 1px solid var(--primary-dark);
+    border-radius: 8px;
+    margin-bottom: 1.5em;
+    overflow: hidden;
+    transition: border-color var(--transition-speed), background-color var(--transition-speed);
+}
+
+details[open] {
+    border-color: var(--primary-color);
+    background-color: #222;
+}
+
+summary {
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: bold;
+    padding: 1em;
+    background-color: var(--header-background);
+    border-bottom: 1px solid var(--primary-dark);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    list-style: none;
+    position: relative;
+}
+
+summary:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-color);
+}
+
+/* Custom dropdown arrow */
+summary::marker {
+    display: none;
+}
+
+summary::after {
+    content: '▼';
+    position: absolute;
+    right: 1.2em;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform var(--transition-speed);
+    color: var(--primary-color);
+    font-size: 0.9em;
+}
+
+details[open] summary::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Dropdown Content Animation */
+details pre {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+details[open] pre {
+    max-height: 1250px; /* Enough to reveal full content */
+    opacity: 1;
+    padding: 1em;
+}
+
+details pre code {
+    color: var(--primary-color);
+    background-color: #111;
+    font-family: 'Courier New', monospace;
+    white-space: pre-wrap;
+    display: block;
+}
+
+

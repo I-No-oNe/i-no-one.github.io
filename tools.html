@@ -1,63 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools 🔧</title>
-    <link rel="stylesheet" href="site/styles.css">
-    <script src="site/script.js"></script>
-    <link rel="icon" href="https://avatars.githubusercontent.com/u/145749961?s=40&v=4" type="image/png">
-    <style>
-        details {
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 0.5rem;
-            background-color: #f9f9f9;
-        }
-
-        summary {
-            font-weight: bold;
-            cursor: pointer;
-            padding: 0.25rem;
-        }
-
-        pre {
-            margin: 0;
-            overflow-x: auto;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tools 🔧</title>
+  <link rel="stylesheet" href="site/styles.css" />
+  <link rel="icon" href="https://avatars.githubusercontent.com/u/145749961?s=40&v=4" type="image/png">
 </head>
 <body>
 <header>
-    <h1>🛠️Useful Resources & Tools</h1>
+  <h1>🛠️ Useful Resources & Tools</h1>
 </header>
 
 <main>
-    <section>
-        <h2>Helpful Links</h2>
-        <ul>
-            <li><a href="https://linkie.shedaniel.dev/mappings" rel="noopener noreferrer">Linkie Mappings</a></li>
-            <li><a href="linkie.shedaniel.dev/dependencies" rel="noopener noreferrer">Linkie Dependencies</a></li>
-            <li><a href="https://somsubhra.github.io/github-release-stats/" rel="noopener noreferrer">GitHub Download Count Checker</a></li>
-            <li><a href="https://itzispyder.github.io/bookmarks" rel="noopener noreferrer">ImproperIssues Bookmarks</a></li>
-            <li><a href="https://round-corner.imageonline.co/" rel="noopener noreferrer">Image rounder</a></li>
-            <li><a href="https://isthisarat.com/" rel="noopener noreferrer">Rat Scanner</a></li>
-            <li><a href="https://lottiefiles.com/" rel="noopener noreferrer">LottieFiles</a></li>
-            <li><a href="https://i-no-one.github.io/tools/qr-maker" rel="noopener noreferrer">Qr Code Maker</a></li>
-            <li><a href="https://i-no-one.github.io/tools/obfuscator" rel="noopener noreferrer">Text obfuscator</a></li>
-            <li><a href="https://dillinger.io/" rel="noopener noreferrer">Online Markdown Editor</a></li>
-            <li><a href="https://www.fibermc.com/" rel="noopener noreferrer">FibeMC</a></li>
-            <li><a href="https://minecraft.fandom.com/wiki/Formatting_codes#Use_in_server.properties_and_pack.mcmeta" rel="noopener noreferrer">Minecraft Color Codes</a></li>
-        </ul>
-    </section>
+  <section>
+    <h2>Helpful Links</h2>
+    <ul>
+      <li><a href="https://isthisarat.com/" rel="noopener noreferrer">Rat Scanner</a></li>
+      <li><a href="https://dillinger.io/" rel="noopener noreferrer">Online Markdown Editor</a></li>
+      <li><a href="https://lottiefiles.com/" rel="noopener noreferrer">LottieFiles</a></li>
+      <li><a href="https://www.fibermc.com/" rel="noopener noreferrer">FibeMC</a></li>
+      <li><a href="https://round-corner.imageonline.co/" rel="noopener noreferrer">Image rounder</a></li>
+      <li><a href="https://linkie.shedaniel.dev/mappings" rel="noopener noreferrer">Linkie Mappings</a></li>
+      <li><a href="https://linkie.shedaniel.dev/dependencies" rel="noopener noreferrer">Linkie Dependencies</a></li>
+      <li><a href="https://itzispyder.github.io/bookmarks" rel="noopener noreferrer">ImproperIssues Bookmarks</a></li>
+      <li><a href="https://somsubhra.github.io/github-release-stats/" rel="noopener noreferrer">GitHub Download Count Checker</a></li>
+      <li><a href="https://i-no-one.github.io/tools/qr-maker" rel="noopener noreferrer">Qr Code Maker</a></li>
+      <li><a href="https://i-no-one.github.io/tools/obfuscator" rel="noopener noreferrer">Text obfuscator</a></li>
+      <li><a href="https://minecraft.fandom.com/wiki/Formatting_codes#Use_in_server.properties_and_pack.mcmeta" rel="noopener noreferrer">Minecraft Color Codes</a></li>
+    </ul>
+  </section>
 
-    <section>
-        <h2>CI Workflows</h2>
+  <section>
+    <h2>CI Workflows</h2>
 
-        <details>
-            <summary>Java CI with Gradle – MC 1.20.4 and lower</summary>
-            <pre><code>name: Java CI with Gradle
+    <details>
+      <summary>Java CI with Gradle – MC 1.20.4 and lower</summary>
+      <div class="dropdown-content">
+        <pre><code>name: Java CI with Gradle
 
 on: 
   push:
@@ -100,11 +80,13 @@ jobs:
           title: "Latest Build"
           files: |
             ./build/libs/*.jar</code></pre>
-        </details>
+      </div>
+    </details>
 
-        <details>
-            <summary>Java CI with Gradle – MC 1.20.6 and up</summary>
-            <pre><code>name: Java CI with Gradle
+    <details>
+      <summary>Java CI with Gradle – MC 1.20.6 and up</summary>
+      <div class="dropdown-content">
+        <pre><code>name: Java CI with Gradle
 
 on: [ push,pull_request ]
 
@@ -143,8 +125,9 @@ jobs:
           title: "Latest Build"
           files: |
             ./build/libs/*.jar</code></pre>
-        </details>
-    </section>
+      </div>
+    </details>
+  </section>
 </main>
 </body>
 </html>
