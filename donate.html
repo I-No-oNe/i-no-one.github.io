@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting to Ko-fi...</title>
+    <style>
+        /* Reset and layout */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2e8e1a, #295405);
+            color: #333;
+            text-align: center;
+            animation: fadeIn 0.8s forwards;
+        }
+
+        h1 { margin-bottom: 20px; font-size: 2rem; font-weight: 600; }
+        a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            background: #fff;
+            padding: 12px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        a:hover { background: #f0f0f0; transform: scale(1.05); }
+
+        .loader {
+            margin-top: 30px;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <h1>Redirecting to Ko-fi...</h1>
+    <a id="fallback" href="https://ko-fi.com/i_no_am/">Click here if not redirected</a>
+    <div class="loader"></div>
+
+    <script>
+        // Redirect instantly using JS
+        window.onload = function() {
+            window.location.replace("https://ko-fi.com/i_no_am/");
+        };
+    </script>
+</body>
+</html>
