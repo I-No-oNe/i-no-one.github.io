@@ -1,122 +1,294 @@
-body {
-    background: linear-gradient(#1e3c72, #2a5298); /* Ocean blue gradient */
-    color: white;
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+/* Reset and Base Styles */
+* {
     margin: 0;
-    overflow: hidden;
-    position: relative;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.countdown-container {
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.1);
+body {
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-    max-width: 100%;
-    transform: scale(1.60); /* Scale */
-    transform-origin: center center;
+    position: relative;
+    overflow-x: hidden;
 }
 
-#countdown {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+/* Background Particles */
+.particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 15s infinite ease-in-out;
 }
 
-.time-cube {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+@keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(-100px) translateX(50px); }
+    50% { transform: translateY(-200px) translateX(-50px); }
+    75% { transform: translateY(-100px) translateX(100px); }
+}
+
+/* Layout */
+.container {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    width: 100%;
+}
+
+.header {
     text-align: center;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin-bottom: 40px;
+}
+
+/* Logo Styling */
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 300px;
+    height: auto;
+    filter: drop-shadow(0 0 20px rgba(0, 157, 220, 0.5));
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Event Info */
+.event-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 20px 0;
+    text-shadow: 0 0 30px rgba(0, 157, 220, 0.8);
+    letter-spacing: 2px;
+}
+
+.event-location {
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+}
+
+.event-dates {
+    font-size: 1em;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 20px;
+}
+
+/* Countdown Card */
+.countdown-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 30px;
+}
+
+.countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Time Boxes */
+.time-box {
+    background: linear-gradient(145deg, rgba(0, 157, 220, 0.2), rgba(0, 100, 150, 0.2));
+    border-radius: 15px;
+    padding: 25px 15px;
+    text-align: center;
+    border: 2px solid rgba(0, 157, 220, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.time-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.5s;
+}
+
+.time-box:hover::before {
+    left: 100%;
+}
+
+.time-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 157, 220, 0.4);
 }
 
 .time-number {
-    font-size: 2em;
+    font-size: 3em;
     font-weight: bold;
-    color: #ffffff;
-    text-shadow: 0px 0px 5px rgba(0, 255, 255, 0.8);
+    color: #00d4ff;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+    display: block;
+    margin-bottom: 10px;
 }
 
 .time-label {
-    font-size: 1em;
+    font-size: 0.9em;
     color: rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-#switch-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1.2em;
-    background-color: #004c97;
+/* Control Buttons */
+.controls {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn {
+    padding: 15px 30px;
+    font-size: 1.1em;
+    background: linear-gradient(145deg, #009ddc, #0077aa);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(0, 157, 220, 0.3);
 }
 
-#switch-button:hover {
-    background-color: #007bff;
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 157, 220, 0.5);
+    background: linear-gradient(145deg, #00b8ff, #009ddc);
 }
 
-/* Textbox styling */
-#textbox {
-    margin-top: 20px;
+.btn:active {
+    transform: translateY(-1px);
+}
+
+.btn.active {
+    background: linear-gradient(145deg, #00d4ff, #009ddc);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.6);
+}
+
+/* Notes Section */
+.notes-section {
+    margin-top: 30px;
+}
+
+.notes-textarea {
     width: 100%;
+    min-height: 120px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(0, 157, 220, 0.3);
+    border-radius: 15px;
+    color: white;
     font-size: 1em;
-    height: 100px;
-    color: #ffffff;
-    padding: 10px;
-    border-radius: 5px;
-    border: 2px solid #004c97;
-    resize: none;
-    background-color: rgba(0, 0, 0, 0.5);
-    overflow: hidden;
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.3s ease;
 }
 
-#textbox::placeholder {
-    font-size: 1em;
-    color: rgba(255, 255, 255, 0.7);
+.notes-textarea:focus {
+    outline: none;
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
 }
 
-@media screen and (max-width: 600px) {
-    .countdown-container {
-        transform: scale(1);
+.notes-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Event Status Messages */
+.event-finished {
+    font-size: 2em;
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(145deg, rgba(40, 167, 69, 0.2), rgba(25, 135, 84, 0.2));
+    border-radius: 15px;
+    border: 2px solid rgba(40, 167, 69, 0.5);
+}
+
+/* Info Banner */
+.info-banner {
+    background: rgba(0, 157, 220, 0.15);
+    border: 2px solid rgba(0, 157, 220, 0.3);
+    border-radius: 15px;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 0.95em;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.info-banner a {
+    color: #00d4ff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.info-banner a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
 
-    #countdown {
-        flex-wrap: wrap; /* Wrap cubes on smaller screens */
-        gap: 10px;
-    }
-
-    .time-cube {
-        width: 60px;
-        height: 60px;
+    .event-title {
+        font-size: 1.8em;
     }
 
     .time-number {
-        font-size: 1.5em;
+        font-size: 2.2em;
+    }
+
+    .countdown-card {
+        padding: 25px;
+    }
+
+    .logo {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-grid {
+        gap: 10px;
+    }
+
+    .time-box {
+        padding: 15px 10px;
+    }
+
+    .time-number {
+        font-size: 1.8em;
     }
 
     .time-label {
         font-size: 0.8em;
-    }
-
-    #textbox {
-        height: 80px;
     }
 }
