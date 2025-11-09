@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,15 +8,38 @@
 </head>
 <body>
     <div class="container">
-        <h1>Obfuscator</h1>
-        <textarea id="inputText" placeholder="Enter text"></textarea>
-        <input type="text" id="key" placeholder="Enter key">
-        <div>
-            <button onclick="encode()">Encode</button>
-            <button onclick="decode()">Decode</button>
+        <div class="header">
+            <h1>🔐 OBFUSCATOR</h1>
+            <p class="subtitle">Secure Text Encoding & Decoding</p>
         </div>
-        <textarea id="outputText" placeholder="Output will appear here" readonly></textarea>
+
+        <div class="input-group">
+            <label for="inputText">Input Text</label>
+            <textarea id="inputText" placeholder="Enter text to encode or paste encoded text to decode..." autocomplete="off"></textarea>
+        </div>
+
+        <div class="input-group">
+            <label for="key">Encryption Key</label>
+            <input type="text" id="key" placeholder="Enter your secret key..." autocomplete="off">
+        </div>
+
+        <div class="button-group">
+            <button class="btn-encode" onclick="encode()">🔒 Encode</button>
+            <button class="btn-decode" onclick="decode()">🔓 Decode</button>
+        </div>
+
+        <div class="output-container">
+            <div class="input-group">
+                <label for="outputText">Output</label>
+                <textarea id="outputText" placeholder="Output will appear here..." readonly autocomplete="off"></textarea>
+            </div>
+            <div class="action-buttons">
+                <button class="copy-btn" onclick="copyOutput()">📋 Copy Output</button>
+                <button class="download-btn" onclick="downloadHistory()">💾 Download History</button>
+            </div>
+        </div>
     </div>
+
     <script src="obfuscator/script.js"></script>
 </body>
 </html>
