@@ -7,6 +7,16 @@ const CURRENT_SEASON_LOGO_URL = 'https://community.firstinspires.org/hubfs/blog/
 // NOTE: Dates are based on the standard FRC schedule template for Israel districts.
 const events = [
     {
+        name: "FRC Kickoff 2026",
+        short_name: "Kickoff",
+        city: "Global",
+        country: "Worldwide",
+        start_date: `${CURRENT_FRC_YEAR}-01-10`,
+        end_date: `${CURRENT_FRC_YEAR}-01-10`,
+        year: CURRENT_FRC_YEAR,
+        key: `${CURRENT_FRC_YEAR}kickoff`
+    },
+    {
         name: "ISR District Event #1",
         short_name: "ISR #1",
         city: "Natanya",
