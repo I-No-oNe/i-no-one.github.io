@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async function () {
     try {
         // Fetch GitHub Repositories and Modrinth Projects
         const [githubRepos, modrinthProjects] = await Promise.all([
@@ -79,10 +79,10 @@ function findMatchingModrinthProject(repoName, modrinthProjects) {
     const specificMappings = {
         'View-Model': 'no-ones-view-model',
         'ClickCrystalPlus-Pack': 'clickcrystalplus-pack',
-        'Auto-Disconnect' : 'auto-disconnect',
-        'Attack-Blocker' : 'attack-blocker',
-        'Glowing-Entities' : 'glowing-entities',
-        'Death-Effects' : 'death-effects'
+        'Auto-Disconnect': 'auto-disconnect',
+        'Attack-Blocker': 'attack-blocker',
+        'Glowing-Entities': 'glowing-entities',
+        'Death-Effects': 'death-effects'
     };
 
     if (specificMappings[repoName]) {
@@ -103,7 +103,7 @@ function initializeNavigation() {
     const navLinks = document.querySelectorAll('nav ul li a');
 
     navLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
+        link.addEventListener('click', function (event) {
             event.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
@@ -116,7 +116,7 @@ function initializeNavigation() {
 
 function smoothScroll(target) {
     window.scrollTo({
-        top: target.offsetTop - 80, 
+        top: target.offsetTop - 152, // magic number :yas:
         behavior: 'smooth'
     });
 }
