@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="server-checker/style.css">
 </head>
 <body>
+
 <div class="dirt-background"></div>
 
 <div class="container">
@@ -44,8 +45,19 @@
         </div>
     </div>
 
+    <div id="historyContainer" class="history-container">
+        <div class="history-header">
+            <h3>Recent Servers</h3>
+            <button onclick="clearHistory()" class="clear-history-btn">Clear History</button>
+        </div>
+        <div id="historyList" class="history-list">
+        </div>
+    </div>
+
     <div class="results" id="results"></div>
 </div>
+
+<div id="notification" class="notification"></div>
 
 <script src="server-checker/script.js"></script>
 </body>

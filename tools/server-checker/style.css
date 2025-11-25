@@ -624,3 +624,17 @@ input::placeholder {
 .results:empty {
     display: none;
 }
+.history-container {
+    display: none;
+    margin-top: 20px;
+}
+
+.history-box {
+    background: var(--bg-secondary);
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+    animation: slideUp 0.6s ease-out;
+}

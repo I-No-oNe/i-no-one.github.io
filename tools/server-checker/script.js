@@ -97,9 +97,7 @@ function generateShareLink() {
 
     const params = new URLSearchParams();
     params.set('host', host);
-    if (port !== 25565) {
-        params.set('port', port);
-    }
+    params.set('port', port); // Always include port for reliability
 
     const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
 
@@ -107,7 +105,6 @@ function generateShareLink() {
     navigator.clipboard.writeText(shareUrl).then(() => {
         showNotification('Share link copied to clipboard!');
     }).catch(() => {
-        // Fallback for older browsers
         const textArea = document.createElement('textarea');
         textArea.value = shareUrl;
         document.body.appendChild(textArea);
@@ -129,18 +126,28 @@ function showNotification(message) {
 }
 
 // Check for URL parameters on load
+// Check for URL parameters on load
 function checkUrlParameters() {
     const params = new URLSearchParams(window.location.search);
-    const host = params.get('host');
-    const port = params.get('port');
 
-    if (host) {
-        document.getElementById('hostInput').value = host;
-        if (port) {
-            document.getElementById('portInput').value = port;
-        }
-        // Auto-check server from share link
-        setTimeout(() => checkServer(), 500);
+    // Only read host and port
+    const host = params.get('host');
+    const portParam = params.get('port');
+
+    if (!host) return; // nothing to do
+
+    const port = portParam ? parseInt(portParam, 10) : 25565;
+
+    // Set inputs
+    const hostInput = document.getElementById('hostInput');
+    const portInput = document.getElementById('portInput');
+
+    if (hostInput && portInput) {
+        hostInput.value = host;
+        portInput.value = isNaN(port) ? 25565 : port;
+
+        // Automatically check the server after setting values
+        setTimeout(() => checkServer(), 100);
     }
 }
 
@@ -461,7 +468,7 @@ function escapeHtml(text) {
 }
 
 // Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Display history
     displayHistory();
 
@@ -469,10 +476,10 @@ document.addEventListener('DOMContentLoaded', function() {
     checkUrlParameters();
 
     // Enter key handlers
-    document.getElementById('hostInput').addEventListener('keypress', function(e) {
+    document.getElementById('hostInput').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') checkServer();
     });
-    document.getElementById('portInput').addEventListener('keypress', function(e) {
+    document.getElementById('portInput').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') checkServer();
     });
 });
