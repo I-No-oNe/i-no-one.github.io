@@ -620,3 +620,7 @@ input::placeholder {
         transform: translateY(0);
     }
 }
+
+.results:empty {
+    display: none;
+}
