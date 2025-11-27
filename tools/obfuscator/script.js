@@ -1,51 +1,53 @@
 let history = [];
 
-document.getElementById('inputText').value = '';
-document.getElementById('key').value = '';
-document.getElementById('outputText').value = '';
-
-window.addEventListener('load', () => {
+// Clear all UI fields + history
+function resetAll() {
     document.getElementById('inputText').value = '';
     document.getElementById('key').value = '';
     document.getElementById('outputText').value = '';
     history = [];
-    
+}
+
+// Reset on first load
+window.addEventListener('load', () => {
+    resetAll();
     sessionStorage.setItem('pageLoaded', 'true');
 });
 
-window.addEventListener('pageshow', (event) => {
-    document.getElementById('inputText').value = '';
-    document.getElementById('key').value = '';
-    document.getElementById('outputText').value = '';
-    history = [];
+// Reset when coming back via navigation cache
+window.addEventListener('pageshow', () => {
+    resetAll();
 });
 
+// Reset on tab close / reload
 window.addEventListener('beforeunload', () => {
-    document.getElementById('inputText').value = '';
-    document.getElementById('key').value = '';
-    document.getElementById('outputText').value = '';
-    history = [];
+    resetAll();
 });
 
+// Reset if user switches tab away and comes back (first time only)
 document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-        if (!sessionStorage.getItem('pageLoaded')) {
-            document.getElementById('inputText').value = '';
-            document.getElementById('key').value = '';
-            document.getElementById('outputText').value = '';
-            history = [];
-        }
+    if (!document.hidden && !sessionStorage.getItem('pageLoaded')) {
+        resetAll();
     }
 });
 
+// ------------------------------------------------------
+// FAVICON
+// ------------------------------------------------------
 function setFavicon(url) {
-    let favicon = document.querySelector("link[rel='icon']") || document.createElement('link');
-    favicon.rel = 'icon';
+    let favicon = document.querySelector("link[rel='icon']");
+    if (!favicon) {
+        favicon = document.createElement('link');
+        favicon.rel = 'icon';
+        document.head.appendChild(favicon);
+    }
     favicon.href = url;
-    document.head.appendChild(favicon);
 }
 setFavicon('https://avatars.githubusercontent.com/u/145749961?v=4&size=64');
 
+// ------------------------------------------------------
+// ALERT SYSTEM
+// ------------------------------------------------------
 function showAlert(message, type = 'success') {
     const alert = document.createElement('div');
     alert.className = `alert alert-${type}`;
@@ -55,13 +57,15 @@ function showAlert(message, type = 'success') {
     setTimeout(() => {
         alert.style.animation = 'slideInRight 0.4s ease-out reverse';
         setTimeout(() => alert.remove(), 400);
-    }, 3000);
+    }, 2500);
 }
 
+// ------------------------------------------------------
+// HISTORY
+// ------------------------------------------------------
 function addToHistory(operation, inputText, key, outputText) {
-    const timestamp = new Date().toLocaleString();
     history.push({
-        timestamp,
+        timestamp: new Date().toLocaleString(),
         operation,
         inputText,
         key,
@@ -69,132 +73,128 @@ function addToHistory(operation, inputText, key, outputText) {
     });
 }
 
+// ------------------------------------------------------
+// OBFUSCATION (UNTOUCHED!)
+// ------------------------------------------------------
 function generateDeterministicIndices(length, key) {
-    const seed = key.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    let indices = new Array(length).fill(0).map((_, i) => (i + seed) % length);
-    return indices;
+    const seed = [...key].reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return Array.from({ length }, (_, i) => (i + seed) % length);
 }
 
 function shuffleStringDeterministic(str, key) {
     const arr = str.split('');
     const indices = generateDeterministicIndices(arr.length, key);
-    let shuffled = [...arr];
-    for (let i = 0; i < arr.length; i++) {
-        shuffled[indices[i]] = arr[i];
-    }
+    const shuffled = new Array(arr.length);
+    for (let i = 0; i < arr.length; i++) shuffled[indices[i]] = arr[i];
     return shuffled.join('');
 }
 
 function unshuffleStringDeterministic(str, key) {
     const arr = str.split('');
     const indices = generateDeterministicIndices(arr.length, key);
-    let unshuffled = new Array(arr.length);
-    for (let i = 0; i < arr.length; i++) {
-        unshuffled[i] = arr[indices[i]];
-    }
+    const unshuffled = new Array(arr.length);
+    for (let i = 0; i < arr.length; i++) unshuffled[i] = arr[indices[i]];
     return unshuffled.join('');
 }
 
+// ------------------------------------------------------
+// ENCODE
+// ------------------------------------------------------
 function encode() {
-    const text = document.getElementById('inputText').value;
-    const key = document.getElementById('key').value;
-    
+    const text = inputText.value.trim();
+    const key = keyInput.value.trim();
+
     if (!text || !key) {
         showAlert('Please enter both text and key', 'error');
         return;
     }
 
     try {
-        let encoder = new TextEncoder();
-        let base64Encoded = btoa(String.fromCharCode(...encoder.encode(text)));
-        let shuffled = shuffleStringDeterministic(base64Encoded, key);
-        const output = shuffled.split('').reverse().join('');
-        document.getElementById('outputText').value = output;
-        
-        // Add to history
+        const base64 = btoa(unescape(encodeURIComponent(text)));
+        const shuffled = shuffleStringDeterministic(base64, key);
+        const output = [...shuffled].reverse().join('');
+
+        outputText.value = output;
         addToHistory('ENCODE', text, key, output);
-        
-        showAlert('Text encoded successfully!', 'success');
-    } catch (error) {
-        showAlert('Encoding failed: ' + error.message, 'error');
+        showAlert('Text encoded successfully!');
+    } catch (e) {
+        showAlert('Encoding error: ' + e.message, 'error');
     }
 }
 
+// ------------------------------------------------------
+// DECODE
+// ------------------------------------------------------
 function decode() {
-    const text = document.getElementById('inputText').value;
-    const key = document.getElementById('key').value;
-    
+    const text = inputText.value.trim();
+    const key = keyInput.value.trim();
+
     if (!text || !key) {
         showAlert('Please enter both encoded text and key', 'error');
         return;
     }
 
     try {
-        let reversed = text.split('').reverse().join('');
-        let unshuffled = unshuffleStringDeterministic(reversed, key);
-        let decodedBytes = new Uint8Array([...atob(unshuffled)].map(char => char.charCodeAt(0)));
-        let decoder = new TextDecoder();
-        const decoded = decoder.decode(decodedBytes);
-        document.getElementById('outputText').value = decoded;
-        
-        // Add to history
+        const reversed = [...text].reverse().join('');
+        const unshuffled = unshuffleStringDeterministic(reversed, key);
+        const decoded = decodeURIComponent(escape(atob(unshuffled)));
+
+        outputText.value = decoded;
         addToHistory('DECODE', text, key, decoded);
-        
-        showAlert('Text decoded successfully!', 'success');
-    } catch (error) {
+        showAlert('Text decoded successfully!');
+    } catch (e) {
         showAlert('Decoding failed. Wrong key or corrupted data.', 'error');
-        console.error('Decode Error:', error);
     }
 }
 
+// ------------------------------------------------------
+// COPY OUTPUT
+// ------------------------------------------------------
 function copyOutput() {
-    const output = document.getElementById('outputText');
-    if (!output.value) {
-        showAlert('Nothing to copy!', 'error');
-        return;
-    }
-    
-    output.select();
-    document.execCommand('copy');
-    showAlert('Copied to clipboard!', 'success');
+    if (!outputText.value) return showAlert('Nothing to copy!', 'error');
+
+    navigator.clipboard.writeText(outputText.value).then(() => {
+        showAlert('Copied to clipboard!');
+    });
 }
 
+// ------------------------------------------------------
+// DOWNLOAD HISTORY
+// ------------------------------------------------------
 function downloadHistory() {
     if (history.length === 0) {
         showAlert('No history to download!', 'error');
         return;
     }
 
-    // Create formatted text content
-    let content = '='.repeat(60) + '\n';
-    content += 'OBFUSCATOR HISTORY LOG\n';
-    content += 'Generated: ' + new Date().toLocaleString() + '\n';
-    content += '='.repeat(60) + '\n\n';
+    let content =
+        '='.repeat(60) + '\n' +
+        'OBFUSCATOR HISTORY LOG\n' +
+        'Generated: ' + new Date().toLocaleString() + '\n' +
+        '='.repeat(60) + '\n\n';
 
-    history.forEach((entry, index) => {
-        content += `[${index + 1}] ${entry.operation} - ${entry.timestamp}\n`;
+    history.forEach((h, i) => {
+        content += `[${i + 1}] ${h.operation} - ${h.timestamp}\n`;
         content += '-'.repeat(60) + '\n';
-        content += `Key: ${entry.key}\n`;
-        content += `Input: ${entry.inputText.substring(0, 100)}${entry.inputText.length > 100 ? '...' : ''}\n`;
-        content += `Output: ${entry.outputText.substring(0, 100)}${entry.outputText.length > 100 ? '...' : ''}\n`;
-        content += '\n';
+        content += `Key: ${h.key}\n`;
+        content += `Input: ${h.inputText.slice(0, 100)}${h.inputText.length > 100 ? '...' : ''}\n`;
+        content += `Output: ${h.outputText.slice(0, 100)}${h.outputText.length > 100 ? '...' : ''}\n\n`;
     });
 
     content += '='.repeat(60) + '\n';
-    content += '⚠️ WARNING: This file contains sensitive information.\n';
-    content += 'Keep it secure and delete after use.\n';
-    content += '='.repeat(60) + '\n';
+    content += '⚠️ WARNING: Sensitive information. Keep secure.\n';
+    content += '='.repeat(60);
 
-    // Create and download file
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
+    a.href = URL.createObjectURL(new Blob([content], { type: 'text/plain' }));
     a.download = `obfuscator-history-${Date.now()}.txt`;
-    document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+    URL.revokeObjectURL(a.href);
 
-    showAlert('History downloaded successfully!', 'success');
+    showAlert('History downloaded!');
 }
+
+// Cache DOM elements
+const inputText = document.getElementById('inputText');
+const keyInput = document.getElementById('key');
+const outputText = document.getElementById('outputText');
