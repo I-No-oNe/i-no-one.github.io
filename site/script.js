@@ -77,6 +77,7 @@ function populateRepos(githubRepos, modrinthProjects) {
 
 function findMatchingModrinthProject(repoName, modrinthProjects) {
     const specificMappings = {
+        'Hit-Color' : 'no-ones-hit-color',
         'View-Model': 'no-ones-view-model',
         'ClickCrystalPlus-Pack': 'clickcrystalplus-pack',
         'Auto-Disconnect': 'auto-disconnect',
