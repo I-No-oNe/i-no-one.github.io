@@ -21,17 +21,15 @@ body {
 /* Background Particles */
 .particle {
     position: absolute;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 50%;
     pointer-events: none;
     animation: float 15s infinite ease-in-out;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0) translateX(0); }
-    25% { transform: translateY(-100px) translateX(50px); }
-    50% { transform: translateY(-200px) translateX(-50px); }
-    75% { transform: translateY(-100px) translateX(100px); }
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(40px, -120px); }
 }
 
 /* Layout */
@@ -55,7 +53,6 @@ body {
 .logo {
     max-width: 300px;
     height: auto;
-    filter: drop-shadow(0 0 20px rgba(0, 157, 220, 0.5));
     animation: pulse 3s ease-in-out infinite;
 }
 
@@ -69,7 +66,7 @@ body {
     font-size: 2.5em;
     font-weight: bold;
     margin: 20px 0;
-    text-shadow: 0 0 30px rgba(0, 157, 220, 0.8);
+    text-shadow: 0 0 10px rgba(0, 157, 220, 0.4);
     letter-spacing: 2px;
 }
 
@@ -87,15 +84,15 @@ body {
 
 /* Countdown Card */
 .countdown-card {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 25px;
     padding: 40px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     margin-bottom: 30px;
 }
 
+/* Countdown Grid */
 .countdown-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -105,42 +102,24 @@ body {
 
 /* Time Boxes */
 .time-box {
-    background: linear-gradient(145deg, rgba(0, 157, 220, 0.2), rgba(0, 100, 150, 0.2));
+    background: rgba(0, 157, 220, 0.15);
+    border: 1px solid rgba(0, 157, 220, 0.25);
     border-radius: 15px;
     padding: 25px 15px;
     text-align: center;
-    border: 2px solid rgba(0, 157, 220, 0.3);
-    transition: all 0.3s ease;
+    transition: transform 0.25s ease;
     position: relative;
-    overflow: hidden;
-}
-
-.time-box::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transform: rotate(45deg);
-    transition: all 0.5s;
-}
-
-.time-box:hover::before {
-    left: 100%;
 }
 
 .time-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 157, 220, 0.4);
+    transform: scale(1.03);
 }
 
 .time-number {
     font-size: 3em;
     font-weight: bold;
     color: #00d4ff;
-    text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
     display: block;
     margin-bottom: 10px;
 }
@@ -168,25 +147,19 @@ body {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     font-weight: 600;
     letter-spacing: 1px;
-    box-shadow: 0 5px 15px rgba(0, 157, 220, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 157, 220, 0.25);
 }
 
 .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 157, 220, 0.5);
-    background: linear-gradient(145deg, #00b8ff, #009ddc);
-}
-
-.btn:active {
-    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 157, 220, 0.35);
 }
 
 .btn.active {
     background: linear-gradient(145deg, #00d4ff, #009ddc);
-    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.6);
 }
 
 /* Notes Section */
@@ -198,21 +171,20 @@ body {
     width: 100%;
     min-height: 120px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(0, 157, 220, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 157, 220, 0.25);
     border-radius: 15px;
     color: white;
     font-size: 1em;
     font-family: inherit;
     resize: vertical;
-    transition: all 0.3s ease;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .notes-textarea:focus {
     outline: none;
     border-color: #00d4ff;
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.25);
 }
 
 .notes-textarea::placeholder {
@@ -224,15 +196,15 @@ body {
     font-size: 2em;
     text-align: center;
     padding: 40px;
-    background: linear-gradient(145deg, rgba(40, 167, 69, 0.2), rgba(25, 135, 84, 0.2));
+    background: rgba(40, 167, 69, 0.15);
     border-radius: 15px;
-    border: 2px solid rgba(40, 167, 69, 0.5);
+    border: 1px solid rgba(40, 167, 69, 0.4);
 }
 
 /* Info Banner */
 .info-banner {
-    background: rgba(0, 157, 220, 0.15);
-    border: 2px solid rgba(0, 157, 220, 0.3);
+    background: rgba(0, 157, 220, 0.10);
+    border: 1px solid rgba(0, 157, 220, 0.25);
     border-radius: 15px;
     padding: 15px 20px;
     margin-bottom: 30px;
@@ -292,7 +264,6 @@ body {
         font-size: 0.8em;
     }
 }
-
 
 .results:empty {
     display: none;
