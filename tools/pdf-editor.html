@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>📄 PDF Converter</title>
+    <link rel="icon" href="https://cdn-icons-png.freepik.com/512/4662/4662973.png" type="image/png">
+    <link rel="stylesheet" href="pdf-editor/style.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>PDF Converter 📄</h1>
+        <p class="tagline">Convert, merge, and manipulate PDFs — all in your browser with complete privacy</p>
+    </header>
+
+    <div id="alert" class="alert"></div>
+
+    <div class="tabs">
+        <button class="tab active" data-tab="convertTab">🖼️ Convert to PDF</button>
+        <button class="tab" data-tab="mergeTab">🔗 Merge PDFs</button>
+        <button class="tab" data-tab="htmlTab">✨ HTML to PDF</button>
+        <button class="tab" data-tab="splitTab">✂️ Split PDF</button>
+    </div>
+
+    <div class="tab-content active" id="convertTab">
+        <div class="card">
+            <div class="card-title"><span class="icon">🖼️</span> Files to Convert</div>
+
+            <div class="drop-zone" id="dropzoneConvert">
+                <div class="drop-icon">🖼️</div>
+                <div class="drop-text">Drop files here (Images, TXT, DOCX)</div>
+                <div class="drop-hint">or <a href="#" id="browseConvert">browse files</a> • Add multiple files to convert
+                </div>
+            </div>
+            <input type="file" id="fileInputConvert" accept=".jpg,.jpeg,.png,.gif,.txt,.docx,.doc" multiple>
+            <div class="file-list" id="fileListConvert">
+            </div>
+
+            <div class="stats" id="convertStats" style="display:none;">
+                <span>Total files: <span id="convertCount">0</span></span>
+                <span>Total size: <span id="convertSize">0 KB</span></span>
+                <button class="secondary" id="btnClearConvert" disabled>Clear All</button>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="pageSizeConvert">Page Size:</label>
+                    <select id="pageSizeConvert">
+                        <option value="a4">A4</option>
+                        <option value="letter">Letter</option>
+                        <option value="legal">Legal</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="orientationConvert">Orientation:</label>
+                    <select id="orientationConvert">
+                        <option value="portrait">Portrait</option>
+                        <option value="landscape">Landscape</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="qualityConvert">Quality:</label>
+                    <select id="qualityConvert">
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <button id="btnConvert" disabled>✨ Convert to PDF</button>
+            </div>
+
+            <div class="processing" id="processingConvert">
+                <div class="spinner"></div>
+                <span>Converting files...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="mergeTab">
+        <div class="card">
+            <div class="card-title"><span class="icon">🔗</span> PDFs to Merge (Reorder by Dragging)</div>
+
+            <div class="drop-zone" id="dropzoneMerge">
+                <div class="drop-icon">📚</div>
+                <div class="drop-text">Drop PDF files here</div>
+                <div class="drop-hint">or <a href="#" id="browseMerge">browse files</a> • Add multiple PDFs to merge
+                </div>
+            </div>
+            <input id="fileInputMerge" type="file" multiple accept=".pdf,application/pdf"/>
+            <div class="file-list" id="fileListMerge">
+            </div>
+
+            <div class="stats" id="mergeStats" style="display:none;">
+                <span>Total PDFs: <span id="mergeCount">0</span></span>
+                <span>Total pages: <span id="mergePages">0</span></span>
+                <span>Total size: <span id="mergeSize">0 KB</span></span>
+                <button class="secondary" id="btnClearMerge" disabled>Clear All</button>
+            </div>
+
+            <div class="controls">
+                <button id="btnMerge" disabled>🔗 Merge PDFs</button>
+            </div>
+
+            <div class="processing" id="processingMerge">
+                <div class="spinner"></div>
+                <span>Merging PDFs...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="htmlTab">
+        <div class="card">
+            <div class="card-title"><span class="icon">✨</span> Paste HTML Code</div>
+
+            <textarea id="htmlInput" rows="10" placeholder=""></textarea>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="pageSizeHtml">Page Size:</label>
+                    <select id="pageSizeHtml">
+                        <option value="a4">A4</option>
+                        <option value="letter">Letter</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="orientationHtml">Orientation:</label>
+                    <select id="orientationHtml">
+                        <option value="portrait">Portrait</option>
+                        <option value="landscape">Landscape</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="marginHtml">Margin (mm):</label>
+                    <input type="number" id="marginHtml" value="10" min="0" max="50">
+                </div>
+                <button id="btnClearHtml" class="secondary">Clear HTML</button>
+                <button id="btnHtmlPdf">✨ Convert HTML to PDF</button>
+            </div>
+
+            <div class="processing" id="processingHtml">
+                <div class="spinner"></div>
+                <span>Converting HTML...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="splitTab">
+        <div class="card">
+            <div class="card-title"><span class="icon">✂️</span> Select PDF to Split</div>
+
+            <div class="drop-zone" id="dropzoneSplit">
+                <div class="drop-icon">📄</div>
+                <div class="drop-text">Drop a single PDF file here</div>
+                <div class="drop-hint">or <a href="#" id="browseSplit">browse file</a>
+                </div>
+            </div>
+            <input type="file" id="fileInputSplit" accept=".pdf">
+            <div id="splitControls" style="display:none;">
+                <div class="controls">
+                    <div class="control-group" style="width: 100%;">
+                        <label for="splitMethod">Split Method:</label>
+                        <select id="splitMethod">
+                            <option value="range">Extract Range (e.g., 1-5)</option>
+                            <option value="pages">Extract Specific Pages (e.g., 2, 4, 7)</option>
+                            <option value="every">Split Every N Pages (e.g., Every 5 pages)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-container" id="rangeInput">
+                    <label for="pageRange">Page Range (e.g., 1-5, 10-12):</label>
+                    <input type="text" id="pageRange" placeholder="e.g. 1-5">
+                </div>
+                <div class="input-container" id="pagesInput" style="display:none;">
+                    <label for="specificPages">Specific Pages (comma-separated):</label>
+                    <input type="text" id="specificPages" placeholder="e.g. 2, 4, 7">
+                </div>
+                <div class="input-container" id="everyInput" style="display:none;">
+                    <label for="everyPages">Split into files of how many pages each:</label>
+                    <input type="number" id="everyPages" value="5" min="1" style="width: 120px; text-align: center; border-radius:8px"/>
+                </div>
+
+                <div class="controls">
+                    <button id="btnSplit" disabled>✂️ Split PDF</button>
+                </div>
+            </div>
+
+            <div class="processing" id="processingSplit">
+                <div class="spinner"></div>
+                <span>Splitting PDF...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span class="icon">👁️</span> Preview & Download</div>
+
+        <div class="preview-container">
+            <div class="preview-toolbar">
+                <div class="preview-info" id="previewInfo">No document loaded</div>
+                <button id="btnDownload" class="secondary" style="display:none">💾 Download PDF</button>
+            </div>
+
+            <div id="previewFrame">
+                <div class="empty-preview">
+                    <div class="icon">📄</div>
+                    <div>Your converted PDF will appear here</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+<script src="pdf-editor/pdf.js"></script>
+</body>
+</html>
