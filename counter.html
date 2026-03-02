@@ -7,65 +7,65 @@
     <link rel="stylesheet" href="frc/counter/styles.css">
 </head>
 <body>
-    <script>
-        for (let i = 0; i < 20; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.width = Math.random() * 100 + 50 + 'px';
-            particle.style.height = particle.style.width;
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.opacity = Math.random() * 0.3 + 0.1;
-            document.body.appendChild(particle);
-        }
-    </script>
+<script>
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.width = Math.random() * 100 + 50 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.opacity = Math.random() * 0.3 + 0.1;
+        document.body.appendChild(particle);
+    }
+</script>
 
-    <div class="container">
-        <div class="header">
-        </div>
-
-        <div class="info-banner">
-            <b id="info-text">📅 Showing FRC Israel District Events (ISR)</b> | 
-            <a id="tba-link" href="#" target="_blank">View on The Blue Alliance</a>
-        </div>
-
-        <div class="countdown-card">
-            <h1 class="event-title" id="event-title">Countdown to Event</h1>
-            <div class="event-location" id="event-location"></div>
-            <div class="event-dates" id="event-dates"></div>
-            
-            <div id="countdown" class="countdown-grid">
-                <div class="time-box">
-                    <span class="time-number" id="days">00</span>
-                    <span class="time-label">Days</span>
-                </div>
-                <div class="time-box">
-                    <span class="time-number" id="hours">00</span>
-                    <span class="time-label">Hours</span>
-                </div>
-                <div class="time-box">
-                    <span class="time-number" id="minutes">00</span>
-                    <span class="time-label">Minutes</span>
-                </div>
-                <div class="time-box">
-                    <span class="time-number" id="seconds">00</span>
-                    <span class="time-label">Seconds</span>
-                </div>
-            </div>
-
-            <div class="controls" id="controls"></div>
-        </div>
-
-        <div class="notes-section">
-            <label for="notes"></label><textarea
-                id="notes" 
-                class="notes-textarea" 
-                placeholder="Write your event notes, strategy ideas, or team reminders here..."
-            ></textarea>
-        </div>
+<div class="container">
+    <div class="header">
     </div>
 
-    <script src="frc/counter/script.js"></script>
+    <div class="info-banner">
+        <b id="info-text">📅 Showing FRC Israel District Events (ISR)</b> |
+        <a id="tba-link" href="#" target="_blank">View on The Blue Alliance</a>
+    </div>
+
+    <div class="countdown-card">
+        <h1 class="event-title" id="event-title">Countdown to Event</h1>
+        <div class="event-location" id="event-location"></div>
+        <div class="event-dates" id="event-dates"></div>
+
+        <div id="countdown" class="countdown-grid">
+            <div class="time-box">
+                <span class="time-number" id="days">00</span>
+                <span class="time-label">Days</span>
+            </div>
+            <div class="time-box">
+                <span class="time-number" id="hours">00</span>
+                <span class="time-label">Hours</span>
+            </div>
+            <div class="time-box">
+                <span class="time-number" id="minutes">00</span>
+                <span class="time-label">Minutes</span>
+            </div>
+            <div class="time-box">
+                <span class="time-number" id="seconds">00</span>
+                <span class="time-label">Seconds</span>
+            </div>
+        </div>
+
+        <div class="controls" id="controls"></div>
+    </div>
+
+    <div class="notes-section">
+        <label for="notes"></label><textarea
+            id="notes"
+            class="notes-textarea"
+            placeholder="Write your event notes, strategy ideas, or team reminders here..."
+    ></textarea>
+    </div>
+</div>
+
+<script src="frc/counter/script.js"></script>
 </body>
 </html>

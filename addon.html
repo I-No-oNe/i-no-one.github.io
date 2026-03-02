@@ -1,26 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Addon Info</title>
-  <link rel="stylesheet" href="addon/css/style.css" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>No-oNe Addon | ClickCrystals Addon</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="addon/css/style.css">
 </head>
 <body>
-  <div class="animated-bg"></div>
-  <div class="container">
-    <h1 class="glow-title">🧩 ClickCrystals Addon Info</h1>
 
-    <!-- Download Button -->
-    <div class="download-container">
-      <a href="https://discord.com/channels/1256214501129191504/1256224383639224331" class="download-btn">
-        🚀 Download Addon
-      </a>
-    </div>
+<div id="cursor-glow"></div>
+<div class="background-mesh"></div>
 
-    <div id="modules" class="fade-in delay-1"></div>
-    <div id="commands" class="fade-in delay-2"></div>
-  </div>
-  <script src="addon/js/script.js"></script>
+<div class="wrap">
+
+    <header class="reveal">
+        <div class="protocol-badge">
+            <span class="dot"></span>NO-ONE ADDON <span id="badge-version">...</span>
+        </div>
+        <h1>No-oNe Addon.<br>addon that nobody use.</h1>
+        <p class="subtitle">A powerful, feature-rich utility to enhance your Minecraft PvP and utility experience.</p>
+        <div class="btns">
+            <a href="https://github.com/I-No-oNe/No-oNe-Addon/releases/latest" class="btn btn-main" target="_blank">Download
+                Addon</a>
+            <a href="https://discord.gg/QHFSDPajd6" class="btn btn-alt" target="_blank">Join Discord</a>
+        </div>
+    </header>
+
+    <section class="reveal">
+        <div class="section-head"><h2>Modules</h2>
+            <div class="line"></div>
+        </div>
+        <div class="glass-card">
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody id="module-body">
+                <tr class="skeleton-row">
+                    <td>████████████</td>
+                    <td>████████████████████████████</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <div class="section-head"><h2>Commands</h2>
+            <div class="line"></div>
+        </div>
+        <div class="glass-card">
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody id="command-body">
+                <tr class="skeleton-row">
+                    <td>████████████</td>
+                    <td>████████████████████████████</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <div class="section-head"><h2>Known FAQ</h2>
+            <div class="line"></div>
+        </div>
+        <div class="faq-list">
+
+            <details open>
+                <summary>How do I install the addon? <span class="plus">+</span></summary>
+                <div class="qa-content">
+                    <div class="callout">
+                        <strong>Version Compatibility</strong>
+                        The addon won't always be compatible with the latest version of ClickCrystals. If
+                        it crashes, verify your game version.
+                    </div>
+                    <ol>
+                        <li>Ensure you have a compatible version of <a
+                                href="https://github.com/ClickCrystals-Development/ClickCrystals" target="_blank">ClickCrystals</a>
+                            installed.
+                        </li>
+                        <li>Download the <strong>No-oNe-Addon</strong> <code>.jar</code> file from the <a
+                                href="https://github.com/I-No-oNe/No-oNe-Addon/releases/latest" target="_blank">Releases
+                            tab</a>.
+                        </li>
+                        <li>Place the file into the <code>mods/</code> folder of your Minecraft instance.</li>
+                        <li>Launch the game. Addon modules will automatically appear in the ClickCrystals GUI under the
+                            <strong>Addon</strong> category.
+                        </li>
+                    </ol>
+                </div>
+            </details>
+
+            <details>
+                <summary>Why aren't some modules working immediately? <span class="plus">+</span></summary>
+                <div class="qa-content">
+                    <div class="callout warn">
+                        <strong>Restart Required</strong>
+                        Some modules make deep changes to the UI or game interactions.
+                    </div>
+                    Specifically, modules like <strong>Mod Menu Disabler</strong> require a full game restart to take
+                    effect after you toggle them.
+                </div>
+            </details>
+
+            <details>
+                <summary>How do I report a bug or crash? <span class="plus">+</span></summary>
+                <div class="qa-content">
+                    Join our <a href="https://discord.gg/QHFSDPajd6" target="_blank">Discord server</a> and head to the
+                    bugs channel.<br><br>
+                    <strong>Please include:</strong>
+                    <ul>
+                        <li>Your <strong>crash log</strong> (found in <code>.minecraft/crash-reports/</code>)</li>
+                        <li>Your <strong>latest log</strong> (found in <code>.minecraft/logs/latest.log</code>)</li>
+                        <li>A short description of what you were doing when the issue occurred.</li>
+                    </ul>
+                    <em><strong>Bug reports without logs will be ignored as they cannot be effectively
+                        debugged.</strong></em>
+                </div>
+            </details>
+
+            <details>
+                <summary>Will this get me banned on multiplayer servers? <span class="plus">+</span></summary>
+                <div class="qa-content">
+                    Anti-cheats do not detect it in <strong>~99% of cases</strong>, <strong>but</strong> no cheat client
+                    or addon can
+                    guarantee 100% safety.<br><br>
+                    Always use it on servers where you understand the rules and risks. <strong>We are not responsible
+                    for any
+                    account bans. </strong>
+                </div>
+            </details>
+
+            <details>
+                <summary>Is this project open source? <span class="plus">+</span></summary>
+                <div class="qa-content">
+                    Yes, this project is licensed under the <strong>MIT License</strong>. You can view the full source
+                    code and documentation on our GitHub repository.
+                </div>
+            </details>
+
+        </div>
+    </section>
+
+    <footer class="reveal"><p>Made by <a href="https://github.com/I-No-oNe" target="_blank">No-oNe</a></p>
+        <p>I-No-oNe 2026™ All Rights Reserved</p>
+    </footer>
+
+</div>
+
+<script src="addon/js/script.js"></script>
 </body>
 </html>
