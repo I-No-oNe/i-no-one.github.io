@@ -305,12 +305,6 @@ tr:hover td {
             transform 0.22s ease;
 }
 
-.faq-list details[open] .qa-content {
-    max-height: 1000px; /* large enough for content */
-    opacity: 1;
-    transform: translateY(0);
-}
-
 .faq-list summary {
     transition: color 0.3s ease;
 }

@@ -13,16 +13,6 @@ const revealObserver = new IntersectionObserver(entries => {
 }, {threshold: 0.1});
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// FAQ Accordion
-const allDetails = document.querySelectorAll('.faq-list details');
-allDetails.forEach(target => {
-    target.addEventListener('click', () => {
-        allDetails.forEach(d => {
-            if (d !== target) d.removeAttribute('open');
-        });
-    });
-});
-
 // Markdown parsing
 function parseMarkdownTable(text, sectionKeyword) {
     const lines = text.split('\n');
@@ -115,12 +105,16 @@ function setFavicon(url) {
 
 setFavicon('https://raw.githubusercontent.com/I-No-oNe/No-oNe-Addon/refs/heads/main/src/main/resources/assets/no-one-addon/icon.png');
 
-document.querySelectorAll('.faq-list details').forEach(detail => {
+// FAQ Accordion & Smooth Animation
+const allDetails = document.querySelectorAll('.faq-list details');
+
+allDetails.forEach(detail => {
     const content = detail.querySelector('.qa-content');
     const summary = detail.querySelector('summary');
 
+    // Setup initial open state
     if (detail.hasAttribute('open')) {
-        content.style.height = content.scrollHeight + 'px';
+        content.style.height = 'auto'; // Let it naturally flow initially
         content.style.opacity = '1';
         content.style.transform = 'translateY(0)';
     }
@@ -129,18 +123,44 @@ document.querySelectorAll('.faq-list details').forEach(detail => {
         e.preventDefault();
         const isOpen = detail.hasAttribute('open');
 
+        // Smoothly close any other open accordions
+        allDetails.forEach(otherDetail => {
+            if (otherDetail !== detail && otherDetail.hasAttribute('open')) {
+                const otherContent = otherDetail.querySelector('.qa-content');
+
+                // Set explicit height before animating down
+                otherContent.style.height = otherContent.scrollHeight + 'px';
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        otherContent.style.height = '0px';
+                        otherContent.style.opacity = '0';
+                        otherContent.style.transform = 'translateY(-6px)';
+                    });
+                });
+
+                setTimeout(() => {
+                    otherDetail.removeAttribute('open');
+                }, 320); // Match CSS transition duration
+            }
+        });
+
+        // Toggle the clicked one
         if (isOpen) {
+            // Set explicit height to transition from
             content.style.height = content.scrollHeight + 'px';
 
             requestAnimationFrame(() => {
-                content.style.height = '0px';
-                content.style.opacity = '0';
-                content.style.transform = 'translateY(-6px)';
+                requestAnimationFrame(() => {
+                    content.style.height = '0px';
+                    content.style.opacity = '0';
+                    content.style.transform = 'translateY(-6px)';
+                });
             });
 
             setTimeout(() => {
                 detail.removeAttribute('open');
-            }, 280);
+            }, 320);
 
         } else {
             detail.setAttribute('open', '');
@@ -150,10 +170,19 @@ document.querySelectorAll('.faq-list details').forEach(detail => {
             content.style.transform = 'translateY(-6px)';
 
             requestAnimationFrame(() => {
-                content.style.height = content.scrollHeight + 'px';
-                content.style.opacity = '1';
-                content.style.transform = 'translateY(0)';
+                requestAnimationFrame(() => {
+                    content.style.height = content.scrollHeight + 'px';
+                    content.style.opacity = '1';
+                    content.style.transform = 'translateY(0)';
+                });
             });
+
+            // Revert back to auto after animation so responsive sizing isn't broken
+            setTimeout(() => {
+                if (detail.hasAttribute('open')) {
+                    content.style.height = 'auto';
+                }
+            }, 320);
         }
     });
 });

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>PDF Utils</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="pdf-utils/style.css">
+</head>
+<body>
+<div class="wrap">
+
+    <header>
+        <div class="logo-mark">📄</div>
+        <div class="header-text">
+            <h1>PDF Utils</h1>
+            <p>Convert · Merge · Split · OCR · Transform</p>
+        </div>
+        <div class="badge">🔒 100% Local</div>
+    </header>
+
+    <div id="alert" class="alert"></div>
+
+    <div class="tabs">
+        <button class="tab active" data-tab="convertTab">🖼 Convert</button>
+        <button class="tab" data-tab="mergeTab">🔗 Merge</button>
+        <button class="tab" data-tab="htmlTab">✦ HTML</button>
+        <button class="tab" data-tab="splitTab">✂ Split</button>
+        <button class="tab" data-tab="ocrTab">🔍 OCR</button>
+    </div>
+
+    <!-- CONVERT -->
+    <div class="tab-content active" id="convertTab">
+        <div class="card">
+            <div class="card-title"><span class="dot"></span>Files to Convert</div>
+            <div class="drop-zone" id="dzConvert">
+                <div class="drop-icon">🖼</div>
+                <div class="drop-text">Drop images or documents here</div>
+                <div class="drop-hint">or <a href="#" id="brConvert">browse files</a> · JPG PNG GIF TXT DOCX</div>
+            </div>
+            <input type="file" id="fiConvert" accept=".jpg,.jpeg,.png,.gif,.txt,.docx,.doc" multiple>
+            <div class="file-list" id="flConvert"></div>
+            <div class="stats" id="stConvert" style="display:none;"><span>Files: <strong
+                    id="cnConvert">0</strong></span><span>Size: <strong id="szConvert">0 KB</strong></span>
+                <button class="clear-btn" id="btnClearConvert" disabled>Clear all</button>
+            </div>
+            <div class="controls">
+                <div class="cg"><label>Page Size</label><select id="psConvert">
+                    <option value="a4">A4</option>
+                    <option value="letter">Letter</option>
+                    <option value="legal">Legal</option>
+                </select></div>
+                <div class="cg"><label>Orientation</label><select id="orConvert">
+                    <option value="portrait">Portrait</option>
+                    <option value="landscape">Landscape</option>
+                </select></div>
+                <div class="cg"><label>Quality</label><select id="quConvert">
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                    <option value="low">Low</option>
+                </select></div>
+                <button id="btnConvert" class="btn-p" disabled>✦ Convert to PDF</button>
+            </div>
+            <div class="processing" id="procConvert">
+                <div class="spinner"></div>
+                <span>Converting files…</span></div>
+        </div>
+    </div>
+
+    <!-- MERGE -->
+    <div class="tab-content" id="mergeTab">
+        <div class="card">
+            <div class="card-title"><span class="dot"></span>PDFs to Merge <span
+                    style="font-size:.65rem;color:var(--text3);font-weight:400;margin-left:6px;">drag to reorder</span>
+            </div>
+            <div class="drop-zone" id="dzMerge">
+                <div class="drop-icon">📚</div>
+                <div class="drop-text">Drop PDF files here</div>
+                <div class="drop-hint">or <a href="#" id="brMerge">browse files</a> · multiple PDFs</div>
+            </div>
+            <input id="fiMerge" type="file" multiple accept=".pdf,application/pdf"/>
+            <div class="file-list" id="flMerge"></div>
+            <div class="stats" id="stMerge" style="display:none;"><span>PDFs: <strong
+                    id="cnMerge">0</strong></span><span>Pages: <strong id="pgMerge">0</strong></span><span>Size: <strong
+                    id="szMerge">0 KB</strong></span>
+                <button class="clear-btn" id="btnClearMerge" disabled>Clear all</button>
+            </div>
+            <div class="controls">
+                <button id="btnMerge" class="btn-p" disabled>🔗 Merge PDFs</button>
+            </div>
+            <div class="processing" id="procMerge">
+                <div class="spinner"></div>
+                <span>Merging PDFs…</span></div>
+        </div>
+    </div>
+
+    <!-- HTML -->
+    <div class="tab-content" id="htmlTab">
+        <div class="card">
+            <div class="card-title"><span class="dot"></span>HTML to PDF</div>
+            <textarea id="htmlInput" rows="12"
+                      placeholder="Paste your HTML here…&#10;&#10;e.g. &lt;h1&gt;Hello&lt;/h1&gt;&lt;p&gt;Your content&lt;/p&gt;"></textarea>
+            <div class="controls">
+                <div class="cg"><label>Page Size</label><select id="psHtml">
+                    <option value="a4">A4</option>
+                    <option value="letter">Letter</option>
+                </select></div>
+                <div class="cg"><label>Orientation</label><select id="orHtml">
+                    <option value="portrait">Portrait</option>
+                    <option value="landscape">Landscape</option>
+                </select></div>
+                <div class="cg"><label>Margin (mm)</label><input type="number" id="mgHtml" value="10" min="0" max="50"
+                                                                 style="width:80px;"></div>
+                <button id="btnClearHtml" class="btn-s">Clear</button>
+                <button id="btnHtmlPdf" class="btn-p">✦ Convert HTML</button>
+            </div>
+            <div class="processing" id="procHtml">
+                <div class="spinner"></div>
+                <span>Converting HTML…</span></div>
+        </div>
+    </div>
+
+    <!-- SPLIT -->
+    <div class="tab-content" id="splitTab">
+        <div class="card">
+            <div class="card-title"><span class="dot"></span>Split PDF</div>
+            <div class="drop-zone" id="dzSplit">
+                <div class="drop-icon">📄</div>
+                <div class="drop-text">Drop a single PDF here</div>
+                <div class="drop-hint">or <a href="#" id="brSplit">browse file</a></div>
+            </div>
+            <input type="file" id="fiSplit" accept=".pdf">
+            <div id="splitControls" class="split-inner" style="display:none;">
+                <div class="controls" style="margin-top:0;">
+                    <div class="cg" style="flex:1;min-width:200px;"><label>Split Method</label><select id="splitMethod">
+                        <option value="range">Extract Range (e.g. 1-5)</option>
+                        <option value="pages">Specific Pages (e.g. 2,4,7)</option>
+                        <option value="every">Split Every N Pages</option>
+                    </select></div>
+                </div>
+                <div class="ic" id="rangeInput"><label>Page Range</label><input type="text" id="pageRange"
+                                                                                placeholder="e.g. 1-5 or 1-3, 7-9">
+                </div>
+                <div class="ic" id="pagesInput" style="display:none;"><label>Specific Pages
+                    (comma-separated)</label><input type="text" id="specificPages" placeholder="e.g. 2, 4, 7"></div>
+                <div class="ic" id="everyInput" style="display:none;"><label>Pages per file</label><input type="number"
+                                                                                                          id="everyPages"
+                                                                                                          value="5"
+                                                                                                          min="1"
+                                                                                                          style="width:120px;">
+                </div>
+                <div class="controls" style="margin-top:4px;">
+                    <button id="btnSplit" class="btn-p" disabled>✂ Split PDF</button>
+                </div>
+            </div>
+            <div class="processing" id="procSplit">
+                <div class="spinner"></div>
+                <span>Splitting PDF…</span></div>
+        </div>
+    </div>
+
+    <!-- OCR -->
+    <div class="tab-content" id="ocrTab">
+        <div class="card">
+            <div class="card-title"><span class="dot"></span>OCR — Extract Text from PDF / Image</div>
+            <div class="drop-zone" id="dzOcr">
+                <div class="drop-icon">🔍</div>
+                <div class="drop-text">Drop a PDF or image here</div>
+                <div class="drop-hint">or <a href="#" id="brOcr">browse file</a> · PDF JPG PNG BMP TIFF</div>
+            </div>
+            <input type="file" id="fiOcr" accept=".pdf,.jpg,.jpeg,.png,.gif,.bmp,.tiff,.tif,image/*,application/pdf">
+
+            <div class="controls" style="margin-top:18px;">
+                <div class="cg"><label>Output Format</label><select id="ocrFmt">
+                    <option value="text">Plain Text</option>
+                    <option value="hocr">hOCR (HTML)</option>
+                </select></div>
+                <div class="cg"><label>PDF Pages</label><input type="text" id="ocrPages" placeholder="e.g. 1-3 or all"
+                                                               value="all" style="width:130px;"></div>
+                <div class="cg"><label>Render Scale</label><select id="ocrScale">
+                    <option value="2">2× (faster)</option>
+                    <option value="3" selected>3× (balanced)</option>
+                    <option value="4">4× (sharper)</option>
+                </select></div>
+                <div class="cg"><label>Preserve Layout</label><select id="ocrPSM">
+                    <option value="3">Auto (default)</option>
+                    <option value="6">Assume single block</option>
+                    <option value="11">Sparse text</option>
+                    <option value="4">Single column</option>
+                </select></div>
+            </div>
+
+            <div style="margin-top:20px;">
+                <div class="cg"><label style="margin-bottom:6px;">Languages (select all that apply)</label>
+                    <div class="lang-grid" id="langGrid"></div>
+                </div>
+            </div>
+
+            <div class="controls" style="margin-top:20px;">
+                <button id="btnOcr" class="btn-p" disabled>🔍 Run OCR</button>
+                <button id="btnOcrClear" class="btn-s">Clear</button>
+            </div>
+
+            <div class="ocr-prog-wrap" id="ocrProgWrap">
+                <div class="ocr-prog" id="ocrProg"></div>
+            </div>
+            <div class="ocr-status" id="ocrStatus"></div>
+
+            <div id="ocrOutputWrap" style="display:none;margin-top:20px;">
+                <div class="ocr-toolbar">
+                    <span class="ocr-toolbar-label">Extracted Text</span>
+                    <div class="ocr-toolbar-actions">
+                        <span class="pill" id="ocrWords"><strong>0</strong>&nbsp;words</span>
+                        <span class="conf-badge" id="ocrConf"></span>
+                        <button class="btn-s btn-xs" id="btnOcrCopy">Copy</button>
+                        <button class="btn-s btn-xs" id="btnOcrTxt">Save .txt</button>
+                    </div>
+                </div>
+                <textarea id="ocrText" readonly placeholder="Extracted text will appear here…"
+                          style="min-height:260px;font-size:.76rem;"></textarea>
+            </div>
+
+            <div class="processing" id="procOcr">
+                <div class="spinner"></div>
+                <span id="procOcrLabel">Preparing…</span></div>
+        </div>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="card">
+        <div class="preview-header">
+            <div class="card-title" style="margin-bottom:0;"><span class="dot"></span>Preview</div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                <div class="preview-info"><span class="status-dot" id="statusDot"></span><span id="previewInfo">No document loaded</span>
+                </div>
+                <button id="btnDownload" class="btn-s" style="display:none;">💾 Download</button>
+            </div>
+        </div>
+        <div id="previewFrame">
+            <div class="empty-preview">
+                <div class="icon">📄</div>
+                <p>Your converted PDF will appear here</p></div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="pdf-utils/script.js"></script>
+</body>
+</html>
