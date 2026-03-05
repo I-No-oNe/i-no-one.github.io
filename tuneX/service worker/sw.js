@@ -5,7 +5,6 @@ const CACHE_NAME = 'tunex-v1';
 const ASSETS = [
   './',
   './index.html',
-  './themes.json',
   './manifest.json',
 ];
 

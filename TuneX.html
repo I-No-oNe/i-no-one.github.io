@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="theme-color" content="#0a0a0a"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="TuneX"/>
+    <title>TuneX</title>
+    <link rel="manifest" href="tuneX/service%20worker/manifest.json"/>
+    <link rel="apple-touch-icon" href="tuneX/icons/icon-192.png"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Clash+Display:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Fraunces:wght@300;400;600&family=JetBrains+Mono:wght@400;500&family=Rajdhani:wght@400;500;600;700&family=Unbounded:wght@400;600;700&display=swap"
+          rel="stylesheet"/>
+    <link rel="stylesheet" href="tuneX/css/style.css">
+</head>
+<body>
+
+<div id="wake-screen">
+    <div class="wake-logo">Tune<span style="color:var(--text-primary)">X</span></div>
+    <div class="wake-spinner" id="wake-spinner"></div>
+    <div class="wake-text" id="wake-text">Starting up the server&#8230;<br>This may take up to 60 seconds on first load.
+    </div>
+    <div class="wake-progress-bar">
+        <div class="wake-progress-fill" id="wakeProgress"></div>
+    </div>
+    <div id="notif-ask"
+         style="display:none;margin-top:20px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;max-width:320px;text-align:center;animation:fadeInScale 0.3s ease;">
+        <div style="font-size:1.6rem;margin-bottom:8px;">&#128276;</div>
+        <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px;font-size:1rem;">Get notified when
+            TuneX is ready?
+        </div>
+        <div style="color:var(--text-secondary);font-size:0.82rem;margin-bottom:16px;line-height:1.6;">Since the server
+            sleeps when not in use, we can ping you the moment it wakes up — so you don&#8217;t have to sit at this
+            screen.
+        </div>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+            <button class="auth-btn" style="padding:10px 20px;font-size:0.85rem;border-radius:50px;"
+                    onclick="askNotifPermission()">Yes, notify me
+            </button>
+            <button style="padding:10px 20px;font-size:0.85rem;background:transparent;border:1px solid var(--border);border-radius:50px;color:var(--text-secondary);cursor:pointer;font-family:var(--font-body);"
+                    onclick="dismissNotifAsk()">No thanks
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="auth-screen">
+    <div class="auth-bg"></div>
+    <div class="auth-card">
+        <div class="auth-logo">Tune<span>X</span></div>
+        <div class="auth-tagline">Your music. Your way. No ads.</div>
+        <div class="auth-tabs">
+            <button class="auth-tab active" onclick="switchAuthTab('login')">Log in</button>
+            <button class="auth-tab" onclick="switchAuthTab('register')">Sign up</button>
+        </div>
+        <div id="auth-login-form">
+            <div style="display:flex;flex-direction:column;gap:16px;">
+                <div class="auth-field"><label>Username</label><input type="text" id="login-user"
+                                                                      placeholder="your_username"
+                                                                      autocomplete="username"/></div>
+                <div class="auth-field"><label>Password</label><input type="password" id="login-pass"
+                                                                      placeholder="••••••••"
+                                                                      autocomplete="current-password"/></div>
+                <button class="auth-btn" onclick="doLogin()">Log In</button>
+                <div class="auth-error" id="login-error"></div>
+            </div>
+        </div>
+        <div id="auth-register-form" style="display:none;">
+            <div style="display:flex;flex-direction:column;gap:16px;">
+                <div class="auth-field"><label>Username</label><input type="text" id="reg-user"
+                                                                      placeholder="choose_username"
+                                                                      autocomplete="username"/></div>
+                <div class="auth-field"><label>Password</label><input type="password" id="reg-pass"
+                                                                      placeholder="••••••••"
+                                                                      autocomplete="new-password"/></div>
+                <div class="auth-field"><label>Confirm Password</label><input type="password" id="reg-pass2"
+                                                                              placeholder="••••••••"/></div>
+                <button class="auth-btn" onclick="doRegister()">Create Account</button>
+                <div class="auth-error" id="reg-error"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="app">
+    <div id="sidebar">
+        <div class="sidebar-top">
+            <div class="sidebar-logo">Tune<span>X</span></div>
+            <nav class="sidebar-nav">
+                <div class="nav-item active" onclick="navigate('home')" data-view="home">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" onclick="navigate('search')" data-view="search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    <span>Search</span>
+                </div>
+                <div class="nav-item" onclick="navigate('liked')" data-view="liked">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    <span>Liked Songs</span>
+                </div>
+                <div class="nav-item" onclick="navigate('recent')" data-view="recent">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <span>Recently Played</span>
+                </div>
+            </nav>
+            <div class="sidebar-divider"></div>
+        </div>
+
+        <div class="sidebar-library">
+            <div class="library-header">
+                <span>Library</span>
+                <button class="library-add-btn" onclick="openCreatePlaylist()" title="Create playlist">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2.5">
+                        <line x1="12" y1="5" x2="12" y2="19"/>
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="sidebar-playlists"></div>
+        </div>
+
+        <div class="sidebar-user">
+            <div class="user-avatar" id="user-avatar">?</div>
+            <div class="user-name" id="user-name">Loading…</div>
+            <div class="user-menu-btn" onclick="toggleUserMenu()" id="user-menu-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="1"/>
+                    <circle cx="19" cy="12" r="1"/>
+                    <circle cx="5" cy="12" r="1"/>
+                </svg>
+                <div class="context-menu" id="user-context-menu">
+                    <div class="ctx-item" onclick="openSettings()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+                        </svg>
+                        Settings
+                    </div>
+                    <div class="ctx-divider"></div>
+                    <div class="ctx-item danger" onclick="doLogout()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                            <polyline points="16 17 21 12 16 7"/>
+                            <line x1="21" y1="12" x2="9" y2="12"/>
+                        </svg>
+                        Log out
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="main-topbar" id="main-topbar">
+            <div class="nav-arrows">
+                <button class="nav-arrow" id="nav-back" onclick="historyBack()" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2.5">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                </button>
+                <button class="nav-arrow" id="nav-fwd" onclick="historyFwd()" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2.5">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="search-bar">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input type="text" id="search-input" placeholder="What do you want to listen to?"
+                       oninput="onSearchInput(this.value)" onkeydown="if(event.key==='Enter')doSearch()"/>
+                <button class="search-clear" id="search-clear" onclick="clearSearch()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="topbar-actions">
+                <button class="theme-btn" id="theme-btn" onclick="toggleThemePicker()" title="Themes">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                </button>
+                <button class="theme-btn" onclick="toggleQueuePanel()" title="Queue">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"
+                         stroke-linecap="round" style="display:block">
+                        <line x1="1" y1="3.5" x2="14" y2="3.5"/>
+                        <line x1="1" y1="7.5" x2="14" y2="7.5"/>
+                        <line x1="1" y1="11.5" x2="14" y2="11.5"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content" id="main-content">
+            <div class="view active" id="view-home">
+                <div class="greeting" id="home-greeting">Good evening</div>
+                <div class="quick-play-grid" id="quick-play"></div>
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">Recommended for you</div>
+                    </div>
+                    <div class="card-grid" id="recs-grid"></div>
+                </div>
+                <div class="section" id="recent-section" style="display:none">
+                    <div class="section-header">
+                        <div class="section-title">Recently played</div>
+                        <a class="section-link" onclick="navigate('recent')">Show all</a>
+                    </div>
+                    <div class="card-grid" id="recent-grid"></div>
+                </div>
+            </div>
+
+            <div class="view" id="view-search">
+                <div id="search-idle">
+                    <div class="greeting">Search</div>
+                    <div style="color:var(--text-secondary);font-size:0.9rem;">Search for songs, artists, and more</div>
+                </div>
+                <div id="search-results-container" style="display:none">
+                    <div class="section">
+                        <div class="search-tabs">
+                            <button class="search-tab active" onclick="switchSearchTab('songs')">Songs</button>
+                            <button class="search-tab" onclick="switchSearchTab('albums')">Albums</button>
+                        </div>
+                    </div>
+                    <div id="search-results-songs">
+                        <div class="track-list">
+                            <div class="track-list-header">
+                                <div>#</div>
+                                <div>Title</div>
+                                <div>Artist</div>
+                                <div>Duration</div>
+                                <div></div>
+                            </div>
+                            <div id="search-track-list"></div>
+                        </div>
+                    </div>
+                    <div id="search-results-albums" style="display:none">
+                        <div class="card-grid" id="search-album-grid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view" id="view-liked">
+                <div class="playlist-hero">
+                    <div class="playlist-hero-art">♥</div>
+                    <div class="playlist-hero-info">
+                        <div class="playlist-hero-type">Playlist</div>
+                        <div class="playlist-hero-name">Liked Songs</div>
+                        <div class="playlist-hero-meta" id="liked-meta">0 songs</div>
+                    </div>
+                </div>
+                <div class="playlist-actions">
+                    <button class="play-big-btn" onclick="playLiked()">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" onclick="shuffleLiked()" title="Shuffle">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <polyline points="16 3 21 3 21 8"/>
+                            <line x1="4" y1="20" x2="21" y2="3"/>
+                            <polyline points="21 16 21 21 16 21"/>
+                            <line x1="15" y1="15" x2="21" y2="21"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="track-list">
+                    <div class="track-list-header">
+                        <div>#</div>
+                        <div>Title</div>
+                        <div>Artist</div>
+                        <div>Duration</div>
+                        <div></div>
+                    </div>
+                    <div id="liked-track-list"></div>
+                </div>
+            </div>
+
+            <div class="view" id="view-recent">
+                <div class="greeting">Recently Played</div>
+                <div class="track-list" style="margin-top:16px">
+                    <div class="track-list-header">
+                        <div>#</div>
+                        <div>Title</div>
+                        <div>Artist</div>
+                        <div>Duration</div>
+                        <div></div>
+                    </div>
+                    <div id="recent-track-list"></div>
+                </div>
+            </div>
+
+            <div class="view" id="view-playlist">
+                <div class="playlist-hero">
+                    <div class="playlist-hero-art" id="pl-view-art">♫</div>
+                    <div class="playlist-hero-info">
+                        <div class="playlist-hero-type">Playlist</div>
+                        <div class="playlist-hero-name" id="pl-view-name">Playlist</div>
+                        <div class="playlist-hero-desc" id="pl-view-desc"></div>
+                        <div class="playlist-hero-meta" id="pl-view-meta">0 songs</div>
+                    </div>
+                </div>
+                <div class="playlist-actions">
+                    <button class="play-big-btn" onclick="playCurrentPlaylist()">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" onclick="shuffleCurrentPlaylist()" title="Shuffle">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <polyline points="16 3 21 3 21 8"/>
+                            <line x1="4" y1="20" x2="21" y2="3"/>
+                            <polyline points="21 16 21 21 16 21"/>
+                            <line x1="15" y1="15" x2="21" y2="21"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="pl-edit-btn" onclick="editCurrentPlaylist()" title="Edit playlist">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="track-list">
+                    <div class="track-list-header">
+                        <div>#</div>
+                        <div>Title</div>
+                        <div>Artist</div>
+                        <div>Duration</div>
+                        <div></div>
+                    </div>
+                    <div id="playlist-track-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="player">
+        <div class="player-track">
+            <div class="player-art-placeholder" id="player-art">♫</div>
+            <div class="player-track-info">
+                <div class="player-title" id="player-title">Nothing playing</div>
+                <div class="player-artist" id="player-artist">—</div>
+            </div>
+            <button class="player-like-btn" id="player-like-btn" onclick="toggleLikeCurrent()" title="Like">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="player-controls">
+            <div class="player-btns">
+                <button class="ctrl-btn" id="shuffle-btn" onclick="toggleShuffle()" title="Shuffle">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 3 21 3 21 8"/>
+                        <line x1="4" y1="20" x2="21" y2="3"/>
+                        <polyline points="21 16 21 21 16 21"/>
+                        <line x1="15" y1="15" x2="21" y2="21"/>
+                    </svg>
+                </button>
+                <button class="ctrl-btn" onclick="playPrev()" title="Previous">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="19 20 9 12 19 4 19 20"/>
+                        <line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+                <button class="play-pause-btn" id="play-pause-btn" onclick="togglePlay()">
+                    <svg id="play-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    <svg id="pause-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
+                         style="display:none">
+                        <rect x="6" y="4" width="4" height="16"/>
+                        <rect x="14" y="4" width="4" height="16"/>
+                    </svg>
+                </button>
+                <button class="ctrl-btn" onclick="playNext()" title="Next">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 4 15 12 5 20 5 4"/>
+                        <line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+                <button class="ctrl-btn" id="repeat-btn" onclick="cycleRepeat()" title="Repeat">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="17 1 21 5 17 9"/>
+                        <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                        <polyline points="7 23 3 19 7 15"/>
+                        <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="progress-bar-wrap">
+                <span class="time-label" id="time-current">0:00</span>
+                <div class="progress-bar" id="progress-bar" onmousedown="startSeek(event)"
+                     ontouchstart="startSeek(event)">
+                    <div class="progress-fill" id="progress-fill"></div>
+                    <div class="progress-thumb" id="progress-thumb"></div>
+                </div>
+                <span class="time-label right" id="time-total">0:00</span>
+            </div>
+        </div>
+
+        <div class="player-extras">
+            <div class="volume-wrap">
+                <button class="ctrl-btn" id="mute-btn" onclick="toggleMute()" title="Mute">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                    </svg>
+                </button>
+                <div class="volume-bar" id="volume-bar" onmousedown="startVolumeSeek(event)"
+                     ontouchstart="startVolumeSeek(event)">
+                    <div class="volume-fill" id="volume-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="queue-panel">
+    <div class="queue-header">
+        <div class="queue-title">Queue</div>
+        <button class="icon-btn" onclick="toggleQueuePanel()"
+                style="width:28px;height:28px;border:none;background:none;color:var(--text-secondary);cursor:pointer;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+    </div>
+    <div class="queue-list" id="queue-list"></div>
+</div>
+
+<div class="theme-picker" id="theme-picker"></div>
+
+<div class="context-menu" id="context-menu">
+    <div class="ctx-item" id="ctx-play" onclick="ctxPlay()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+        Play
+    </div>
+    <div class="ctx-item" id="ctx-add-queue" onclick="ctxAddToQueue()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        Add to queue
+    </div>
+    <div class="ctx-divider"></div>
+    <div class="ctx-item" id="ctx-like" onclick="ctxToggleLike()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        Save to liked
+    </div>
+    <div class="ctx-item" id="ctx-add-playlist" onclick="ctxAddToPlaylist()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+        </svg>
+        Add to playlist
+    </div>
+    <div class="ctx-item" id="ctx-remove" onclick="ctxRemove()" style="display:none" class="danger">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+        </svg>
+        Remove from playlist
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+    <div class="modal" id="modal">
+        <div class="modal-title" id="modal-title">Create Playlist</div>
+        <div id="modal-body"></div>
+        <div class="modal-actions" id="modal-actions"></div>
+    </div>
+</div>
+
+<div id="toast-container"></div>
+
+<audio id="audio-el" preload="none"></audio>
+
+<script defer src="tuneX/js/app.js"></script>
+</body>
+</html>
