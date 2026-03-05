@@ -1,0 +1,161 @@
+{
+  "themes": [
+    {
+      "id": "obsidian",
+      "name": "Obsidian",
+      "description": "Deep dark with emerald accents",
+      "colors": {
+        "bg-base": "#0a0a0a",
+        "bg-surface": "#111111",
+        "bg-elevated": "#1a1a1a",
+        "bg-card": "#161616",
+        "accent": "#1db954",
+        "accent-hover": "#1ed760",
+        "accent-muted": "#1db95430",
+        "text-primary": "#ffffff",
+        "text-secondary": "#b3b3b3",
+        "text-muted": "#535353",
+        "border": "#2a2a2a",
+        "player-bg": "#121212",
+        "sidebar-bg": "#000000",
+        "gradient-hero": "linear-gradient(135deg, #1db95420 0%, #0a0a0a 100%)"
+      },
+      "fonts": {
+        "display": "'Clash Display', 'DM Sans', sans-serif",
+        "body": "'DM Sans', sans-serif",
+        "mono": "'JetBrains Mono', monospace"
+      }
+    },
+    {
+      "id": "midnight-rose",
+      "name": "Midnight Rose",
+      "description": "Dark purple with rose gold",
+      "colors": {
+        "bg-base": "#080610",
+        "bg-surface": "#0f0d1a",
+        "bg-elevated": "#1a1628",
+        "bg-card": "#13111f",
+        "accent": "#e8a0bf",
+        "accent-hover": "#f0b8d0",
+        "accent-muted": "#e8a0bf25",
+        "text-primary": "#f0eeff",
+        "text-secondary": "#a09ab8",
+        "text-muted": "#564e6e",
+        "border": "#2a2440",
+        "player-bg": "#0a0815",
+        "sidebar-bg": "#06040f",
+        "gradient-hero": "linear-gradient(135deg, #e8a0bf20 0%, #080610 100%)"
+      },
+      "fonts": {
+        "display": "'Playfair Display', serif",
+        "body": "'DM Sans', sans-serif",
+        "mono": "'JetBrains Mono', monospace"
+      }
+    },
+    {
+      "id": "solar-flare",
+      "name": "Solar Flare",
+      "description": "Warm amber on deep charcoal",
+      "colors": {
+        "bg-base": "#0c0a06",
+        "bg-surface": "#141108",
+        "bg-elevated": "#1f1a0e",
+        "bg-card": "#181410",
+        "accent": "#f59e0b",
+        "accent-hover": "#fbbf24",
+        "accent-muted": "#f59e0b25",
+        "text-primary": "#fef9ee",
+        "text-secondary": "#c4a96a",
+        "text-muted": "#6b5b35",
+        "border": "#2e2516",
+        "player-bg": "#0e0b06",
+        "sidebar-bg": "#080600",
+        "gradient-hero": "linear-gradient(135deg, #f59e0b20 0%, #0c0a06 100%)"
+      },
+      "fonts": {
+        "display": "'Fraunces', serif",
+        "body": "'DM Sans', sans-serif",
+        "mono": "'JetBrains Mono', monospace"
+      }
+    },
+    {
+      "id": "arctic",
+      "name": "Arctic",
+      "description": "Clean white with ice blue",
+      "colors": {
+        "bg-base": "#f8fafc",
+        "bg-surface": "#ffffff",
+        "bg-elevated": "#f1f5f9",
+        "bg-card": "#ffffff",
+        "accent": "#0ea5e9",
+        "accent-hover": "#0284c7",
+        "accent-muted": "#0ea5e915",
+        "text-primary": "#0f172a",
+        "text-secondary": "#475569",
+        "text-muted": "#94a3b8",
+        "border": "#e2e8f0",
+        "player-bg": "#ffffff",
+        "sidebar-bg": "#f1f5f9",
+        "gradient-hero": "linear-gradient(135deg, #0ea5e915 0%, #f8fafc 100%)"
+      },
+      "fonts": {
+        "display": "'DM Sans', sans-serif",
+        "body": "'DM Sans', sans-serif",
+        "mono": "'JetBrains Mono', monospace"
+      }
+    },
+    {
+      "id": "neon-tokyo",
+      "name": "Neon Tokyo",
+      "description": "Cyberpunk purple and cyan",
+      "colors": {
+        "bg-base": "#05020f",
+        "bg-surface": "#0a0518",
+        "bg-elevated": "#110a22",
+        "bg-card": "#0d071c",
+        "accent": "#00f5d4",
+        "accent-hover": "#00ffdf",
+        "accent-muted": "#00f5d425",
+        "text-primary": "#e8f4ff",
+        "text-secondary": "#8b7fb8",
+        "text-muted": "#4a3d6b",
+        "border": "#1e1040",
+        "player-bg": "#040110",
+        "sidebar-bg": "#030010",
+        "gradient-hero": "linear-gradient(135deg, #00f5d420 0%, #bf00ff10 100%)"
+      },
+      "fonts": {
+        "display": "'Rajdhani', sans-serif",
+        "body": "'DM Sans', sans-serif",
+        "mono": "'JetBrains Mono', monospace"
+      }
+    },
+    {
+      "id": "forest",
+      "name": "Forest",
+      "description": "Deep green like a canopy at night",
+      "colors": {
+        "bg-base": "#030d06",
+        "bg-surface": "#07140a",
+        "bg-elevated": "#0f2014",
+        "bg-card": "#0b1a0e",
+        "accent": "#4ade80",
+        "accent-hover": "#6ee7a0",
+        "accent-muted": "#4ade8025",
+        "text-primary": "#ecfdf5",
+        "text-secondary": "#86b898",
+        "text-muted": "#3d6b4d",
+        "border": "#1a3320",
+        "player-bg": "#040f07",
+        "sidebar-bg": "#020a05",
+        "gradient-hero": "linear-gradient(135deg, #4ade8020 0%, #030d06 100%)"
+      },
+      "fonts": {
+        "display": "'Unbounded', sans-serif",
+        "body": "'DM Sans', sans-serif",
+        "mono": "'JetBrains Mono', monospace"
+      }
+    }
+  ],
+  "default": "obsidian"
+}
