@@ -5,7 +5,7 @@
 // Set PRODUCTION_URL to your Render deployment URL.
 // When opened via http (local dev / served by Flask), the app auto-detects
 // the server origin, so you never need to change PRODUCTION_URL locally.
-const PRODUCTION_URL = 'https://tunex-backend-phxe.onrender.com';
+const PRODUCTION_URL = 'https://tunex-backend-f33m.onrender.com';
 
 const BACKEND = (() => {
     // DISABLED FOR NOW
@@ -1794,6 +1794,14 @@ function notifyServerReady() {
         console.warn('Notification failed:', e);
     }
 }
+// set favicon function
+function setFavicon(url) {
+    let favicon = document.querySelector("link[rel='icon']") || document.createElement('link');
+    favicon.rel = 'icon';
+    favicon.href = url;
+    document.head.appendChild(favicon);
+}
 
 // ─── START ────────────────────────────────────────────────────────────────
+setFavicon("https://github.com/I-No-oNe/i-no-one.github.io/blob/main/tuneX/icons/icon-512.png?raw=true")
 init();

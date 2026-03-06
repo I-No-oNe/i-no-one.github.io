@@ -3,9 +3,13 @@
 
 const CACHE_NAME = 'tunex-v1';
 const ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
+  '../../TuneX.html',           // Main HTML in root
+  '../themes.json',             // themes.json is in /tuneX/
+  '../css/style.css',           // CSS in /tuneX/css/
+  '../js/app.js',               // App logic in /tuneX/js/
+  './manifest.json',            // Manifest in same folder as SW
+  '../icons/icon-192.png',       // Icon path
+  '../icons/icon-512.png'       // Icon path
 ];
 
 // ─── Install: cache static assets ─────────────────────────────────────────
@@ -81,8 +85,8 @@ async function pollPing(backendUrl, token) {
       if (allHidden) {
         await self.registration.showNotification('TuneX is ready!', {
           body: 'Server is online — tap to start listening.',
-          icon: './icon-192.png',
-          badge: './icon-192.png',
+          icon: '../icons/icon-192.png',
+          badge: '../icons/icon-192.png',
           tag: 'tunex-ready',
           renotify: false,
           data: { url: self.location.origin + self.registration.scope },
