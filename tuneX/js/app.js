@@ -406,6 +406,7 @@ async function enterApp() {
 
     await Promise.all([loadPlaylists(), loadLikedIds()]);
     loadHomeView();
+    injectMobileNav();
 
     // Ping server every 5 minutes to keep it alive on free tier
     setInterval(() => {
@@ -730,9 +731,12 @@ function trackRow(track, num, playlist, playlistId = null, isLiked = false) {
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       </button>
     </div>
-    <div class="track-info">
+<div class="track-info">
       ${track.thumbnail ? `<img class="track-img" src="${track.thumbnail}" alt="" loading="lazy"/>` : `<div class="track-img-placeholder">♫</div>`}
-      <div><div class="track-title">${escHtml(track.title || 'Unknown')}</div></div>
+      <div class="track-text">
+        <div class="track-title">${escHtml(track.title || 'Unknown')}</div>
+        <div class="track-artist-sub">${escHtml(track.artist || 'Unknown')}</div>
+      </div>
     </div>
     <div class="track-artist">${escHtml(track.artist || 'Unknown')}</div>
     <div class="track-duration">${fmtDur(track.duration)}</div>
@@ -918,7 +922,9 @@ async function loadAndPlay(track) {
 
 function updatePlayerUI(track) {
     document.getElementById('player-title').textContent = track.title || 'Unknown';
-    document.getElementById('player-artist').textContent = track.artist || '—';
+    const artistEl = document.getElementById('player-artist');
+    artistEl.textContent = track.artist || '—';
+    artistEl.setAttribute('data-duration', fmtDur(track.duration));
     const artEl = document.getElementById('player-art');
     if (track.thumbnail) {
         artEl.outerHTML = `<img id="player-art" class="player-art" src="${track.thumbnail}" alt=""/>`;
@@ -1723,19 +1729,18 @@ async function askNotifPermission() {
     localStorage.setItem('tunex_notif_asked', '1');
     notifAskedBefore = true;
     document.getElementById('notif-ask').style.display = 'none';
+    if (!('Notification' in window)) { toast('Notifications not supported in this browser'); return; }
     try {
         const result = await Notification.requestPermission();
         if (result === 'granted') {
             localStorage.setItem('tunex_notif_enabled', '1');
-            toast('Notifications enabled');
-            // Register service worker for background pinging
-            registerServiceWorker();
+            toast('✓ Notifications enabled');
+            await registerServiceWorker();
+            if (_wakeScreenActive) startSwWakeWatch();
         } else {
             toast('Notification permission denied');
         }
-    } catch (e) {
-        console.warn('Notification permission error:', e);
-    }
+    } catch (e) { console.warn('Notification permission error:', e); }
 }
 
 function dismissNotifAsk() {
@@ -1745,29 +1750,45 @@ function dismissNotifAsk() {
 }
 
 async function registerServiceWorker() {
-    if (!('serviceWorker' in navigator)) return;
-    try {
-        const reg = await navigator.serviceWorker.register('tuneX/service worker/sw.js');
-        console.log('TuneX SW registered');
-        // Listen for SERVER_READY message from SW (when tab was in background)
-        navigator.serviceWorker.addEventListener('message', (e) => {
-            if (e.data?.type === 'SERVER_READY') {
-                toast('Server is ready!');
-            }
-        });
-        return reg;
-    } catch (e) {
-        console.warn('SW registration failed:', e);
+    if (!('serviceWorker' in navigator)) return null;
+    const swPaths = [
+        'tuneX/service worker/sw.js',
+        'tuneX/service%20worker/sw.js',
+    ];
+    let reg = null;
+    for (const path of swPaths) {
+        try {
+            reg = await navigator.serviceWorker.register(path, { scope: './' });
+            console.log('[TuneX] SW registered:', path);
+            break;
+        } catch (err) {
+            console.warn('[TuneX] SW register failed at', path, ':', err.message);
+        }
     }
+    if (!reg) { console.warn('[TuneX] SW registration failed on all paths'); return null; }
+    navigator.serviceWorker.addEventListener('message', (e) => {
+        if (e.data?.type === 'SERVER_READY') {
+            toast('🎵 TuneX is ready!');
+            document.title = '🎵 TuneX — Ready!';
+            setTimeout(() => { document.title = 'TuneX'; }, 3000);
+        }
+    });
+    return reg;
 }
 
 // Tell SW to start background polling (called when page goes to background during wake)
 async function startSwWakeWatch() {
     if (!('serviceWorker' in navigator)) return;
-    const reg = await navigator.serviceWorker.ready;
-    if (reg.active) {
-        reg.active.postMessage({type: 'START_WAKE_WATCH', backendUrl: BACKEND, token: token || ''});
-    }
+    try {
+        const reg = await navigator.serviceWorker.ready;
+        if (reg.active) {
+            reg.active.postMessage({type: 'START_WAKE_WATCH', backendUrl: BACKEND, token: token || ''});
+            console.log('[TuneX] SW wake watch started');
+        } else {
+            await registerServiceWorker();
+            setTimeout(startSwWakeWatch, 1000);
+        }
+    } catch (e) { console.warn('[TuneX] startSwWakeWatch error:', e); }
 }
 
 function stopSwWakeWatch() {
@@ -1801,6 +1822,99 @@ function setFavicon(url) {
     favicon.href = url;
     document.head.appendChild(favicon);
 }
+
+function injectMobileNav() {
+    if (document.getElementById('mobile-nav')) return;
+    const nav = document.createElement('nav');
+    nav.id = 'mobile-nav';
+    nav.innerHTML = `
+    <button class="m-nav-item active" data-view="home" onclick="mobileNavigate('home')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Home
+    </button>
+    <button class="m-nav-item" data-view="search" onclick="mobileNavigate('search')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Search
+    </button>
+    <button class="m-nav-item" data-view="liked" onclick="mobileNavigate('liked')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      Liked
+    </button>
+    <button class="m-nav-item" data-view="library" onclick="toggleMobileLibrary()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Library
+    </button>
+  `;
+    document.body.appendChild(nav);
+}
+
+function mobileNavigate(view) {
+    navigate(view);
+    updateMobileNav(view);
+}
+
+function updateMobileNav(view) {
+    document.querySelectorAll('#mobile-nav .m-nav-item').forEach(el => {
+        el.classList.toggle('active', el.dataset.view === view);
+    });
+}
+
+function toggleMobileLibrary() {
+    if (document.getElementById('mobile-lib-sheet')) return;
+    const listHtml = playlists.map(pl => `
+    <div class="mobile-sheet-row" onclick="mobileNavigate('playlist');openPlaylist('${pl.id}');closeMobileSheet()">
+      <div class="mobile-sheet-thumb">
+        ${pl.tracks?.[0]?.thumbnail ? `<img src="${pl.tracks[0].thumbnail}" style="width:100%;height:100%;object-fit:cover;border-radius:6px"/>` : '♫'}
+      </div>
+      <div style="min-width:0">
+        <div style="font-size:0.9rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(pl.name)}</div>
+        <div style="font-size:0.75rem;color:var(--text-muted)">Playlist · ${(pl.tracks || []).length} songs</div>
+      </div>
+    </div>`).join('');
+
+    const sheet = document.createElement('div');
+    sheet.id = 'mobile-lib-sheet';
+    sheet.style.cssText = 'position:fixed;inset:0;z-index:9500;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px)';
+    sheet.innerHTML = `
+    <div style="background:var(--bg-elevated);border-radius:16px 16px 0 0;max-height:80vh;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom,0px)">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 12px">
+        <div style="font-family:var(--font-display);font-size:1.1rem;font-weight:700">Your Library</div>
+        <button onclick="closeMobileSheet()" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div style="padding:0 16px">
+        <div class="mobile-sheet-row" onclick="mobileNavigate('liked');closeMobileSheet()" style="margin-bottom:4px">
+          <div class="mobile-sheet-thumb" style="background:var(--accent-muted);color:var(--accent);font-size:20px">♥</div>
+          <div>
+            <div style="font-size:0.9rem;font-weight:600">Liked Songs</div>
+            <div style="font-size:0.75rem;color:var(--text-muted)">Playlist</div>
+          </div>
+        </div>
+        <button onclick="openCreatePlaylist();closeMobileSheet()" style="width:100%;background:var(--bg-base);border:1px dashed var(--border);border-radius:var(--radius);padding:12px 16px;color:var(--text-secondary);font-family:var(--font-body);font-size:0.85rem;cursor:pointer;margin-bottom:8px;text-align:left">+ Create new playlist</button>
+        ${listHtml}
+        ${!playlists.length ? '<div style="padding:20px 0;text-align:center;color:var(--text-muted);font-size:0.85rem">No playlists yet</div>' : ''}
+        <div style="height:16px"></div>
+      </div>
+    </div>`;
+    sheet.addEventListener('click', e => { if (e.target === sheet) closeMobileSheet(); });
+    document.body.appendChild(sheet);
+}
+
+function closeMobileSheet() {
+    document.getElementById('mobile-lib-sheet')?.remove();
+}
+
+// Inject mobile sheet styles once
+(function() {
+    const s = document.createElement('style');
+    s.textContent = `
+    .mobile-sheet-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;}
+    .mobile-sheet-row:active{background:var(--bg-elevated);}
+    .mobile-sheet-thumb{width:52px;height:52px;border-radius:6px;background:var(--bg-elevated);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:20px;overflow:hidden;}
+    `;
+    document.head.appendChild(s);
+})();
 
 // ─── START ────────────────────────────────────────────────────────────────
 setFavicon("https://github.com/I-No-oNe/i-no-one.github.io/blob/main/tuneX/icons/icon-512.png?raw=true")
