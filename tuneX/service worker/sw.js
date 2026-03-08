@@ -101,7 +101,7 @@ async function pollPing(backendUrl, token) {
 
     if (r.ok) {
       stopWakeWatch();
-      await notifyServerReady(backendUrl);
+      await notifyServerReady();
       return;
     }
   } catch (err) {
@@ -122,7 +122,7 @@ async function pollPing(backendUrl, token) {
   wakeWatchTimer = setTimeout(() => pollPing(backendUrl, token), 8000);
 }
 
-async function notifyServerReady(backendUrl) {
+async function notifyServerReady() {
   const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
 
   // Always post message to any open tabs

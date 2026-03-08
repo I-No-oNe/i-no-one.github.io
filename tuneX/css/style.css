@@ -1887,30 +1887,529 @@ body {
 /* ═══════════════════════════════════════════════════════════════════════
    MOBILE (Unified)
    ═══════════════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════
+   TuneX — MOBILE FIX + ACCOUNT SHEET
+   Replace the existing @media (max-width: 640px) block, the touch/hover
+   block, and APPEND the account-sheet section below.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────────────────────
+   DESKTOP/TABLET: improved sidebar-user + account dropdown
+   ────────────────────────────────────────────────────────────────────── */
+
+.sidebar-user {
+    padding: 10px 12px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border-radius: var(--radius);
+    margin: 4px;
+    transition: background var(--transition);
+    position: relative;
+}
+
+.sidebar-user:hover { background: var(--bg-elevated); }
+
+.user-avatar {
+    width: 34px;
+    height: 34px;
+    background: var(--accent-muted);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.82rem;
+    flex-shrink: 0;
+    border: 2px solid transparent;
+    transition: border-color var(--transition);
+}
+
+.sidebar-user:hover .user-avatar { border-color: var(--accent); }
+
+.user-name {
+    flex: 1;
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-menu-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all var(--transition);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.user-menu-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255,255,255,0.08);
+}
+
+#user-context-menu {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    min-width: 200px;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+   ACCOUNT SHEET — shared base (desktop dropdown + mobile bottom sheet)
+   ────────────────────────────────────────────────────────────────────── */
+
+#account-sheet-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(3px);
+    z-index: 490;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+#account-sheet-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Desktop: popup anchored above sidebar-user */
+#account-sheet {
+    position: fixed;
+    left: 12px;
+    bottom: 64px;
+    width: 232px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 8px 0 6px;
+    z-index: 500;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px) scale(0.97);
+    transform-origin: bottom left;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#account-sheet.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.acct-handle {
+    display: none;
+    width: 36px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 auto 12px;
+    flex-shrink: 0;
+}
+
+.acct-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 16px 10px;
+}
+
+.acct-avatar {
+    width: 40px;
+    height: 40px;
+    background: var(--accent-muted);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    border: 2px solid var(--accent);
+}
+
+.acct-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.acct-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.acct-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--accent);
+    background: var(--accent-muted);
+    border-radius: 4px;
+    padding: 1px 6px;
+}
+
+.acct-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 4px 12px;
+    flex-shrink: 0;
+}
+
+.acct-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    border-radius: 6px;
+    transition: background var(--transition), color var(--transition);
+}
+
+.acct-item:hover { background: rgba(255,255,255,0.07); }
+
+.acct-item svg {
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    transition: color var(--transition);
+}
+
+.acct-item:hover svg { color: var(--text-primary); }
+
+.acct-item.danger { color: #ff6b6b; }
+.acct-item.danger svg { color: #ff6b6b; }
+.acct-item.danger:hover { background: rgba(255,107,107,0.1); }
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TuneX — MOBILE FIX + ACCOUNT SHEET
+   Replace the existing @media (max-width: 640px) block, the touch/hover
+   block, and APPEND the account-sheet section below.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────────────────────
+   DESKTOP SIDEBAR — single-row user button (click = sheet, right-click = sheet)
+   ────────────────────────────────────────────────────────────────────── */
+
+.sidebar-user {
+    padding: 8px 10px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin: 4px 6px 6px;
+    transition: background var(--transition);
+    position: relative;
+    background: transparent;
+}
+
+.sidebar-user:hover {
+    background: var(--bg-elevated);
+}
+
+/* Chevron hint — fades in on hover */
+.sidebar-user::after {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5'%3E%3Cpolyline points='18 15 12 9 6 15'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    transition: opacity var(--transition);
+}
+
+.sidebar-user:hover::after {
+    opacity: 1;
+}
+
+/* Avatar */
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background: var(--accent-muted);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    border: 1.5px solid var(--accent);
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.sidebar-user:hover .user-avatar {
+    box-shadow: 0 0 0 3px var(--accent-muted);
+    transform: scale(1.05);
+}
+
+/* Username */
+.user-name {
+    flex: 1;
+    font-size: 0.82rem;
+    font-weight: 600;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+}
+
+/* Hide old three-dot button and its dropdown */
+.user-menu-btn       { display: none !important; }
+#user-context-menu   { display: none !important; }
+
+/* ──────────────────────────────────────────────────────────────────────
+   ACCOUNT SHEET OVERLAY
+   Desktop: transparent (no backdrop) — sheet is a lightweight popup
+   Mobile: dimmed backdrop (overridden in the mobile block below)
+   ────────────────────────────────────────────────────────────────────── */
+
+#account-sheet-overlay {
+    position: fixed;
+    inset: 0;
+    /* transparent on desktop — just catches outside clicks */
+    background: transparent;
+    z-index: 490;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+#account-sheet-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+   ACCOUNT SHEET — Desktop dropdown
+   Anchors to bottom of sidebar, slides up with a scale+fade
+   ────────────────────────────────────────────────────────────────────── */
+
+#account-sheet {
+    position: fixed;
+    /* sits inside sidebar column, just above the user row */
+    left: 8px;
+    bottom: 58px;
+    width: calc(var(--sidebar-width) - 16px);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 6px 6px 6px;
+    z-index: 500;
+    box-shadow:
+            0 4px 6px -1px rgba(0,0,0,0.3),
+            0 20px 50px -10px rgba(0,0,0,0.6),
+            inset 0 1px 0 rgba(255,255,255,0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    /* hidden state */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px) scale(0.96);
+    transform-origin: bottom left;
+    transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+#account-sheet.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+/* ── Header: large avatar + name + badge ── */
+.acct-handle {
+    display: none; /* mobile only */
+}
+
+.acct-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px 12px;
+    /* subtle gradient background to distinguish header */
+    background: linear-gradient(135deg, var(--accent-muted) 0%, transparent 100%);
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 2px;
+}
+
+.acct-avatar {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-muted);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    /* two-ring effect: accent inner + subtle outer glow */
+    box-shadow:
+            0 0 0 2px var(--bg-elevated),
+            0 0 0 4px var(--accent),
+            0 4px 12px rgba(0,0,0,0.4);
+}
+
+.acct-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.acct-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+}
+
+.acct-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: var(--accent-muted);
+    border-radius: 20px;
+    padding: 2px 8px;
+    width: fit-content;
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* Thin divider */
+.acct-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 3px 8px;
+    flex-shrink: 0;
+}
+
+/* Menu items */
+.acct-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.83rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    border-radius: 8px;
+    transition: background var(--transition), color var(--transition);
+    letter-spacing: 0.01em;
+}
+
+.acct-item:hover {
+    background: rgba(255,255,255,0.06);
+    color: var(--text-primary);
+}
+
+.acct-item svg {
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: color var(--transition);
+    width: 15px;
+    height: 15px;
+}
+
+.acct-item:hover svg {
+    color: var(--accent);
+}
+
+.acct-item.danger {
+    color: #f87171;
+}
+
+.acct-item.danger svg {
+    color: #f87171;
+}
+
+.acct-item.danger:hover {
+    background: rgba(248, 113, 113, 0.08);
+    color: #fca5a5;
+}
+
+
+/* ──────────────────────────────────────────────────────────────────────
+   MOBILE ≤640px
+   ────────────────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
 
     :root {
         --sidebar-width: 0px;
-        --player-height: 0px; /* Overridden by fixed mini-player */
-        --mobile-nav-height: 64px;
+        --player-height: 0px;
+        --mobile-nav-height: 56px;
+        --mini-player-height: 108px;
     }
 
-    html {
-        font-size: 13px;
-    }
+    html { font-size: 13px; }
+    #sidebar { display: none; }
 
-    #sidebar {
-        display: none;
-    }
-
-    /* App grid becomes simple flex column */
     #app {
         display: flex !important;
         flex-direction: column;
-        height: 100dvh; /* Better handling of mobile browser UI */
+        height: 100dvh;
         padding: 0;
         gap: 0;
-        padding-bottom: calc(64px + var(--mobile-nav-height)); /* Mini-player + Nav */
+        padding-bottom: calc(var(--mini-player-height) + var(--mobile-nav-height));
     }
 
     #main {
@@ -1923,260 +2422,225 @@ body {
     }
 
     /* Top bar */
-    .main-topbar {
-        padding: 12px 16px;
-        gap: 8px;
-        min-height: 54px;
-        flex-shrink: 0;
-    }
-
-    .nav-arrows {
-        display: none;
-    }
-
-    .search-bar {
-        flex: 1;
-        max-width: none;
-    }
+    .main-topbar { padding: 10px 14px; gap: 8px; min-height: 50px; flex-shrink: 0; }
+    .nav-arrows  { display: none; }
+    .search-bar  { flex: 1; max-width: none; }
 
     .search-bar input {
-        padding: 9px 36px 9px 38px;
+        padding: 8px 34px 8px 36px;
         font-size: 0.875rem;
         border-radius: 8px;
     }
 
-    .search-clear {
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-    }
+    .search-icon { left: 11px; }
+    .search-clear { right: 9px; }
+    .topbar-actions { gap: 4px; }
+    .theme-btn { width: 34px; height: 34px; }
 
-    .search-icon {
-        left: 12px;
-    }
-
-    .topbar-actions {
-        gap: 4px;
-    }
-
-    .theme-btn {
-        width: 36px;
-        height: 36px;
-    }
-
-    /* Scrollable content area */
+    /* Scrollable content */
     .main-content {
         flex: 1;
         overflow-y: auto;
-        padding: 16px 16px 8px;
+        overflow-x: hidden;
+        padding: 14px 14px 8px;
         -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: contain;
         min-height: 0;
     }
 
-    .greeting {
-        font-size: 1.4rem;
-        margin-bottom: 16px;
-    }
+    .greeting { font-size: 1.35rem; margin-bottom: 14px; }
 
-    /* Quick play: 2 columns */
-    .quick-play-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        margin-bottom: 24px;
-    }
+    /* Quick-play */
+    .quick-play-grid { grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 20px; }
+    .quick-play-item { height: 50px; border-radius: 6px; }
 
-    .quick-play-item {
-        height: 52px;
-        border-radius: 6px;
-    }
-
-    .quick-thumb, .quick-thumb-placeholder {
-        width: 52px;
-        height: 52px;
+    .quick-thumb,
+    .quick-thumb-placeholder {
+        width: 50px; height: 50px;
         border-radius: 6px 0 0 6px;
+        flex-shrink: 0;
     }
 
-    .quick-title {
-        font-size: 0.8rem;
-        padding: 0 10px;
-    }
-
-    .qp-play {
-        display: none;
-    }
-
-    .track-artist-sub { display: block; }
-    .track-artist { display: none; }
-    .track-info { min-width: 0; overflow: hidden; }
-    .track-text { min-width: 0; overflow: hidden; }
+    .quick-title { font-size: 0.78rem; padding: 0 8px; }
+    .qp-play     { display: none; }
 
     /* Sections */
-    .section { margin-bottom: 24px; }
-    .section-title { font-size: 1.1rem; }
-    .section-header { margin-bottom: 12px; }
+    .section       { margin-bottom: 22px; }
+    .section-title { font-size: 1.05rem; }
+    .section-header { margin-bottom: 10px; }
 
-    /* Card grid */
-    .card-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    .track-card { padding: 10px; }
-    .card-thumb-wrap { margin-bottom: 10px; }
-    .card-title { font-size: 0.8rem; }
-    .card-sub { font-size: 0.72rem; }
+    /* Cards */
+    .card-grid     { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .track-card    { padding: 10px; }
+    .card-thumb-wrap { margin-bottom: 8px; }
+    .card-title    { font-size: 0.8rem; }
+    .card-sub      { font-size: 0.7rem; }
 
     .card-play {
-        opacity: 1;
-        transform: translateY(0);
-        width: 38px;
-        height: 38px;
-        bottom: 6px;
-        right: 6px;
+        opacity: 1; transform: translateY(0);
+        width: 36px; height: 36px;
+        bottom: 5px; right: 5px;
     }
 
     /* Track list */
     .track-list-header {
-        grid-template-columns: 40px 1fr 56px 40px;
-        padding: 0 12px 8px;
-        font-size: 0.7rem;
+        grid-template-columns: 36px 1fr 52px 36px;
+        padding: 0 10px 8px;
+        font-size: 0.68rem;
     }
 
     .track-row {
-        grid-template-columns: 40px 1fr 56px 40px;
-        padding: 4px 12px;
-        min-height: 60px;
+        grid-template-columns: 36px 1fr 52px 36px;
+        padding: 4px 10px;
+        min-height: 58px;
     }
 
-    .track-num, .track-album, .track-artist { display: none; }
+    .track-num    { display: none; }
+    .track-album  { display: none; }
+    .track-artist { display: none; }
     .track-play-btn { display: flex; }
-    .track-title { font-size: 0.875rem; }
-    .track-info { gap: 10px; }
-    .track-img, .track-img-placeholder { width: 44px; height: 44px; }
-    .track-duration { font-size: 0.75rem; }
-    .track-action-btn { opacity: 1; width: 32px; height: 32px; }
+
+    .track-artist-sub {
+        display: block;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .track-title  { font-size: 0.85rem; }
+    .track-info   { gap: 9px; }
+    .track-text   { min-width: 0; overflow: hidden; }
+
+    .track-img,
+    .track-img-placeholder { width: 42px; height: 42px; }
+
+    .track-duration   { font-size: 0.72rem; }
+    .track-action-btn { opacity: 1; width: 30px; height: 30px; }
 
     /* Playlist hero */
     .playlist-hero {
-        flex-wrap: nowrap;
-        align-items: flex-start;
-        padding: 20px 16px 16px;
-        margin: -16px -16px 16px;
-        min-height: auto;
-        gap: 16px;
+        flex-wrap: nowrap; align-items: flex-start;
+        padding: 18px 14px 14px;
+        margin: -14px -14px 14px;
+        min-height: auto; gap: 14px;
     }
 
-    .playlist-hero-art {
-        width: 100px;
-        height: 100px;
-        font-size: 36px;
-        flex-shrink: 0;
-    }
-
+    .playlist-hero-art  { width: 96px; height: 96px; font-size: 34px; flex-shrink: 0; }
     .playlist-hero-info { padding-top: 4px; }
-    .playlist-hero-type { font-size: 0.65rem; }
-    .playlist-hero-name { font-size: 1.4rem; margin: 4px 0 6px; line-height: 1.1; }
-    .playlist-hero-desc { font-size: 0.78rem; margin-bottom: 4px; }
-    .playlist-hero-meta { font-size: 0.72rem; }
+    .playlist-hero-type { font-size: 0.62rem; }
+    .playlist-hero-name { font-size: 1.3rem; margin: 4px 0 5px; line-height: 1.1; }
+    .playlist-hero-desc { font-size: 0.76rem; margin-bottom: 3px; }
+    .playlist-hero-meta { font-size: 0.7rem; }
 
-    .playlist-actions { gap: 12px; margin-bottom: 16px; }
-    .play-big-btn { width: 52px; height: 52px; }
-    .icon-btn { width: 38px; height: 38px; }
+    .playlist-actions { gap: 10px; margin-bottom: 14px; }
+    .play-big-btn { width: 50px; height: 50px; }
+    .icon-btn     { width: 36px; height: 36px; }
 
-    /* ── MINI PLAYER — fixed above bottom nav ── */
-    /* ── FULL PLAYER — fixed above bottom nav ── */
+    /* ═══════════════════════════════════════════════════════
+       PLAYER — 3-row grid
+       ═══════════════════════════════════════════════════════ */
     #player {
         position: fixed;
         bottom: var(--mobile-nav-height);
-        left: 0;
-        right: 0;
-        height: 130px;
+        left: 0; right: 0;
+        height: var(--mini-player-height);
         z-index: 100;
         background: var(--bg-elevated);
         border-top: 1px solid var(--border);
-        padding: 10px 16px 8px;
+        display: grid;
+        grid-template-rows: 1fr auto 1fr;
+        grid-template-columns: 1fr;
+        padding: 6px 14px 4px;
         gap: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
     }
 
-    /* Row 1: art + title/artist + like */
     .player-track {
-        flex: none;
+        grid-row: 1;
         width: 100%;
-        gap: 10px;
+        display: flex;
+        flex-direction: row;
         align-items: center;
+        gap: 10px;
+        min-width: 0;
     }
 
-    .player-art, .player-art-placeholder {
-        width: 40px;
-        height: 40px;
-        border-radius: 4px;
+    .player-art,
+    .player-art-placeholder {
+        width: 40px; height: 40px;
+        border-radius: 5px;
         flex-shrink: 0;
     }
+    .player-art-placeholder { font-size: 15px; }
 
-    .player-art-placeholder { font-size: 14px; }
-    .player-track-info { flex: 1; min-width: 0; }
-    .player-title { font-size: 0.875rem; font-weight: 600; }
-    .player-artist { font-size: 0.75rem; }
-    .player-artist::after { content: none; }
-    .player-like-btn { padding: 6px; flex-shrink: 0; }
-
-    /* Row 2: progress bar + times */
-    .player-controls {
-        flex: none;
-        width: 100%;
+    .player-track-info {
+        flex: 1; min-width: 0;
+        display: flex;
         flex-direction: column;
-        gap: 2px;
+        justify-content: center;
+    }
+
+    .player-title {
+        font-size: 0.875rem; font-weight: 600;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .player-artist {
+        font-size: 0.73rem;
+        color: var(--text-secondary);
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        display: block !important;
+    }
+
+    .player-like-btn { display: flex !important; flex-shrink: 0; padding: 6px; }
+
+    .player-controls {
+        grid-row: 2 / 4;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
         align-items: center;
+        gap: 0;
+        justify-content: space-between;
     }
 
     .progress-bar-wrap {
-        display: flex;
-        width: 100%;
-        gap: 6px;
-        align-items: center;
-        max-width: 100%;
+        display: flex !important;
+        width: 100%; align-items: center;
+        gap: 5px; max-width: 100%; padding: 2px 0;
     }
 
-    .progress-bar { height: 3px; }
+    .progress-bar   { height: 3px; }
     .progress-thumb { width: 10px; height: 10px; }
+    .time-label     { font-size: 0.62rem; min-width: 26px; }
 
-    .time-label {
-        font-size: 0.65rem;
-        min-width: 28px;
-    }
-
-    /* Row 3: shuffle + prev + play + next + repeat */
     .player-btns {
-        gap: 0;
         width: 100%;
+        display: flex; align-items: center;
         justify-content: space-between;
-        padding: 0 4px;
+        gap: 0; padding: 0 2px;
     }
 
-    #shuffle-btn { display: flex; }
-    #repeat-btn { display: flex; }
+    #shuffle-btn { display: flex !important; }
+    #repeat-btn  { display: flex !important; }
 
-    .ctrl-btn { padding: 6px; flex-shrink: 0; }
+    .ctrl-btn     { padding: 4px; flex-shrink: 0; }
     .ctrl-btn svg { width: 20px; height: 20px; }
 
     .play-pause-btn {
-        width: 42px;
-        height: 42px;
-        min-width: 42px;
-        min-height: 42px;
+        width: 40px; height: 40px;
+        min-width: 40px; min-height: 40px;
     }
 
     .player-extras { display: none; }
 
-    /* ── BOTTOM NAV ── */
+    /* ═══════════════════════════════════════
+       BOTTOM NAV — 5 items
+       ═══════════════════════════════════════ */
     #mobile-nav {
         position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        bottom: 0; left: 0; right: 0;
         height: var(--mobile-nav-height);
         background: var(--sidebar-bg);
         border-top: 1px solid var(--border);
@@ -2192,87 +2656,127 @@ body {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 4px;
+        gap: 3px;
         cursor: pointer;
         color: var(--text-muted);
         border: none;
         background: none;
         font-family: var(--font-body);
-        font-size: 0.65rem;
+        font-size: 0.6rem;
         font-weight: 600;
-        padding: 8px 4px;
+        padding: 6px 2px;
         transition: color var(--transition);
         -webkit-tap-highlight-color: transparent;
     }
 
-    #mobile-nav .m-nav-item.active { color: var(--text-primary); }
-    #mobile-nav .m-nav-item svg { width: 22px; height: 22px; }
+    #mobile-nav .m-nav-item.active   { color: var(--text-primary); }
+    #mobile-nav .m-nav-item svg      { width: 21px; height: 21px; }
+    #m-account-btn.sheet-open        { color: var(--accent); }
 
-    /* Modals & Menus */
+    /* ═══════════════════════════════════════════
+       ACCOUNT SHEET — mobile bottom sheet
+       ═══════════════════════════════════════════ */
+    /* Restore dimmed backdrop on mobile */
+    #account-sheet-overlay {
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(4px);
+    }
+
+    /* Override desktop popup -> bottom sheet */
+    #account-sheet {
+        left: 0; right: 0;
+        bottom: 0; width: 100%; top: auto;
+        border-radius: 20px 20px 0 0;
+        padding: 12px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+        transform: translateY(100%);
+        transform-origin: bottom center;
+        opacity: 1;
+        pointer-events: none;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 -4px 32px rgba(0,0,0,0.4);
+    }
+
+    #account-sheet.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .acct-handle { display: block; margin-bottom: 14px; }
+    .acct-header  { border-radius: 0; padding: 6px 14px 14px; margin-bottom: 4px; }
+    .acct-avatar  { width: 48px; height: 48px; font-size: 1.2rem; }
+    .acct-name    { font-size: 1rem; }
+    .acct-divider { margin: 3px 10px; }
+    .acct-item    { padding: 13px 14px; font-size: 0.92rem; }
+    .acct-item svg { width: 18px; height: 18px; }
+
+    /* Modals */
     .modal-overlay { padding: 0; align-items: flex-end; }
+
     .modal {
         max-width: 100%;
         border-radius: 16px 16px 0 0;
-        padding: 24px 20px;
+        padding: 20px 18px;
         animation: slideUp 0.3s ease;
     }
 
     .context-menu {
         position: fixed !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        top: auto !important;
-        width: 100%;
-        min-width: 0;
+        left: 0 !important; right: 0 !important;
+        bottom: 0 !important; top: auto !important;
+        width: 100%; min-width: 0;
         border-radius: 16px 16px 0 0;
         padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 0px));
         animation: slideUp 0.2s ease;
     }
 
-    .ctx-item { padding: 14px 20px; font-size: 0.95rem; gap: 14px; }
+    .ctx-item { padding: 13px 18px; font-size: 0.92rem; gap: 12px; }
     .ctx-item svg { width: 18px; height: 18px; }
 
     @keyframes slideUp {
         from { transform: translateY(100%); }
-        to { transform: translateY(0); }
+        to   { transform: translateY(0); }
     }
 
-    /* System Components */
+    /* System panels */
     #queue-panel {
         width: 100%;
-        bottom: calc(64px + var(--mobile-nav-height));
+        bottom: calc(var(--mini-player-height) + var(--mobile-nav-height));
     }
 
-    .theme-picker {
-        right: 16px;
-        left: 16px;
-        width: auto;
-        top: 60px;
-    }
+    .theme-picker { right: 12px; left: 12px; width: auto; top: 58px; }
 
     #toast-container {
-        bottom: calc(64px + var(--mobile-nav-height) + 16px);
+        bottom: calc(var(--mini-player-height) + var(--mobile-nav-height) + 10px);
+        left: 50%; transform: translateX(-50%);
+        width: calc(100% - 32px);
+        align-items: stretch;
     }
 
+    .toast { text-align: center; }
+
     .search-tabs { gap: 6px; }
-    .search-tab { font-size: 0.8rem; padding: 6px 14px; }
-    .auth-card { padding: 32px 24px; }
+    .search-tab  { font-size: 0.78rem; padding: 5px 12px; }
+    .auth-card   { padding: 28px 20px; }
 }
 
-/* Very small phones */
+/* ── Very small phones ── */
 @media (max-width: 380px) {
     html { font-size: 12px; }
-    .main-content { padding: 12px 12px 8px; }
-    .card-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+    .main-content { padding: 10px 10px 6px; }
+    .card-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .quick-play-grid { gap: 6px; }
+    .playlist-hero-name { font-size: 1.15rem; }
+    .acct-item { padding: 12px 16px; }
 }
 
-/* Touch devices: always show interactive elements */
+/* ── Touch devices ── */
 @media (hover: none) and (pointer: coarse) {
-    button { min-height: 44px; }
-    .ctx-item { padding: 10px 12px; }
+    .ctx-item         { padding: 11px 14px; }
     .track-action-btn { opacity: 1; min-height: 32px; min-width: 32px; }
-    .card-play { opacity: 1; transform: translateY(0); }
-    .qp-play { opacity: 1; }
+    .card-play        { opacity: 1; transform: translateY(0); }
+    .qp-play          { opacity: 1; }
+    .ctrl-btn         { min-width: 40px; min-height: 40px; }
+    .nav-arrow        { min-width: 40px; min-height: 40px; }
+    .acct-item        { min-height: 48px; }
 }

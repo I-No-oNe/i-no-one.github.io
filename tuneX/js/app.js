@@ -403,10 +403,13 @@ async function enterApp() {
 
     document.getElementById('user-name').textContent = currentUser.username;
     document.getElementById('user-avatar').textContent = currentUser.username[0].toUpperCase();
+    syncAccountSheet(currentUser.username[0].toUpperCase(), currentUser.username);
+    injectAccountSheet();
 
     await Promise.all([loadPlaylists(), loadLikedIds()]);
     loadHomeView();
     injectMobileNav();
+    wireAccountTriggers();
 
     // Ping server every 5 minutes to keep it alive on free tier
     setInterval(() => {
@@ -1349,9 +1352,23 @@ function closeModal(e) {
 }
 
 // ─── USER MENU ────────────────────────────────────────────────────────────
-function toggleUserMenu() {
-    document.getElementById('user-context-menu').classList.toggle('visible');
-    event.stopPropagation();
+function toggleUserMenu(e) {
+    if (e) e.stopPropagation();
+    toggleAccountSheet();
+}
+
+function wireAccountTriggers() {
+    const row = document.querySelector('.sidebar-user');
+    if (!row || row._accountWired) return;
+    row._accountWired = true;
+
+    // Left-click already goes to toggleUserMenu() via the HTML onclick.
+    // Right-click: suppress browser menu, open account sheet instead.
+    row.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleAccountSheet();
+    });
 }
 
 function openSettings() {
@@ -1609,6 +1626,9 @@ document.addEventListener('click', (e) => {
     if (!e.target.closest('#context-menu')) closeContextMenu();
     if (!e.target.closest('#theme-picker') && !e.target.closest('#theme-btn')) document.getElementById('theme-picker').classList.remove('visible');
     if (!e.target.closest('#user-context-menu') && !e.target.closest('#user-menu-btn')) document.getElementById('user-context-menu').classList.remove('visible');
+    if (!e.target.closest('#account-sheet') && !e.target.closest('#m-account-btn') && !e.target.closest('.sidebar-user')) {
+        closeAccountSheet();
+    }
 });
 
 document.getElementById('main-content').addEventListener('scroll', (e) => {
@@ -1844,8 +1864,14 @@ function injectMobileNav() {
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       Library
     </button>
+    <button class="m-nav-item" id="m-account-btn" onclick="toggleAccountSheet()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      Account
+    </button>
   `;
     document.body.appendChild(nav);
+
+    injectAccountSheet();
 }
 
 function mobileNavigate(view) {
@@ -1857,6 +1883,106 @@ function updateMobileNav(view) {
     document.querySelectorAll('#mobile-nav .m-nav-item').forEach(el => {
         el.classList.toggle('active', el.dataset.view === view);
     });
+}
+
+function injectAccountSheet() {
+    if (document.getElementById('account-sheet')) return;
+
+    // Overlay (tap-outside to close)
+    const overlay = document.createElement('div');
+    overlay.id = 'account-sheet-overlay';
+    overlay.onclick = closeAccountSheet;
+    document.body.appendChild(overlay);
+
+    // Sheet
+    const sheet = document.createElement('div');
+    sheet.id = 'account-sheet';
+    sheet.innerHTML = `
+    <div class="acct-handle"></div>
+    <div class="acct-header">
+      <div class="acct-avatar" id="acct-avatar">?</div>
+      <div class="acct-info">
+        <div class="acct-name" id="acct-name">Loading…</div>
+        <div class="acct-badge">TuneX user</div>
+      </div>
+    </div>
+    <div class="acct-divider"></div>
+    <button class="acct-item" onclick="openSettings(); closeAccountSheet()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+      </svg>
+      Settings
+    </button>
+<!--    <button class="acct-item" onclick="toggleThemePicker(); closeAccountSheet()">-->
+<!--      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">-->
+<!--        <circle cx="12" cy="12" r="3"/>-->
+<!--        <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>-->
+<!--      </svg>-->
+<!--      Themes-->
+<!--    </button>-->
+    <button class="acct-item" onclick="toggleQueuePanel(); closeAccountSheet()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <line x1="3" y1="6"  x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      Queue
+    </button>
+    <button class="acct-item" onclick="toggleMobileLibrary(); closeAccountSheet()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+      </svg>
+      Library
+    </button>
+    <div class="acct-divider"></div>
+    <button class="acct-item danger" onclick="doLogout()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      Log out
+    </button>
+  `;
+    document.body.appendChild(sheet);
+}
+
+function syncAccountSheet(initial, name) {
+    const a = document.getElementById('acct-avatar');
+    const n = document.getElementById('acct-name');
+    if (a) a.textContent = initial || '?';
+    if (n) n.textContent = name || '—';
+}
+
+function toggleAccountSheet() {
+    const sheet = document.getElementById('account-sheet');
+    if (!sheet) return;
+    if (sheet.classList.contains('open')) {
+        closeAccountSheet();
+    } else {
+        openAccountSheet();
+    }
+}
+
+function openAccountSheet() {
+    // Always sync latest avatar/name from sidebar before opening
+    const av = document.getElementById('user-avatar');
+    const nm = document.getElementById('user-name');
+    syncAccountSheet(
+        av ? av.textContent : '?',
+        nm ? nm.textContent : '—'
+    );
+    document.getElementById('account-sheet')?.classList.add('open');
+    document.getElementById('account-sheet-overlay')?.classList.add('visible');
+    document.getElementById('m-account-btn')?.classList.add('sheet-open');
+}
+
+function closeAccountSheet() {
+    document.getElementById('account-sheet')?.classList.remove('open');
+    document.getElementById('account-sheet-overlay')?.classList.remove('visible');
+    document.getElementById('m-account-btn')?.classList.remove('sheet-open');
 }
 
 function toggleMobileLibrary() {

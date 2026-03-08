@@ -11,12 +11,18 @@
     for (let i = 0; i < 20; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
-        particle.style.width = Math.random() * 100 + 50 + 'px';
-        particle.style.height = particle.style.width;
+
+        // Define the size once so we can use it for both width and height
+        const size = Math.random() * 100 + 50 + 'px';
+
+        particle.style.width = size;
+        particle.style.height = size;
+
         particle.style.left = Math.random() * 100 + '%';
         particle.style.top = Math.random() * 100 + '%';
         particle.style.animationDelay = Math.random() * 15 + 's';
         particle.style.opacity = Math.random() * 0.3 + 0.1;
+
         document.body.appendChild(particle);
     }
 </script>
