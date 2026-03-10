@@ -111,7 +111,7 @@ async function wakeServer() {
 
     for (let i = 0; i < 15; i++) {
         try {
-            const r = await fetch(`${BACKEND}/api/ping`, {signal: AbortSignal.timeout(8000)});
+            const r = await fetch(`${BACKEND}`, {signal: AbortSignal.timeout(8000)});
             if (r.ok) {
                 clearInterval(interval);
                 fill.style.width = '100%';
@@ -411,11 +411,11 @@ async function enterApp() {
     injectMobileNav();
     wireAccountTriggers();
 
-    // Ping server every 5 minutes to keep it alive on free tier
+    // Ping server every 4 minutes to keep it alive on free tier
     setInterval(() => {
         fetch(`${BACKEND}/api/ping`, {headers: {'Authorization': `Bearer ${token}`}}).catch(() => {
         });
-    }, 5 * 60 * 1000);
+    }, 4 * 60 * 1000);
 }
 
 async function loadPlaylists() {
@@ -1772,14 +1772,10 @@ function dismissNotifAsk() {
 async function registerServiceWorker() {
     if (!('serviceWorker' in navigator)) return null;
 
-    // Use a relative path. If app.js is in /tuneX/js/,
-    // and sw.js is in /tuneX/, use '../sw.js'
-    // If app.js is in /tuneX/ root, use './sw.js'
-    const swPath = '../sw.js';
+    const swPath = './tuneX/sw.js';
 
     try {
-        // We remove the manual { scope } because
-        // it defaults to the folder the file is in.
+
         const reg = await navigator.serviceWorker.register(swPath);
         console.log('[TuneX] SW registered:', swPath);
 
@@ -1793,7 +1789,6 @@ async function registerServiceWorker() {
 
         return reg;
     } catch (err) {
-        // Check if the error is due to Privacy/Security settings
         if (err.name === 'SecurityError') {
             console.warn('[TuneX] SW registration blocked by browser privacy settings or Private Mode.');
         } else {
