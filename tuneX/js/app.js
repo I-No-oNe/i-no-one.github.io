@@ -72,7 +72,7 @@ audio.volume = volume;
 
 // ─── INIT ─────────────────────────────────────────────────────────────────
 async function init() {
-    // Register service worker early (needed for notifications even before login)
+    // Register service-worker early (needed for notifications even before login)
     registerServiceWorker();
 
     await loadThemes();
@@ -1771,31 +1771,37 @@ function dismissNotifAsk() {
 
 async function registerServiceWorker() {
     if (!('serviceWorker' in navigator)) return null;
-    const swPaths = [
-        'tuneX/service worker/sw.js',
-        'tuneX/service%20worker/sw.js',
-    ];
-    let reg = null;
-    for (const path of swPaths) {
-        try {
-            reg = await navigator.serviceWorker.register(path, { scope: './' });
-            console.log('[TuneX] SW registered:', path);
-            break;
-        } catch (err) {
-            console.warn('[TuneX] SW register failed at', path, ':', err.message);
-        }
-    }
-    if (!reg) { console.warn('[TuneX] SW registration failed on all paths'); return null; }
-    navigator.serviceWorker.addEventListener('message', (e) => {
-        if (e.data?.type === 'SERVER_READY') {
-            toast('🎵 TuneX is ready!');
-            document.title = '🎵 TuneX — Ready!';
-            setTimeout(() => { document.title = 'TuneX'; }, 3000);
-        }
-    });
-    return reg;
-}
 
+    // Use a relative path. If app.js is in /tuneX/js/,
+    // and sw.js is in /tuneX/, use '../sw.js'
+    // If app.js is in /tuneX/ root, use './sw.js'
+    const swPath = '../sw.js';
+
+    try {
+        // We remove the manual { scope } because
+        // it defaults to the folder the file is in.
+        const reg = await navigator.serviceWorker.register(swPath);
+        console.log('[TuneX] SW registered:', swPath);
+
+        navigator.serviceWorker.addEventListener('message', (e) => {
+            if (e.data?.type === 'SERVER_READY') {
+                toast('🎵 TuneX is ready!');
+                document.title = '🎵 TuneX — Ready!';
+                setTimeout(() => { document.title = 'TuneX'; }, 3000);
+            }
+        });
+
+        return reg;
+    } catch (err) {
+        // Check if the error is due to Privacy/Security settings
+        if (err.name === 'SecurityError') {
+            console.warn('[TuneX] SW registration blocked by browser privacy settings or Private Mode.');
+        } else {
+            console.warn('[TuneX] SW registration failed:', err.message);
+        }
+        return null;
+    }
+}
 // Tell SW to start background polling (called when page goes to background during wake)
 async function startSwWakeWatch() {
     if (!('serviceWorker' in navigator)) return;
