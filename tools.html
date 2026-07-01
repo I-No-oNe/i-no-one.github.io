@@ -35,37 +35,40 @@
         }
         .links a:hover { border-color: var(--accent); color: var(--accent-ink); transform: translateY(-2px); }
 
-        details.ci {
+        .ci {
             background: var(--glass-2); border: 1px solid var(--line-2);
             border-radius: 14px; margin-bottom: 10px; overflow: hidden;
             transition: border-color var(--speed), box-shadow var(--speed);
         }
-        details.ci:hover { border-color: var(--accent-soft); }
-        details.ci[open] { border-color: var(--accent-soft); box-shadow: 0 0 0 1px var(--accent-soft), var(--shadow-sm); }
-        details.ci > summary {
-            list-style: none; cursor: pointer; padding: 15px 18px;
+        .ci:hover { border-color: var(--accent-soft); }
+        .ci.open { border-color: var(--accent-soft); box-shadow: 0 0 0 1px var(--accent-soft), var(--shadow-sm); }
+        .ci-sum {
+            width: 100%; text-align: left; font: inherit; cursor: pointer;
+            background: transparent; border: none; padding: 15px 18px;
             font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 12px;
             transition: background var(--speed);
         }
-        details.ci > summary:hover { background: var(--glass); }
-        details.ci > summary::-webkit-details-marker { display: none; }
-        details.ci > summary::after {
+        .ci-sum:hover { background: var(--glass); }
+        .ci-sum::after {
             content: ''; margin-left: auto; width: 9px; height: 9px;
             border-right: 2px solid var(--accent-ink); border-bottom: 2px solid var(--accent-ink);
             transform: rotate(45deg); transition: transform .3s var(--ease); flex-shrink: 0;
         }
-        details.ci[open] > summary::after { transform: rotate(-135deg); }
-        details.ci pre {
+        .ci.open .ci-sum::after { transform: rotate(-135deg); }
+        .ci-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s var(--ease); }
+        .ci.open .ci-body { grid-template-rows: 1fr; }
+        .ci-body > div { overflow: hidden; min-height: 0; }
+        .ci-body pre {
             margin: 0; padding: 18px; overflow-x: auto;
             background: var(--code-bg); border-top: 1px solid var(--line);
         }
-        details.ci[open] pre { animation: ciReveal .32s var(--ease); }
-        @keyframes ciReveal { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
-        details.ci code { font-family: 'JetBrains Mono', monospace; font-size: .82rem; color: var(--code-ink); white-space: pre; line-height: 1.65; }
+        .ci-body code { font-family: 'JetBrains Mono', monospace; font-size: .82rem; color: var(--code-ink); white-space: pre; line-height: 1.65; }
     </style>
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
+<button id="nav-burger" class="nav-burger" type="button" aria-label="Open menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div id="nav-scrim" class="nav-scrim"></div>
 <div class="layout">
     <aside class="sidebar">
         <a class="side-brand" href="index.html">
@@ -113,9 +116,9 @@
             <div class="panel">
             <div class="panel-title"><span class="dot"></span>CI workflows</div>
 
-            <details class="ci">
-                <summary>Java CI with Gradle – MC 1.20.4 and lower</summary>
-                <pre><code>name: Java CI with Gradle
+            <div class="ci">
+                <button class="ci-sum" type="button" aria-expanded="false">Java CI with Gradle – MC 1.20.4 and lower</button>
+                <div class="ci-body"><div><pre><code>name: Java CI with Gradle
 
 on:
   push:
@@ -157,12 +160,12 @@ jobs:
           prerelease: false
           title: "Latest Build"
           files: |
-            ./build/libs/*.jar</code></pre>
-            </details>
+            ./build/libs/*.jar</code></pre></div></div>
+            </div>
 
-            <details class="ci">
-                <summary>Java CI with Gradle – MC 1.20.6-1.21</summary>
-                <pre><code>name: Java CI with Gradle
+            <div class="ci">
+                <button class="ci-sum" type="button" aria-expanded="false">Java CI with Gradle – MC 1.20.6-1.21</button>
+                <div class="ci-body"><div><pre><code>name: Java CI with Gradle
 
 on: [ push,pull_request ]
 
@@ -200,12 +203,12 @@ jobs:
           prerelease: false
           title: "Latest Build"
           files: |
-            ./build/libs/*.jar</code></pre>
-            </details>
+            ./build/libs/*.jar</code></pre></div></div>
+            </div>
 
-            <details class="ci">
-                <summary>Java CI with Gradle – MC 1.21+</summary>
-                <pre><code>name: build
+            <div class="ci">
+                <button class="ci-sum" type="button" aria-expanded="false">Java CI with Gradle – MC 1.21+</button>
+                <div class="ci-body"><div><pre><code>name: build
 on: [pull_request, push]
 
 jobs:
@@ -255,11 +258,19 @@ jobs:
           prerelease: false
           title: "Latest Build (1.21.9-1.21.10)"
           files: |
-            ./build/libs/*.jar</code></pre>
-            </details>
+            ./build/libs/*.jar</code></pre></div></div>
+            </div>
             </div>
         </div>
     </main>
 </div>
+<script>
+    document.querySelectorAll('.ci-sum').forEach(function (b) {
+        b.addEventListener('click', function () {
+            var open = b.parentElement.classList.toggle('open');
+            b.setAttribute('aria-expanded', open);
+        });
+    });
+</script>
 </body>
 </html>

@@ -39,11 +39,9 @@ nav ul li a:hover::after { width: 100%; }
 .nav-actions { display: flex; align-items: center; gap: 10px; }
 .nav-btn { padding: 9px 15px; font-size: .88rem; }
 
-/* ---------- Glass surfaces ---------- */
-.profile-card, .card, .repo {
+/* ---------- Glass surfaces (no live backdrop-filter -> smooth scroll) ---------- */
+.profile-card, .card {
     background: var(--glass);
-    backdrop-filter: blur(var(--blur)) saturate(160%);
-    -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
     border: 1px solid var(--glass-brd);
     box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi);
 }
@@ -157,9 +155,12 @@ nav ul li a:hover::after { width: 100%; }
     position: relative; overflow: hidden;
     display: flex; flex-direction: column;
     border-radius: var(--radius-sm); padding: 20px;
+    background: var(--glass); border: 1px solid var(--glass-brd);
     box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi);
     transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
     animation: rise .6s var(--ease) both;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 210px;
 }
 .repo::before {
     content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
