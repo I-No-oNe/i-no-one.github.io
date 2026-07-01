@@ -3,37 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">FRC Israel Countdown</title>
+    <title id="page-title">FRC Israel Countdown · I-No-oNe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site/theme.css">
     <link rel="stylesheet" href="frc/counter/styles.css">
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/145749961?s=64&v=4" type="image/png">
+    <script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(!t){var m=document.cookie.match(/(?:^|; )theme=(dark|light)/);t=m?m[1]:'light'}document.documentElement.setAttribute('data-theme',t)})();</script>
+    <script defer src="site/theme.js"></script>
 </head>
 <body>
-<script>
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
+<div class="aurora" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
 
-        // Define the size once so we can use it for both width and height
-        const size = Math.random() * 100 + 50 + 'px';
-
-        particle.style.width = size;
-        particle.style.height = size;
-
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.top = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 15 + 's';
-        particle.style.opacity = Math.random() * 0.3 + 0.1;
-
-        document.body.appendChild(particle);
-    }
-</script>
-
-<div class="container">
-    <div class="header">
+<div class="topbar">
+    <a class="side-brand" href="index.html"><img src="https://avatars.githubusercontent.com/u/145749961?s=64&v=4" alt=""><span>I-No-oNe</span></a>
+    <div class="topbar-right">
+        <a class="btn" href="index.html">← Main site</a>
+        <a class="btn btn-primary" href="donate.html" rel="noopener noreferrer">☕ Donate</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+        </button>
     </div>
+</div>
 
+<div class="container rise">
     <div class="info-banner">
         <b id="info-text">📅 Showing FRC Israel District Events (ISR)</b> |
-        <a id="tba-link" href="#" target="_blank">View on The Blue Alliance</a>
+        <a id="tba-link" href="#" target="_blank" rel="noopener noreferrer">View on The Blue Alliance</a>
     </div>
 
     <div class="countdown-card">
@@ -42,33 +40,18 @@
         <div class="event-dates" id="event-dates"></div>
 
         <div id="countdown" class="countdown-grid">
-            <div class="time-box">
-                <span class="time-number" id="days">00</span>
-                <span class="time-label">Days</span>
-            </div>
-            <div class="time-box">
-                <span class="time-number" id="hours">00</span>
-                <span class="time-label">Hours</span>
-            </div>
-            <div class="time-box">
-                <span class="time-number" id="minutes">00</span>
-                <span class="time-label">Minutes</span>
-            </div>
-            <div class="time-box">
-                <span class="time-number" id="seconds">00</span>
-                <span class="time-label">Seconds</span>
-            </div>
+            <div class="time-box"><span class="time-number" id="days">00</span><span class="time-label">Days</span></div>
+            <div class="time-box"><span class="time-number" id="hours">00</span><span class="time-label">Hours</span></div>
+            <div class="time-box"><span class="time-number" id="minutes">00</span><span class="time-label">Minutes</span></div>
+            <div class="time-box"><span class="time-number" id="seconds">00</span><span class="time-label">Seconds</span></div>
         </div>
 
         <div class="controls" id="controls"></div>
     </div>
 
     <div class="notes-section">
-        <label for="notes"></label><textarea
-            id="notes"
-            class="notes-textarea"
-            placeholder="Write your event notes, strategy ideas, or team reminders here..."
-    ></textarea>
+        <label for="notes"></label>
+        <textarea id="notes" class="notes-textarea" placeholder="Write your event notes, strategy ideas, or team reminders here..."></textarea>
     </div>
 </div>
 

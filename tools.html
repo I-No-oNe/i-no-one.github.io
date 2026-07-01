@@ -3,45 +3,93 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Tools 🔧</title>
-    <link rel="stylesheet" href="tools/tools/styles.css"/>
-    <link rel="icon" href="https://avatars.githubusercontent.com/u/145749961?s=40&v=4" type="image/png">
+    <title>Tools · I-No-oNe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site/theme.css">
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/145749961?s=64&v=4" type="image/png">
+    <script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(!t){var m=document.cookie.match(/(?:^|; )theme=(dark|light)/);t=m?m[1]:'light'}document.documentElement.setAttribute('data-theme',t)})();</script>
+    <script defer src="site/theme.js"></script>
+    <style>
+        .page-head { margin-bottom: 26px; }
+        .page-head h1 { font-size: 2.4rem; font-weight: 900; letter-spacing: -.03em; }
+        .page-head p { color: var(--muted); margin-top: 6px; font-size: 1.05rem; }
+        .section-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -.01em; margin: 4px 0 16px; }
+        .links { display: flex; flex-wrap: wrap; gap: 10px; }
+        .links a {
+            font-size: .9rem; font-weight: 500; padding: 9px 15px; border-radius: 11px;
+            background: var(--glass-2); border: 1px solid var(--line-2); color: var(--ink-2);
+            transition: border-color var(--speed), color var(--speed), transform var(--speed);
+        }
+        .links a:hover { border-color: var(--accent); color: var(--accent-ink); transform: translateY(-2px); }
+        details.ci {
+            background: var(--glass-2); border: 1px solid var(--line-2);
+            border-radius: 14px; margin-bottom: 12px; overflow: hidden;
+        }
+        details.ci > summary {
+            list-style: none; cursor: pointer; padding: 14px 18px;
+            font-weight: 600; color: var(--ink); display: flex; align-items: center; justify-content: space-between;
+        }
+        details.ci > summary::-webkit-details-marker { display: none; }
+        details.ci > summary::after { content: '＋'; color: var(--accent-ink); font-weight: 700; }
+        details.ci[open] > summary::after { content: '－'; }
+        details.ci pre {
+            margin: 0; padding: 16px 18px; overflow-x: auto;
+            background: rgba(0,0,0,.28); border-top: 1px solid var(--line);
+        }
+        details.ci code { font-family: 'JetBrains Mono', monospace; font-size: .82rem; color: #d6f5df; white-space: pre; }
+    </style>
 </head>
 <body>
-<header>
-    <h1>🛠️ Useful Resources & Tools</h1>
-</header>
+<div class="aurora" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
+<div class="layout">
+    <aside class="sidebar">
+        <a class="side-brand" href="index.html">
+            <img src="https://avatars.githubusercontent.com/u/145749961?s=64&v=4" alt=""><span>I-No-oNe</span>
+        </a>
+        <span class="side-label">Tools</span>
+        <a class="side-link active" href="tools.html"><span class="ico">🧰</span> Overview</a>
+        <a class="side-link" href="tools/qr-maker.html"><span class="ico">🔳</span> QR Code Maker</a>
+        <a class="side-link" href="tools/pdf-utils.html"><span class="ico">📄</span> PDF Utils</a>
+        <a class="side-link" href="tools/obfuscator.html"><span class="ico">🔐</span> Obfuscator</a>
+        <a class="side-link" href="tools/server-checker.html"><span class="ico">⛏️</span> Server Checker</a>
+        <span class="side-label">More</span>
+        <a class="side-link" href="index.html"><span class="ico">←</span> Main site</a>
+        <div class="side-foot">
+            <a class="btn btn-primary side-donate" href="donate.html" rel="noopener noreferrer">☕ Donate</a>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+                <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+            </button>
+        </div>
+    </aside>
 
-<main>
-    <section>
-        <h2>Helpful Links</h2>
-        <ul>
-            <li><a href="https://isthisarat.com/" rel="noopener noreferrer">Rat Scanner</a></li>
-            <li><a href="https://dillinger.io/" rel="noopener noreferrer">Online Markdown Editor</a></li>
-            <li><a href="https://lottiefiles.com/" rel="noopener noreferrer">LottieFiles</a></li>
-            <li><a href="https://www.fibermc.com/" rel="noopener noreferrer">FibeMC</a></li>
-            <li><a href="https://round-corner.imageonline.co/" rel="noopener noreferrer">Image rounder</a></li>
-            <li><a href="https://linkie.shedaniel.dev/mappings" rel="noopener noreferrer">Linkie Mappings</a></li>
-            <li><a href="https://linkie.shedaniel.dev/dependencies" rel="noopener noreferrer">Linkie Dependencies</a>
-            </li>
-            <li><a href="https://somsubhra.github.io/github-release-stats/" rel="noopener noreferrer">GitHub Download
-                Count Checker</a></li>
-            <li><a href="tools/pdf-utils.html" rel="noopener noreferrer">Pdf Utils</a></li>
-            <li><a href="tools/server-checker.html">MC Servers Status Checker</a></li>
-            <li><a href="tools/qr-maker.html" rel="noopener noreferrer">Qr Code Maker</a></li>
-            <li><a href="tools/obfuscator.html" rel="noopener noreferrer">Text obfuscator</a></li>
-            <li><a href="https://minecraft.wiki/w/Formatting_codes#Use_in_server.properties_and_pack.mcmeta"
-                   rel="noopener noreferrer">Minecraft Color Codes</a></li>
-        </ul>
-    </section>
+    <main class="content">
+        <div class="content-inner rise">
+            <div class="page-head">
+                <h1>Tools</h1>
+                <p>Pick a tool from the sidebar. Below are external links and CI snippets I keep coming back to.</p>
+            </div>
 
-    <section>
-        <h2>CI Workflows</h2>
+            <h2 class="section-title">Helpful links</h2>
+            <div class="links">
+                <a href="https://isthisarat.com/" rel="noopener noreferrer">Rat Scanner</a>
+                <a href="https://dillinger.io/" rel="noopener noreferrer">Markdown Editor</a>
+                <a href="https://lottiefiles.com/" rel="noopener noreferrer">LottieFiles</a>
+                <a href="https://www.fibermc.com/" rel="noopener noreferrer">FibeMC</a>
+                <a href="https://round-corner.imageonline.co/" rel="noopener noreferrer">Image Rounder</a>
+                <a href="https://linkie.shedaniel.dev/mappings" rel="noopener noreferrer">Linkie Mappings</a>
+                <a href="https://linkie.shedaniel.dev/dependencies" rel="noopener noreferrer">Linkie Dependencies</a>
+                <a href="https://somsubhra.github.io/github-release-stats/" rel="noopener noreferrer">GitHub Download Count</a>
+                <a href="https://minecraft.wiki/w/Formatting_codes#Use_in_server.properties_and_pack.mcmeta" rel="noopener noreferrer">Minecraft Color Codes</a>
+            </div>
 
-        <details>
-            <summary>Java CI with Gradle – MC 1.20.4 and lower</summary>
-            <div class="dropdown-content">
-        <pre><code>name: Java CI with Gradle
+            <h2 class="section-title">CI workflows</h2>
+
+            <details class="ci">
+                <summary>Java CI with Gradle – MC 1.20.4 and lower</summary>
+                <pre><code>name: Java CI with Gradle
 
 on:
   push:
@@ -84,13 +132,11 @@ jobs:
           title: "Latest Build"
           files: |
             ./build/libs/*.jar</code></pre>
-            </div>
-        </details>
+            </details>
 
-        <details>
-            <summary>Java CI with Gradle – MC 1.20.6-1.21</summary>
-            <div class="dropdown-content">
-        <pre><code>name: Java CI with Gradle
+            <details class="ci">
+                <summary>Java CI with Gradle – MC 1.20.6-1.21</summary>
+                <pre><code>name: Java CI with Gradle
 
 on: [ push,pull_request ]
 
@@ -129,21 +175,17 @@ jobs:
           title: "Latest Build"
           files: |
             ./build/libs/*.jar</code></pre>
-            </div>
-        </details>
+            </details>
 
-        <details>
-            <summary>Java CI with Gradle – MC 1.21+</summary>
-            <div class="dropdown-content">
-        <pre><code>
-name: build
+            <details class="ci">
+                <summary>Java CI with Gradle – MC 1.21+</summary>
+                <pre><code>name: build
 on: [pull_request, push]
 
 jobs:
   build:
     strategy:
       matrix:
-        # Use these Java versions
         java: [
           21,    # Current Java LTS
         ]
@@ -172,14 +214,14 @@ jobs:
         run: rm -f ./build/libs/*-sources.jar || true
 
       - name: capture build artifacts
-        if: ${{ matrix.java == '21' }} # Only upload artifacts built from latest java
+        if: ${{ matrix.java == '21' }}
         uses: actions/upload-artifact@v4
         with:
           name: Artifacts
           path: build/libs/
 
       - name: create automatic release
-        if: ${{ github.event_name == 'push' && matrix.java == '21' }} # Only release on pushes, not PRs
+        if: ${{ github.event_name == 'push' && matrix.java == '21' }}
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -188,9 +230,9 @@ jobs:
           title: "Latest Build (1.21.9-1.21.10)"
           files: |
             ./build/libs/*.jar</code></pre>
-            </div>
-        </details>
-    </section>
-</main>
+            </details>
+        </div>
+    </main>
+</div>
 </body>
 </html>

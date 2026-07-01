@@ -36,9 +36,10 @@ function populateRepos(githubRepos, modrinthProjects) {
         return;
     }
 
-    githubRepos.forEach(repo => {
+    githubRepos.forEach((repo, index) => {
         const repoElement = document.createElement('div');
         repoElement.classList.add('repo');
+        repoElement.style.animationDelay = Math.min(index * 0.04, 0.4) + 's';
 
         const repoName = document.createElement('h3');
         repoName.textContent = repo.name;
@@ -117,7 +118,7 @@ function initializeNavigation() {
 
 function smoothScroll(target) {
     window.scrollTo({
-        top: target.offsetTop - 152, // magic number :yas:
+        top: target.offsetTop - 80, // header height + margin
         behavior: 'smooth'
     });
 }
