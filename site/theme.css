@@ -28,6 +28,8 @@
     --aur-1: rgba(22, 163, 74, .40);
     --aur-2: rgba(14, 165, 163, .34);
     --aur-3: rgba(101, 199, 120, .30);
+    --code-bg: #0b0f0d;
+    --code-ink: #d6f5df;
     --font: 'Inter', system-ui, sans-serif;
 }
 
