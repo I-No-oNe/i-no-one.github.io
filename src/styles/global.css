@@ -3,7 +3,6 @@
   --green: var(--accent); --green-soft: var(--accent-soft); --green-bright: var(--accent);
   --font-body: var(--font); --font-display: var(--font); --orange: #e8953f;
 }
-.shell { width: min(1080px,100%); margin-inline:auto; padding-inline:22px; }
 .eyebrow{color:var(--accent-ink);font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 .js [data-reveal]{opacity:0;transform:translateY(18px) scale(.992);transition:opacity .6s var(--ease),transform .6s var(--ease);transition-delay:var(--reveal-delay,0ms)}.js [data-reveal].is-visible{opacity:1;transform:none}
@@ -17,10 +16,10 @@
 }
 
 /* Lightweight liquid-glass enhancement: one blur per major surface, static highlights. */
-header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-textarea,.tool-app-card,.search-box,.history-container{
+header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-textarea,.tool-app-card,.history-container{
   backdrop-filter:blur(var(--blur)) saturate(180%) brightness(1.03);-webkit-backdrop-filter:blur(var(--blur)) saturate(180%) brightness(1.03);
 }
-.profile-card,.card,.panel,.countdown-card,.info-banner,.tool-app-card,.search-box,.history-container{
+.profile-card,.card,.panel,.countdown-card,.info-banner,.tool-app-card,.history-container{
   border-color:var(--glass-brd)!important;
   background-image:linear-gradient(145deg,color-mix(in srgb,var(--glass-hi) 22%,transparent),transparent 42%,color-mix(in srgb,var(--accent-soft) 18%,transparent));
   box-shadow:var(--shadow),inset 0 1px 0 var(--glass-hi),inset 1px 0 0 color-mix(in srgb,var(--glass-hi) 60%,transparent),inset 0 -1px 0 var(--glass-lo)!important;
@@ -40,10 +39,10 @@ header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-t
 :where(.server-tag,.controls button,.tab,.btn-p,.btn-s){min-height:42px}
 
 @media(max-width:720px){
-  :root{--blur:12px}.shell{padding-inline:16px}
+  :root{--blur:12px}
   .aurora{background:radial-gradient(circle at 8% 8%,var(--aur-1),transparent 34%),radial-gradient(circle at 100% 36%,var(--aur-2),transparent 40%),radial-gradient(circle at 48% 100%,var(--aur-3),transparent 38%)}
   .aurora .blob{display:none}
-  header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-textarea,.tool-app-card,.search-box,.history-container{backdrop-filter:blur(12px) saturate(155%);-webkit-backdrop-filter:blur(12px) saturate(155%)}
+  header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-textarea,.tool-app-card,.history-container{backdrop-filter:blur(12px) saturate(155%);-webkit-backdrop-filter:blur(12px) saturate(155%)}
   :where(.server-tag,.controls button,.tab,.btn-p,.btn-s){min-height:44px}
   .pdf-app .card{backdrop-filter:none;-webkit-backdrop-filter:none}
   .profile-card{padding:28px 18px;gap:20px}.profile-avatar{width:130px;height:130px}.profile-info h1{font-size:2.15rem}.tagline{font-size:.98rem}.profile-card .cta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:10px}.profile-card .cta .btn{width:100%;min-height:44px}.profile-card .cta .btn:last-child{grid-column:1/-1;width:min(160px,100%);justify-self:center}

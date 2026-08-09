@@ -1,7 +1,9 @@
 const PROJECT_CACHE_KEY = 'i-no-one:projects:v1';
 let projectCache = readProjectCache();
 let modrinthProjects = projectCache?.modrinth || [];
-let shownGithubSignature = '';
+// The grid is rendered at build time; its signature seeds ours so a matching
+// refresh is a no-op and a stale cache never overwrites fresher markup.
+let shownGithubSignature = document.getElementById('repos')?.dataset.signature || '';
 
 function readProjectCache() {
     try { return JSON.parse(localStorage.getItem(PROJECT_CACHE_KEY) || 'null'); }
@@ -25,6 +27,15 @@ async function fetchJson(url) {
     }
 }
 
+// Repo name -> Modrinth slug table, emitted by the page so it stays in one place.
+let slugMappings;
+function readSlugMappings() {
+    if (slugMappings) return slugMappings;
+    try { slugMappings = JSON.parse(document.getElementById('modrinth-slugs')?.textContent || '{}'); }
+    catch { slugMappings = {}; }
+    return slugMappings;
+}
+
 function githubSignature(repos) {
     return repos.map(repo => `${repo.id}:${repo.updated_at}`).join('|');
 }
@@ -37,7 +48,7 @@ function showGithubRepos(repos) {
 }
 
 function initProjects() {
-    if (projectCache?.github?.length) showGithubRepos(projectCache.github);
+    if (!shownGithubSignature && projectCache?.github?.length) showGithubRepos(projectCache.github);
 
     fetchJson('https://api.github.com/users/I-No-oNe/repos')
         .then(repos => repos.map(({ id, name, description, html_url, updated_at }) => ({ id, name, description, html_url, updated_at })))
@@ -145,15 +156,7 @@ function appendModrinthLinks(projects) {
 }
 
 function findMatchingModrinthProject(repoName, modrinthProjects) {
-    const specificMappings = {
-        'Hit-Color' : 'no-ones-hit-color',
-        'View-Model': 'no-ones-view-model',
-        'ClickCrystalPlus-Pack': 'clickcrystalplus-pack',
-        'Auto-Disconnect': 'auto-disconnect',
-        'Attack-Blocker': 'attack-blocker',
-        'Glowing-Entities': 'glowing-entities',
-        'Death-Effects': 'death-effects'
-    };
+    const specificMappings = readSlugMappings();
 
     if (specificMappings[repoName]) {
         return modrinthProjects.find(project => project.slug === specificMappings[repoName]);

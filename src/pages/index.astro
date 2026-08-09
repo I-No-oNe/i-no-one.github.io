@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import PageFooter from '../components/PageFooter.astro';
@@ -7,20 +8,74 @@ import GlassPanel from '../components/GlassPanel.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import StatusBadge from '../components/StatusBadge.astro';
 import Icon from '../components/Icon.astro';
+import avatar from '../assets/avatar.png';
 import repoScript from '../../site/script.js?url';
+
+/* Repo name -> Modrinth slug, for the pairs the title match cannot resolve.
+   Serialised into the page so script.js reuses the same table on refresh. */
+const modrinthSlugs: Record<string, string> = {
+  'Hit-Color': 'no-ones-hit-color',
+  'View-Model': 'no-ones-view-model',
+  'ClickCrystalPlus-Pack': 'clickcrystalplus-pack',
+  'Auto-Disconnect': 'auto-disconnect',
+  'Attack-Blocker': 'attack-blocker',
+  'Glowing-Entities': 'glowing-entities',
+  'Death-Effects': 'death-effects'
+};
+
+/* Projects are pulled at build time so the grid ships as HTML; script.js only
+   refreshes it when GitHub reports something newer. */
+interface Repo { id: number; name: string; description: string | null; html_url: string; updated_at: string }
+interface ModrinthProject { id: string; slug: string; title: string }
+
+async function fetchJson<T>(url: string): Promise<T> {
+  const response = await fetch(url, { signal: AbortSignal.timeout(8000) });
+  if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+  return response.json() as Promise<T>;
+}
+
+const [repos, modrinthProjects] = await Promise.all([
+  fetchJson<Repo[]>('https://api.github.com/users/I-No-oNe/repos')
+    .then((list) => list.map(({ id, name, description, html_url, updated_at }) => ({ id, name, description, html_url, updated_at })))
+    .catch((error: Error) => { console.warn('[build] GitHub projects unavailable:', error.message); return [] as Repo[]; }),
+  fetchJson<ModrinthProject[]>('https://api.modrinth.com/v2/user/iwsGxbBt/projects')
+    .then((list) => list.map(({ id, slug, title }) => ({ id, slug, title })))
+    .catch((error: Error) => { console.warn('[build] Modrinth projects unavailable:', error.message); return [] as ModrinthProject[]; })
+]);
+
+const findModrinthProject = (repoName: string) => {
+  const slug = modrinthSlugs[repoName];
+  return slug
+    ? modrinthProjects.find((project) => project.slug === slug)
+    : modrinthProjects.find((project) => project.title.toLowerCase() === repoName.toLowerCase());
+};
+
+const reposSignature = repos.map((repo) => `${repo.id}:${repo.updated_at}`).join('|');
 ---
 
 <BaseLayout title="I-No-oNe" description="I-No-oNe - Minecraft mod developer, maker of web tools and FRC gadgets. Open source on GitHub and Modrinth.">
-  <Fragment slot="head"><link rel="preconnect" href="https://avatars.githubusercontent.com" /><link rel="preconnect" href="https://api.github.com" crossorigin /><link rel="preconnect" href="https://api.modrinth.com" crossorigin /></Fragment>
+  <Fragment slot="head"><link rel="preconnect" href="https://api.github.com" crossorigin /><link rel="preconnect" href="https://api.modrinth.com" crossorigin /></Fragment>
   <SiteHeader />
   <main id="top">
     <section id="home" class="hero"><div class="container"><GlassPanel class="profile-card hero-panel">
       <div class="profile-glow" aria-hidden="true"></div>
-      <div class="avatar-wrap"><img src="https://avatars.githubusercontent.com/u/145749961?s=400&v=4" alt="I-No-oNe avatar" class="profile-avatar" width="400" height="400" fetchpriority="high" decoding="async" /></div>
+      <div class="avatar-wrap"><Image src={avatar} alt="I-No-oNe avatar" class="profile-avatar" width={400} height={400} loading="eager" fetchpriority="high" decoding="async" /></div>
       <div class="profile-info"><div class="badges"><StatusBadge live>Heads-down on private work</StatusBadge><StatusBadge>Free time: personal software &amp; mods</StatusBadge></div><h1>I-No-oNe</h1><p class="tagline">Mod developer &amp; maker. I build Minecraft mods, handy web tools, and FRC gadgets - all open source on GitHub and Modrinth.</p><div class="cta"><ActionButton href="https://github.com/I-No-oNe" variant="primary" external>GitHub</ActionButton><ActionButton href="https://modrinth.com/user/I-No-oNe" external>Modrinth</ActionButton><ActionButton href="https://discord.com/users/1051897115447660697" external>Discord</ActionButton></div></div>
     </GlassPanel></div></section>
     <div class="container">
-      <GlassPanel as="section" id="projects" class="card" reveal><SectionHeader title="Projects" subtitle="Public repositories, synced live from GitHub & Modrinth." href="https://github.com/I-No-oNe?tab=repositories" linkLabel="All repos" /><div id="repos" class="repos-grid" aria-busy="true" aria-live="polite">{Array.from({ length: 6 }, (_, index) => <div class="repo repo-skeleton" aria-hidden="true" style={`--skeleton-delay:${index * 70}ms`}><span></span><span></span><span></span></div>)}</div></GlassPanel>
+      <GlassPanel as="section" id="projects" class="card" reveal><SectionHeader title="Projects" subtitle="Public repositories, synced live from GitHub & Modrinth." href="https://github.com/I-No-oNe?tab=repositories" linkLabel="All repos" /><div id="repos" class="repos-grid" aria-busy={repos.length ? 'false' : 'true'} aria-live="polite" data-signature={reposSignature || undefined}>{repos.length
+        ? repos.map((repo) => {
+            const modrinthProject = findModrinthProject(repo.name);
+            return <div class="repo" data-repo-name={repo.name}>
+              <h3>{repo.name}</h3>
+              <p>{repo.description || 'No description available.'}</p>
+              <div class="repo-links">
+                <a href={repo.html_url} target="_blank" rel="noopener noreferrer">View on GitHub</a>
+                {modrinthProject && <a href={`https://modrinth.com/project/${modrinthProject.id}`} target="_blank" rel="noopener noreferrer" class="modrinth-link">View on Modrinth</a>}
+              </div>
+            </div>;
+          })
+        : Array.from({ length: 6 }, (_, index) => <div class="repo repo-skeleton" aria-hidden="true" style={`--skeleton-delay:${index * 70}ms`}><span></span><span></span><span></span></div>)}</div></GlassPanel>
       <div class="two-col">
         <GlassPanel as="section" id="frc" class="card" reveal delay={80}><SectionHeader title="FRC" /><p>The FIRST® Robotics Competition stages short games played by robots - designed and built by high-school teams and engineer mentors, then driven in live competition.</p><ActionButton href="/counter/" variant="primary">Season countdown <Icon name="arrow" size={16} /></ActionButton></GlassPanel>
         <GlassPanel as="section" id="tools" class="card" reveal delay={140}><SectionHeader title="Tools" /><p>A small collection of web tools I actually use - QR maker, PDF utils, obfuscator, server checker and more.</p><ActionButton href="/tools/" variant="primary">Open tools <Icon name="arrow" size={16} /></ActionButton></GlassPanel>
@@ -29,5 +84,6 @@ import repoScript from '../../site/script.js?url';
     </div>
   </main>
   <PageFooter />
+  <script id="modrinth-slugs" type="application/json" is:inline set:html={JSON.stringify(modrinthSlugs)}></script>
   <script is:inline src={repoScript} defer></script>
 </BaseLayout>

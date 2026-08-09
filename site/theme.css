@@ -114,15 +114,7 @@ a:hover { color: var(--accent); }
 
 @media (prefers-reduced-motion: reduce) {
     ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
-}
-
-/* Glass surface */
-.glass {
-    background: linear-gradient(145deg, color-mix(in srgb, var(--glass-hi) 22%, var(--glass)), var(--glass) 48%, color-mix(in srgb, var(--accent-soft) 18%, var(--glass)));
-    backdrop-filter: blur(var(--blur)) saturate(180%) brightness(1.03);
-    -webkit-backdrop-filter: blur(var(--blur)) saturate(180%) brightness(1.03);
-    border: 1px solid var(--glass-brd);
-    box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi), inset 1px 0 0 color-mix(in srgb,var(--glass-hi) 65%,transparent), inset 0 -1px 0 var(--glass-lo);
+    .blob, [data-theme="dark"] .aurora::before { animation: none; }
 }
 
 /* Buttons */
@@ -245,7 +237,6 @@ a:hover { color: var(--accent); }
 
 /* Page entrance */
 @keyframes rise { from { opacity: 0; transform: translateY(12px) scale(.995); } to { opacity: 1; transform: none; } }
-.rise { animation: rise .6s var(--ease) both; }
 
 /* Mobile sidebar -> topbar */
 @media (max-width: 780px) {

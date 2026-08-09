@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://i-no-one.github.io/</loc><priority>1.0</priority></url>
+  <url><loc>https://i-no-one.github.io/tools/</loc><priority>0.9</priority></url>
+  <url><loc>https://i-no-one.github.io/tools/qr-maker/</loc><priority>0.8</priority></url>
+  <url><loc>https://i-no-one.github.io/tools/pdf-utils/</loc><priority>0.8</priority></url>
+  <url><loc>https://i-no-one.github.io/tools/obfuscator/</loc><priority>0.8</priority></url>
+  <url><loc>https://i-no-one.github.io/tools/server-checker/</loc><priority>0.8</priority></url>
+  <url><loc>https://i-no-one.github.io/counter/</loc><priority>0.7</priority></url>
+  <url><loc>https://i-no-one.github.io/addon/</loc><priority>0.6</priority></url>
+  <url><loc>https://i-no-one.github.io/donate/</loc><priority>0.5</priority></url>
+</urlset>

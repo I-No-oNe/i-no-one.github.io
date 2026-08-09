@@ -12,6 +12,11 @@ const {
   title = 'I-No-oNe - Developer & Maker',
   description = 'Minecraft mod developer, web tool maker, and FRC builder. Open-source projects on GitHub and Modrinth.'
 } = Astro.props;
+
+// Routes build as /tools.html but are served as /tools/, so share the clean form.
+const routePath = Astro.url.pathname.replace(/index\.html$/, '').replace(/\.html$/, '/');
+const canonical = new URL(routePath.endsWith('/') ? routePath : `${routePath}/`, Astro.site);
+const socialImage = new URL('/favicon.png', Astro.site);
 ---
 
 <!doctype html>
@@ -23,8 +28,19 @@ const {
     <meta name="theme-color" content="#0d1210" />
     <meta name="color-scheme" content="light dark" />
     <style is:inline>html{background:#eef1ee}html[data-theme="dark"]{background:#0c1010}</style>
-    <link rel="icon" href="https://avatars.githubusercontent.com/u/145749961?s=512&v=4" type="image/png" sizes="512x512" />
-    <link rel="apple-touch-icon" href="https://avatars.githubusercontent.com/u/145749961?s=512&v=4" sizes="512x512" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="460x460" />
+    <link rel="apple-touch-icon" href="/favicon.png" sizes="460x460" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="I-No-oNe" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
     <slot name="head" />
     <title>{title}</title>
     <script is:inline>
