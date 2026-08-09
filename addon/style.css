@@ -180,9 +180,20 @@ h1 {
     overflow: hidden;
 }
 
+/* Fixed layout so a long module name or an unbroken description can never push
+   the table wider than the phone it is being read on. */
 table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th:first-child {
+    width: 30%;
+}
+
+td {
+    overflow-wrap: anywhere;
 }
 
 th {
@@ -400,7 +411,7 @@ footer a:hover {
         flex-direction: column;
     }
 
-    .mod-name {
+    th:first-child, .mod-name {
         width: 40%;
     }
 }
