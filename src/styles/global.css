@@ -54,6 +54,7 @@ header,.sidebar{
 @media(max-width:380px){
   .nav-bar{gap:7px;padding-inline:12px}.nav-actions{gap:6px}.nav-btn{min-height:42px;padding:7px 9px;font-size:.76rem}.theme-toggle{width:42px;height:42px}.mobile-menu-toggle{width:42px;height:42px;flex-basis:42px}.brand-avatar{width:34px;height:34px}.site-header .brand span{font-size:.96rem}
   .profile-card{padding-inline:15px}.badges{gap:7px}.badge{padding:6px 9px;font-size:.72rem}.profile-info h1{font-size:2rem}.tagline{font-size:.94rem}.card{padding-inline:17px}.card-head h2{font-size:1.45rem}
+  .repo-links a{padding-inline:7px;font-size:.74rem}
 }
 @media(hover:hover) and (pointer:fine){.glass-panel{transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease)}.mobile-link-grid a:hover{border-color:var(--accent);transform:translateY(-1px)}}
 @media(hover:none){#cursor-glow{display:none}}

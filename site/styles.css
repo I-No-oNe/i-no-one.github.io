@@ -231,9 +231,10 @@ footer { border-top: 1px solid var(--line); margin-top: 28px; padding: 30px 0; }
     .profile-info h1 { font-size: 2.4rem; }
     .card-head { flex-direction: column; align-items: flex-start; }
     .contact-card { flex-direction: column; align-items: flex-start; }
-    /* Keep the GitHub/Modrinth pair side by side instead of stacking. */
-    .repo-links { flex-wrap: nowrap; }
-    .repo-links a { flex: 1 1 0; min-width: 0; padding-inline: 8px; text-align: center; white-space: nowrap; }
+    /* Keep the GitHub/Modrinth pair side by side. Each button takes its label
+       width plus an equal share of the slack, so neither label is cramped; if a
+       screen is too narrow for both, the row wraps rather than clipping. */
+    .repo-links a { flex: 1 1 auto; padding-inline: 10px; font-size: .78rem; text-align: center; white-space: nowrap; }
 }
 @media (max-width: 460px) {
     .nav-btn { padding: 7px 10px; font-size: .78rem; }
