@@ -1,7 +1,44 @@
 'use strict';
-const { jsPDF } = window.jspdf;
-const { PDFDocument } = PDFLib;
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+const loadedScripts = new Map();
+function loadScript(src, ready) {
+    if (ready()) return Promise.resolve();
+    if (loadedScripts.has(src)) return loadedScripts.get(src);
+    const promise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src; script.async = true;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error('Could not load required library.'));
+        document.head.appendChild(script);
+    });
+    loadedScripts.set(src, promise);
+    return promise;
+}
+async function getJsPdf() {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', () => Boolean(window.jspdf));
+    return window.jspdf.jsPDF;
+}
+async function getPdfLib() {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js', () => Boolean(window.PDFLib));
+    return window.PDFLib.PDFDocument;
+}
+async function getMammoth() {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js', () => Boolean(window.mammoth));
+    return window.mammoth;
+}
+async function getHtmlToPdf() {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js', () => Boolean(window.html2pdf));
+    return window.html2pdf;
+}
+async function getPdfJs() {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js', () => Boolean(window.pdfjsLib));
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    return window.pdfjsLib;
+}
+async function getTesseract() {
+    await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js', () => Boolean(window.Tesseract));
+    return window.Tesseract;
+}
 
 // State
 let convertFiles = [], mergeFiles = [], splitFile = null, ocrFile = null;
@@ -71,6 +108,7 @@ document.getElementById('btnConvert').addEventListener('click', async ()=>{
     if(!convertFiles.length) return;
     showProc('procConvert',true); document.getElementById('btnConvert').disabled=true;
     try {
+        const jsPDF = await getJsPdf();
         const doc=new jsPDF({orientation:document.getElementById('orConvert').value,unit:'mm',format:document.getElementById('psConvert').value});
         let first=true;
         for(const file of convertFiles){
@@ -92,6 +130,7 @@ document.getElementById('btnConvert').addEventListener('click', async ()=>{
                 const text=await file.text(); doc.setFontSize(11);
                 doc.text(doc.splitTextToSize(text,doc.internal.pageSize.getWidth()-20),10,15);
             } else if(['doc','docx'].includes(ext)){
+                const mammoth = await getMammoth();
                 const r=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()}); doc.setFontSize(11);
                 doc.text(doc.splitTextToSize(r.value,doc.internal.pageSize.getWidth()-20),10,15);
             }
@@ -103,7 +142,7 @@ document.getElementById('btnConvert').addEventListener('click', async ()=>{
 });
 
 /* ── MERGE ── */
-async function getPageCount(f){try{const p=await PDFDocument.load(await f.arrayBuffer(),{ignoreEncryption:true});return p.getPageCount();}catch{return'?';}}
+async function getPageCount(f){try{const PDFDocument=await getPdfLib();const p=await PDFDocument.load(await f.arrayBuffer(),{ignoreEncryption:true});return p.getPageCount();}catch{return'?';}}
 async function renderMergeList(){
     const list=document.getElementById('flMerge'); list.innerHTML=''; let tp=0;
     for(const[i,f] of mergeFiles.entries()){
@@ -132,6 +171,7 @@ document.getElementById('btnMerge').addEventListener('click',async()=>{
     if(mergeFiles.length<2)return;
     showProc('procMerge',true); document.getElementById('btnMerge').disabled=true;
     try{
+        const PDFDocument=await getPdfLib();
         const merged=await PDFDocument.create();
         for(const f of mergeFiles){const src=await PDFDocument.load(await f.arrayBuffer(),{ignoreEncryption:true});(await merged.copyPages(src,src.getPageIndices())).forEach(p=>merged.addPage(p));}
         showPreview(new Blob([await merged.save()],{type:'application/pdf'}),'merged.pdf');
@@ -147,6 +187,7 @@ document.getElementById('btnHtmlPdf').addEventListener('click',async()=>{
     if(!html){showAlert('Paste some HTML first.','error');return;}
     showProc('procHtml',true); document.getElementById('btnHtmlPdf').disabled=true;
     try{
+        const html2pdf=await getHtmlToPdf();
         const c=document.createElement('div'); c.innerHTML=html; document.body.appendChild(c);
         const blob=await html2pdf().set({margin:+document.getElementById('mgHtml').value||10,filename:'html-export.pdf',image:{type:'jpeg',quality:.9},html2canvas:{scale:2,useCORS:true},jsPDF:{unit:'mm',format:document.getElementById('psHtml').value,orientation:document.getElementById('orHtml').value}}).from(c).outputPdf('blob');
         document.body.removeChild(c);
@@ -171,6 +212,7 @@ document.getElementById('btnSplit').addEventListener('click',async()=>{
     if(!splitFile)return;
     showProc('procSplit',true); document.getElementById('btnSplit').disabled=true;
     try{
+        const PDFDocument=await getPdfLib();
         const src=await PDFDocument.load(await splitFile.arrayBuffer(),{ignoreEncryption:true});
         const total=src.getPageCount(), method=document.getElementById('splitMethod').value;
         let groups=[];
@@ -288,6 +330,7 @@ document.getElementById('btnOcr').addEventListener('click',async()=>{
 
         if(isPdf){
             document.getElementById('procOcrLabel').textContent='Loading PDF…';
+            const pdfjsLib=await getPdfJs();
             const pdfjs=await pdfjsLib.getDocument({data:new Uint8Array(await ocrFile.arrayBuffer())}).promise;
             const total=pdfjs.numPages;
             const pages=parsePages(document.getElementById('ocrPages').value,total);
@@ -304,6 +347,7 @@ document.getElementById('btnOcr').addEventListener('click',async()=>{
         document.getElementById('procOcrLabel').textContent='Loading Tesseract…';
         setProgress(30);
 
+        const Tesseract=await getTesseract();
         const worker=await Tesseract.createWorker(langs,1,{
             logger:m=>{
                 if(m.status==='recognizing text'){
@@ -348,7 +392,7 @@ document.getElementById('btnOcr').addEventListener('click',async()=>{
 
 document.getElementById('btnOcrCopy').addEventListener('click',()=>{
     const t=document.getElementById('ocrText').value; if(!t)return;
-    navigator.clipboard.writeText(t).then(()=>showAlert('Copied!')).catch(()=>{document.getElementById('ocrText').select();document.execCommand('copy');showAlert('Copied!');});
+    navigator.clipboard.writeText(t).then(()=>showAlert('Copied!')).catch(()=>showAlert('Clipboard access was denied.','error'));
 });
 
 document.getElementById('btnOcrTxt').addEventListener('click',()=>{

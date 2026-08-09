@@ -110,7 +110,8 @@ function encode() {
     }
 
     try {
-        const base64 = btoa(unescape(encodeURIComponent(text)));
+        const bytes = new TextEncoder().encode(text);
+        const base64 = btoa(Array.from(bytes, byte => String.fromCharCode(byte)).join(''));
         const shuffled = shuffleStringDeterministic(base64, key);
         const output = [...shuffled].reverse().join('');
 
@@ -137,7 +138,8 @@ function decode() {
     try {
         const reversed = [...text].reverse().join('');
         const unshuffled = unshuffleStringDeterministic(reversed, key);
-        const decoded = decodeURIComponent(escape(atob(unshuffled)));
+        const bytes = Uint8Array.from(atob(unshuffled), char => char.charCodeAt(0));
+        const decoded = new TextDecoder().decode(bytes);
 
         outputText.value = decoded;
         addToHistory('DECODE', text, key, decoded);

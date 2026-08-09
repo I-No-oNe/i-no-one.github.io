@@ -1,0 +1,21 @@
+---
+import ToolsLayout from '../../layouts/ToolsLayout.astro';
+import styles from '../../../tools/qr-maker/styles.css?url';
+import logic from '../../../tools/qr-maker/script.js?url';
+---
+
+<ToolsLayout active="qr" title="QR code maker" description="Generate and download a clean QR code from text or a URL." stylesheets={[styles]}>
+  <div class="container tool-app-card">
+    <div class="input-section">
+      <label class="sr-only" for="text">Text or URL</label>
+      <input type="text" id="text" class="field" placeholder="Enter text or URL" autocomplete="off" />
+      <button class="btn btn-primary" type="button" onclick="generateQR()">Generate</button>
+    </div>
+    <p class="privacy-note">Everything happens locally in this tab.</p>
+    <div class="loading-spinner" id="spinner" aria-label="Generating QR code"></div>
+    <div id="qrcode" class="qrcode" aria-live="polite"></div>
+    <button id="downloadBtn" class="btn" type="button" onclick="downloadQR()" style="display:none; margin-top:20px;">Download QR code</button>
+  </div>
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script is:inline src={logic}></script>
+</ToolsLayout>

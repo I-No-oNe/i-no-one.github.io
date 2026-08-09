@@ -3,6 +3,26 @@
 
 Personal site + a set of small web tools. 
 
+Built with Astro and deployed as a static GitHub Pages site at
+`https://i-no-one.github.io`. Existing `.html` routes are preserved.
+
+## Local development
+
+```bash
+npm install
+npm run dev
+```
+
+Production check:
+
+```bash
+npm run build
+npm run preview
+```
+
+Pushes to `main` deploy `dist/` through the GitHub Pages workflow. In repository
+settings, Pages source must be set to **GitHub Actions**.
+
 ## Main Site 🕹️:
 
 - [Main Site](https://i-no-one.github.io/)

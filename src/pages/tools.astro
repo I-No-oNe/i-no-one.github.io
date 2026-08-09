@@ -1,0 +1,30 @@
+---
+import ToolsLayout from '../layouts/ToolsLayout.astro';
+
+const links = [
+  ['Rat Scanner', 'https://isthisarat.com/'], ['Markdown Editor', 'https://dillinger.io/'],
+  ['Linkie Mappings', 'https://linkie.shedaniel.dev/mappings'], ['Linkie Dependencies', 'https://linkie.shedaniel.dev/dependencies'],
+  ['GitHub Release Stats', 'https://somsubhra.github.io/github-release-stats/'], ['Minecraft Color Codes', 'https://minecraft.wiki/w/Formatting_codes']
+];
+
+const workflows = [
+  { title: 'Gradle · Java 17', code: `name: Java CI with Gradle\n\non: [push, pull_request]\n\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-java@v4\n        with:\n          java-version: '17'\n          distribution: zulu\n      - uses: gradle/actions/setup-gradle@v4\n      - run: chmod +x gradlew && ./gradlew build` },
+  { title: 'Gradle · Java 21', code: `name: Java CI with Gradle\n\non: [push, pull_request]\n\njobs:\n  build:\n    runs-on: ubuntu-22.04\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-java@v4\n        with:\n          java-version: '21'\n          distribution: microsoft\n      - uses: gradle/actions/setup-gradle@v4\n      - run: chmod +x gradlew && ./gradlew build` },
+  { title: 'Upload build artifacts', code: `- name: Upload artifacts\n  uses: actions/upload-artifact@v4\n  with:\n    name: build-artifacts\n    path: build/libs/*.jar\n    if-no-files-found: error` }
+];
+---
+
+<ToolsLayout active="overview" title="Tools" description="Small, focused utilities that run directly in your browser.">
+  <div class="tools-two-col">
+    <section class="tool-panel panel">
+      <div class="tool-panel-head"><h2><span class="panel-dot"></span>Helpful links</h2></div>
+      <div class="bookmark-list">{links.map(([label, href]) => <a href={href} target="_blank" rel="noopener noreferrer"><span>{label}</span>↗</a>)}</div>
+    </section>
+    <section class="tool-panel panel">
+      <div class="tool-panel-head"><h2><span class="panel-dot"></span>CI workflows</h2></div>
+      <div class="workflow-list">
+        {workflows.map((workflow) => <details><summary>{workflow.title}<span>+</span></summary><pre><code>{workflow.code}</code></pre></details>)}
+      </div>
+    </section>
+  </div>
+</ToolsLayout>

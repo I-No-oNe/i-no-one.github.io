@@ -1,0 +1,6 @@
+---
+interface Props { href: string; icon: string; label: string; active?: boolean; }
+const { href, icon, label, active = false } = Astro.props;
+---
+
+<a class:list={['side-link', { active }]} href={href} aria-current={active ? 'page' : undefined}><span class="ico">{icon}</span><span>{label}</span></a>

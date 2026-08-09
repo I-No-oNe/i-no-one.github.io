@@ -1,0 +1,33 @@
+---
+import ToolsLayout from '../../layouts/ToolsLayout.astro';
+import styles from '../../../tools/obfuscator/style.css?url';
+import logic from '../../../tools/obfuscator/script.js?url';
+---
+
+<ToolsLayout active="obfuscator" title="Obfuscator" description="Encode and decode text locally with your own key." stylesheets={[styles]}>
+  <div class="container tool-app-card">
+    <div class="input-group">
+      <label for="inputText">Input text</label>
+      <textarea id="inputText" class="field" placeholder="Enter text to encode or paste encoded text to decode…" autocomplete="off"></textarea>
+    </div>
+    <div class="input-group">
+      <label for="key">Encryption key</label>
+      <input type="text" id="key" class="field" placeholder="Enter your private key…" autocomplete="off" />
+    </div>
+    <div class="button-group">
+      <button class="btn btn-primary btn-encode" type="button" onclick="encode()">Encode</button>
+      <button class="btn btn-decode" type="button" onclick="decode()">Decode</button>
+    </div>
+    <div class="output-container">
+      <div class="input-group">
+        <label for="outputText">Output</label>
+        <textarea id="outputText" class="field" placeholder="Output appears here…" readonly autocomplete="off"></textarea>
+      </div>
+      <div class="action-buttons">
+        <button class="btn copy-btn" type="button" onclick="copyOutput()">Copy output</button>
+        <button class="btn download-btn" type="button" onclick="downloadHistory()">Download history</button>
+      </div>
+    </div>
+  </div>
+  <script is:inline src={logic}></script>
+</ToolsLayout>

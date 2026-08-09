@@ -1,0 +1,46 @@
+:root {
+  --surface: var(--glass); --surface-2: var(--glass-2); --line-strong: var(--line-2);
+  --green: var(--accent); --green-soft: var(--accent-soft); --green-bright: var(--accent);
+  --font-body: var(--font); --font-display: var(--font); --orange: #e8953f;
+}
+.shell { width: min(1080px,100%); margin-inline:auto; padding-inline:22px; }
+.eyebrow{color:var(--accent-ink);font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.js [data-reveal]{opacity:0;transform:translateY(18px) scale(.992);transition:opacity .6s var(--ease),transform .6s var(--ease);transition-delay:var(--reveal-delay,0ms)}.js [data-reveal].is-visible{opacity:1;transform:none}
+
+/* Main navigation: compact desktop bar and self-contained phone menu. */
+.site-header .desktop-nav{margin-left:auto}.desktop-actions{display:flex;align-items:center;gap:10px}.mobile-menu-toggle{display:none;width:42px;height:42px;padding:0;border:1px solid var(--glass-brd);border-radius:13px;background:var(--glass-2);color:var(--ink);box-shadow:inset 0 1px 0 var(--glass-hi);cursor:pointer}.mobile-menu-toggle span{display:block;width:17px;height:2px;margin:4px auto;border-radius:2px;background:currentColor;transition:transform .25s var(--ease),opacity .2s}.mobile-menu-toggle[aria-expanded="true"] span:first-child{transform:translateY(3px) rotate(45deg)}.mobile-menu-toggle[aria-expanded="true"] span:last-child{transform:translateY(-3px) rotate(-45deg)}.mobile-site-nav{display:none}
+
+@media(max-width:720px){
+  .site-header{background:color-mix(in srgb,var(--header-bg) 90%,transparent)}.site-header .nav-bar{height:62px;padding-inline:14px}.site-header .brand{min-width:0}.site-header .brand span{display:inline;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.site-header .desktop-nav,.desktop-actions{display:none}.mobile-menu-toggle{display:block;flex:0 0 42px}.site-header .nav-actions{margin-left:auto}
+  .mobile-site-nav{position:absolute;top:100%;left:0;right:0;display:block;margin:0;padding:0 10px 12px;pointer-events:none;visibility:hidden;opacity:0;transform:translateY(-8px) scale(.985);transform-origin:top;transition:opacity .22s var(--ease),transform .28s var(--ease),visibility 0s linear .28s}.mobile-site-nav.open{pointer-events:auto;visibility:visible;opacity:1;transform:none;transition-delay:0s}.mobile-site-nav .container{padding:0}.mobile-menu-panel{overflow:hidden;padding:10px;border:1px solid var(--glass-brd);border-radius:20px;background:var(--glass);box-shadow:var(--shadow),inset 0 1px 0 var(--glass-hi);backdrop-filter:blur(12px) saturate(145%);-webkit-backdrop-filter:blur(12px) saturate(145%)}.mobile-link-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.mobile-link-grid a{display:flex;align-items:center;justify-content:space-between;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:13px;background:var(--glass-2);color:var(--ink-2);font-size:.88rem;font-weight:700}.mobile-link-grid a span{color:var(--accent-ink)}.mobile-menu-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.mobile-menu-actions .btn{width:100%;min-height:44px}
+}
+
+/* Lightweight liquid-glass enhancement: one blur per major surface, static highlights. */
+header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-textarea,.tool-app-card,.search-box,.history-container{
+  backdrop-filter:blur(var(--blur)) saturate(155%);-webkit-backdrop-filter:blur(var(--blur)) saturate(155%);
+}
+.profile-card,.card,.panel,.countdown-card,.info-banner,.tool-app-card,.search-box,.history-container{
+  border-color:var(--glass-brd)!important;
+  box-shadow:var(--shadow),inset 0 1px 0 var(--glass-hi),inset 1px 0 0 color-mix(in srgb,var(--glass-hi) 55%,transparent)!important;
+}
+.theme-toggle,.btn,.field,.notes-textarea,.time-box,.workflow-list details,.bookmark-list a{
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--glass-hi) 70%,transparent);
+}
+
+@media(max-width:720px){
+  :root{--blur:9px}.shell{padding-inline:16px}
+  .aurora{background:radial-gradient(circle at 8% 8%,var(--aur-1),transparent 42%),radial-gradient(circle at 100% 36%,var(--aur-2),transparent 48%),radial-gradient(circle at 48% 100%,var(--aur-3),transparent 46%)}
+  .aurora .blob{display:none}
+  header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-textarea,.tool-app-card,.search-box,.history-container{backdrop-filter:blur(9px) saturate(135%);-webkit-backdrop-filter:blur(9px) saturate(135%)}
+  .pdf-app .card{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .profile-card{padding:28px 18px;gap:20px}.profile-avatar{width:130px;height:130px}.profile-info h1{font-size:2.15rem}.tagline{font-size:.98rem}.profile-card .cta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:10px}.profile-card .cta .btn{width:100%;min-height:44px}.profile-card .cta .btn:last-child{grid-column:1/-1;width:min(160px,100%);justify-self:center}
+  .card{padding:28px 20px}.contact-card .cta{width:100%}.contact-card .cta .btn{min-height:44px}
+}
+@media(max-width:380px){
+  .nav-bar{gap:7px;padding-inline:12px}.nav-actions{gap:6px}.nav-btn{min-height:38px;padding:7px 9px;font-size:.76rem}.theme-toggle{width:38px;height:38px}.mobile-menu-toggle{width:38px;height:38px;flex-basis:38px}.brand-avatar{width:28px;height:28px}.site-header .brand span{font-size:.96rem}
+  .profile-card{padding-inline:15px}.badges{gap:7px}.badge{padding:6px 9px;font-size:.72rem}.profile-info h1{font-size:2rem}.tagline{font-size:.94rem}.card{padding-inline:17px}.card-head h2{font-size:1.45rem}
+}
+@media(hover:hover) and (pointer:fine){.glass-panel{transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease)}.mobile-link-grid a:hover{border-color:var(--accent);transform:translateY(-1px)}}
+@media(hover:none){#cursor-glow{display:none}}
+@media(prefers-reduced-motion:reduce){.js [data-reveal]{opacity:1;transform:none;transition:none}.mobile-site-nav,.mobile-menu-toggle span{transition:none!important}}

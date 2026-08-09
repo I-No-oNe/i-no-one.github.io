@@ -14,7 +14,7 @@ function generateQR() {
     downloadBtn.style.display = 'none';
 
     setTimeout(() => {
-        const qrCode = new QRCode(qrCodeContainer, {
+        new QRCode(qrCodeContainer, {
             text: text,
             width: 200,
             height: 200

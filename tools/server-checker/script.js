@@ -104,15 +104,7 @@ function generateShareLink() {
     // Copy to clipboard
     navigator.clipboard.writeText(shareUrl).then(() => {
         showNotification('Share link copied to clipboard!');
-    }).catch(() => {
-        const textArea = document.createElement('textarea');
-        textArea.value = shareUrl;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        showNotification('Share link copied to clipboard!');
-    });
+    }).catch(() => showNotification('Could not copy the link.'));
 }
 
 function showNotification(message) {

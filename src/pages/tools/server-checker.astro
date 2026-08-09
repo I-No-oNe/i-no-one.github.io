@@ -1,0 +1,33 @@
+---
+import ToolsLayout from '../../layouts/ToolsLayout.astro';
+import styles from '../../../tools/server-checker/style.css?url';
+import logic from '../../../tools/server-checker/script.js?url';
+---
+
+<ToolsLayout active="server" title="Minecraft server checker" description="Check live status, version, player count, and MOTD." stylesheets={[styles]}>
+  <div class="container">
+    <div class="search-box tool-app-card">
+      <div class="input-group">
+        <div class="input-wrapper"><label for="hostInput">Server address</label><input type="text" id="hostInput" class="field" placeholder="hypixel.net" /></div>
+        <div class="input-wrapper port-wrapper"><label for="portInput">Port</label><input type="number" id="portInput" class="field port-input" placeholder="25565" value="25565" /></div>
+      </div>
+      <button class="btn btn-primary minecraft-btn" type="button" onclick="checkServer()"><span class="btn-text">Check server</span></button>
+      <div class="popular-servers">
+        <span class="label">Try a popular server</span>
+        <div class="server-tags">
+          <button class="server-tag" type="button" onclick="setServer('hypixel.net',25565)">Hypixel</button>
+          <button class="server-tag" type="button" onclick="setServer('2b2t.org',25565)">2b2t</button>
+          <button class="server-tag" type="button" onclick="setServer('us.mineplex.com',25565)">Mineplex</button>
+          <button class="server-tag" type="button" onclick="setServer('play.cubecraft.net',25565)">CubeCraft</button>
+        </div>
+      </div>
+    </div>
+    <div id="historyContainer" class="history-container">
+      <div class="history-header"><h3>Recent servers</h3><button onclick="clearHistory()" class="clear-history-btn" type="button">Clear history</button></div>
+      <div id="historyList" class="history-list"></div>
+    </div>
+    <div class="results" id="results" aria-live="polite"></div>
+  </div>
+  <div id="notification" class="notification" aria-live="polite"></div>
+  <script is:inline src={logic}></script>
+</ToolsLayout>

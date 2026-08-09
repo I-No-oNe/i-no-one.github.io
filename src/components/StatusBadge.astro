@@ -1,0 +1,6 @@
+---
+interface Props { live?: boolean; }
+const { live = false } = Astro.props;
+---
+
+<span class:list={['badge', { 'badge-dot': live }]}><slot /></span>

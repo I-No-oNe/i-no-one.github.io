@@ -1,0 +1,32 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import ToolNavItem from './ToolNavItem.astro';
+
+interface Props {
+  active: 'overview' | 'qr' | 'pdf' | 'obfuscator' | 'server';
+}
+
+const { active } = Astro.props as Props;
+const links = [
+  { id: 'overview', href: '/tools.html', icon: '🧰', label: 'Overview' },
+  { id: 'qr', href: '/tools/qr-maker.html', icon: '🔳', label: 'QR Code Maker' },
+  { id: 'pdf', href: '/tools/pdf-utils.html', icon: '📄', label: 'PDF Utils' },
+  { id: 'obfuscator', href: '/tools/obfuscator.html', icon: '🔐', label: 'Obfuscator' },
+  { id: 'server', href: '/tools/server-checker.html', icon: '⛏️', label: 'Server Checker' }
+] as const;
+---
+
+<button id="nav-burger" class="nav-burger" type="button" aria-label="Open tools menu" aria-controls="tools-sidebar" aria-expanded="false">
+  <img src="https://avatars.githubusercontent.com/u/145749961?s=48&v=4" alt="" />
+  <span>Tools</span>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
+</button>
+<div id="nav-scrim" class="nav-scrim"></div>
+<aside id="tools-sidebar" class="sidebar">
+  <a class="side-brand" href="/"><img src="https://avatars.githubusercontent.com/u/145749961?s=64&v=4" alt="" /><span>I-No-oNe</span></a>
+  <span class="side-label">Tools</span>
+  {links.map((link) => <ToolNavItem href={link.href} icon={link.icon} label={link.label} active={active === link.id} />)}
+  <span class="side-label">More</span>
+  <ToolNavItem href="/" icon="←" label="Main site" />
+  <div class="side-foot"><a class="btn btn-primary side-donate" href="/donate.html">☕ Donate</a><ThemeToggle /></div>
+</aside>

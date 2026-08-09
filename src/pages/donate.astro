@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Redirecting to Ko-fi…" description="Support I-No-oNe on Ko-fi.">
+  <Fragment slot="head"><meta http-equiv="refresh" content="0; url=https://ko-fi.com/i_no_am/" /><meta name="robots" content="noindex" /></Fragment>
+  <main class="redirect-page"><h1>Redirecting to Ko-fi…</h1><div class="redirect-loader" aria-hidden="true"></div><a class="button secondary" href="https://ko-fi.com/i_no_am/">Continue to Ko-fi</a></main>
+  <script is:inline>window.location.replace('https://ko-fi.com/i_no_am/');</script>
+</BaseLayout>
+
+<style>
+  .redirect-page { min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 24px; text-align: center; }
+  .redirect-page h1 { font-family: var(--font-display); font-size: 1.5rem; }
+  .redirect-loader { width: 42px; height: 42px; border: 3px solid var(--line-strong); border-top-color: var(--green); border-radius: 50%; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>

@@ -36,6 +36,8 @@ function populateRepos(githubRepos, modrinthProjects) {
         return;
     }
 
+    reposContainer.replaceChildren();
+
     githubRepos.forEach((repo, index) => {
         const repoElement = document.createElement('div');
         repoElement.classList.add('repo');

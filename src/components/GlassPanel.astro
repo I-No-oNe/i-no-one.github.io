@@ -1,0 +1,12 @@
+---
+export interface Props {
+  as?: 'div' | 'section' | 'article';
+  id?: string;
+  class?: string;
+  reveal?: boolean;
+  delay?: number;
+}
+const { as: Tag = 'div', id, class: className, reveal = false, delay = 0 } = Astro.props;
+---
+
+<Tag id={id} class:list={['glass-panel', className]} data-reveal={reveal ? '' : undefined} style={delay ? `--reveal-delay:${delay}ms` : undefined}><slot /></Tag>

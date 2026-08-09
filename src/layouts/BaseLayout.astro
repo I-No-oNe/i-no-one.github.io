@@ -1,0 +1,87 @@
+---
+import '../../site/theme.css';
+import '../../site/styles.css';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'I-No-oNe — Developer & Maker',
+  description = 'Minecraft mod developer, web tool maker, and FRC builder. Open-source projects on GitHub and Modrinth.'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0d1210" />
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/145749961?s=64&v=4" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <slot name="head" />
+    <title>{title}</title>
+    <script is:inline>
+      (() => {
+        let theme;
+        try { theme = localStorage.getItem('theme'); } catch {}
+        if (!theme) {
+          const match = document.cookie.match(/(?:^|; )theme=(dark|light)/);
+          theme = match?.[1] || 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.classList.add('js');
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="aurora" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
+    <slot />
+    <script>
+      const root = document.documentElement;
+      const themeButton = document.querySelector('#theme-toggle');
+      themeButton?.addEventListener('click', () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch {}
+        document.cookie = `theme=${next};path=/;max-age=31536000;samesite=lax`;
+      });
+
+      const menuButton = document.querySelector('#menu-toggle');
+      const mobileNav = document.querySelector('#mobile-nav');
+      menuButton?.addEventListener('click', () => {
+        const open = menuButton.getAttribute('aria-expanded') !== 'true';
+        menuButton.setAttribute('aria-expanded', String(open));
+        menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+        mobileNav?.classList.toggle('open', open);
+      });
+      mobileNav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+        menuButton?.setAttribute('aria-expanded', 'false');
+        mobileNav.classList.remove('open');
+      }));
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape' || menuButton?.getAttribute('aria-expanded') !== 'true') return;
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', 'Open navigation');
+        mobileNav?.classList.remove('open');
+        (menuButton as HTMLElement).focus();
+      });
+
+      const revealItems = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      revealItems.forEach((item) => revealObserver.observe(item));
+    </script>
+  </body>
+</html>
