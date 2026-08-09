@@ -1,6 +1,6 @@
 ---
 interface Props {
-  name: 'arrow' | 'code' | 'discord' | 'file' | 'github' | 'grid' | 'heart' | 'home' | 'lock' | 'moon' | 'qr' | 'server' | 'sun' | 'tools';
+  name: 'arrow' | 'close' | 'code' | 'discord' | 'file' | 'github' | 'grid' | 'heart' | 'home' | 'lock' | 'moon' | 'qr' | 'server' | 'sun' | 'tools';
   size?: number;
 }
 
@@ -8,6 +8,7 @@ const { name, size = 20 } = Astro.props;
 
 const paths = {
   arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  close: '<path d="m6 6 12 12M18 6 6 18"/>',
   code: '<path d="m8 9-3 3 3 3m8-6 3 3-3 3m-2-9-4 12"/>',
   discord: '<path d="M8.5 8.5a9 9 0 0 1 7 0m-8 7c3 1.5 6 1.5 9 0M9 13h.01M15 13h.01"/><path d="M7 18c-1.5-.5-2.7-1.2-3.5-2 0-5 1.5-8.5 4-10l2 1c1.7-.4 3.3-.4 5 0l2-1c2.5 1.5 4 5 4 10-.8.8-2 1.5-3.5 2l-1.2-1.5"/>',
   file: '<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5M9 12h6M9 16h6"/>',

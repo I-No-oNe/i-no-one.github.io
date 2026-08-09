@@ -1,0 +1,28 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  active: 'overview' | 'qr' | 'pdf' | 'obfuscator' | 'server';
+  title: string;
+  description: string;
+}
+
+const { active, title, description } = Astro.props as Props;
+const details = {
+  overview: { icon: 'grid', label: 'Toolbox', note: 'No account needed' },
+  qr: { icon: 'qr', label: 'Browser tool', note: 'Runs locally' },
+  pdf: { icon: 'file', label: 'Document tool', note: 'Files stay in this tab' },
+  obfuscator: { icon: 'lock', label: 'Text tool', note: 'Runs locally' },
+  server: { icon: 'server', label: 'Minecraft tool', note: 'Live server lookup' }
+} as const;
+const detail = details[active];
+---
+
+<div class="page-head">
+  <div class="page-head-main">
+    <span class="page-head-icon"><Icon name={detail.icon} size={22} /></span>
+    <div><p class="page-kicker">{detail.label}</p><h1>{title}</h1></div>
+  </div>
+  <p class="page-description">{description}</p>
+  <span class="page-note"><span class="page-note-dot"></span>{detail.note}</span>
+</div>

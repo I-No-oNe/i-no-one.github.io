@@ -1,6 +1,7 @@
 ---
 import ToolsLayout from '../layouts/ToolsLayout.astro';
 import Icon from '../components/Icon.astro';
+import WorkflowCard from '../components/WorkflowCard.astro';
 
 const tools = [
   { href: '/tools/qr-maker.html', icon: 'qr', title: 'QR Code Maker', description: 'Turn a link or note into a downloadable QR code.' },
@@ -22,7 +23,7 @@ const workflows = [
 ];
 ---
 
-<ToolsLayout active="overview" title="Tools" description="Useful things I built for quick jobs. Fast, private, and no account required.">
+<ToolsLayout active="overview" title="Tools" description="Useful things I built for quick jobs. Fast, focused, and ready in your browser.">
   <div class="tool-card-grid">
     {tools.map((tool) => <a class="tool-card" href={tool.href}>
       <span class="tool-card-icon"><Icon name={tool.icon} size={20} /></span>
@@ -38,7 +39,7 @@ const workflows = [
     <section class="tool-panel panel">
       <div class="tool-panel-head"><h2><span class="panel-dot"></span>CI workflows</h2></div>
       <div class="workflow-list">
-        {workflows.map((workflow) => <details><summary>{workflow.title}<span>+</span></summary><pre><code>{workflow.code}</code></pre></details>)}
+        {workflows.map((workflow) => <WorkflowCard title={workflow.title} code={workflow.code} />)}
       </div>
     </section>
   </div>

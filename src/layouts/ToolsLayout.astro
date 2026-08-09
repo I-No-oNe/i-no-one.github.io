@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import ToolPageHeader from '../components/ToolPageHeader.astro';
 import ToolsNavigation from '../components/ToolsNavigation.astro';
 import shellStyles from '../styles/tools-shell.css?url';
 
@@ -16,10 +17,11 @@ const { active, title, description, stylesheets = [] } = Astro.props;
   <Fragment slot="head">{stylesheets.map((href) => <link rel="stylesheet" href={href} />)}<link rel="stylesheet" href={shellStyles} /></Fragment>
   <div class="layout">
     <ToolsNavigation active={active} />
-    <main class="content"><div class="content-inner rise"><div class="page-head"><h1>{title}</h1><p>{description}</p></div><slot /></div></main>
+    <main class="content"><div class="content-inner tool-page-enter"><ToolPageHeader active={active} title={title} description={description} /><div class="tool-page-body"><slot /></div></div></main>
   </div>
   <script>
     const burger = document.querySelector('#nav-burger');
+    const closeButton = document.querySelector('#sidebar-close');
     const sidebar = document.querySelector('.sidebar');
     const scrim = document.querySelector('#nav-scrim');
     const setOpen = (open: boolean) => {
@@ -28,8 +30,12 @@ const { active, title, description, stylesheets = [] } = Astro.props;
       burger?.setAttribute('aria-expanded', String(open));
       burger?.setAttribute('aria-label', open ? 'Close tools menu' : 'Open tools menu');
       document.body.classList.toggle('nav-open', open);
+      if (open) window.setTimeout(() => {
+        if (sidebar?.classList.contains('open')) (closeButton as HTMLElement | null)?.focus();
+      }, 280);
     };
     burger?.addEventListener('click', () => setOpen(!sidebar?.classList.contains('open')));
+    closeButton?.addEventListener('click', () => { setOpen(false); (burger as HTMLElement | null)?.focus(); });
     scrim?.addEventListener('click', () => setOpen(false));
     sidebar?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (event) => {
