@@ -73,7 +73,9 @@ function initProjects() {
         .catch(error => console.error('Modrinth projects failed:', error));
 }
 
-initProjects();
+// The grid already ships as HTML, so the refresh is pure catch-up work: hold it
+// until the browser is idle rather than racing the first paint for bandwidth.
+(window.requestIdleCallback || (cb => setTimeout(cb, 200)))(initProjects, { timeout: 3000 });
 
 function populateRepos(githubRepos, modrinthProjects) {
     const reposContainer = document.getElementById('repos');
@@ -94,10 +96,7 @@ function populateRepos(githubRepos, modrinthProjects) {
         const repoElement = document.createElement('div');
         repoElement.classList.add('repo');
         repoElement.dataset.repoName = repo.name;
-        if (index < 9) {
-            repoElement.classList.add('repo-enter');
-            repoElement.style.transitionDelay = index * 30 + 'ms';
-        }
+        repoElement.style.setProperty('--i', index);
 
         const repoName = document.createElement('h3');
         repoName.textContent = repo.name;
@@ -135,9 +134,6 @@ function populateRepos(githubRepos, modrinthProjects) {
 
     reposContainer.replaceChildren(fragment);
     reposContainer.setAttribute('aria-busy', 'false');
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-        reposContainer.querySelectorAll('.repo-enter').forEach(repo => repo.classList.add('repo-visible'));
-    }));
 }
 
 function appendModrinthLinks(projects) {

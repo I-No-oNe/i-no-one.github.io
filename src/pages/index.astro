@@ -59,14 +59,14 @@ const reposSignature = repos.map((repo) => `${repo.id}:${repo.updated_at}`).join
   <main id="top">
     <section id="home" class="hero"><div class="container"><GlassPanel class="profile-card hero-panel">
       <div class="profile-glow" aria-hidden="true"></div>
-      <div class="avatar-wrap"><Image src={avatar} alt="I-No-oNe avatar" class="profile-avatar" width={400} height={400} loading="eager" fetchpriority="high" decoding="async" /></div>
+      <div class="avatar-wrap"><Image src={avatar} alt="I-No-oNe avatar" class="profile-avatar" width={152} height={152} densities={[1, 2]} loading="eager" fetchpriority="high" decoding="async" /></div>
       <div class="profile-info"><div class="badges"><StatusBadge live>Heads-down on private work</StatusBadge><StatusBadge>Free time: personal software &amp; mods</StatusBadge></div><h1>I-No-oNe</h1><p class="tagline">Mod developer &amp; maker. I build Minecraft mods, handy web tools, and FRC gadgets - all open source on GitHub and Modrinth.</p><div class="cta"><ActionButton href="https://github.com/I-No-oNe" variant="primary" external>GitHub</ActionButton><ActionButton href="https://modrinth.com/user/I-No-oNe" external>Modrinth</ActionButton><ActionButton href="https://discord.com/users/1051897115447660697" external>Discord</ActionButton></div></div>
     </GlassPanel></div></section>
     <div class="container">
       <GlassPanel as="section" id="projects" class="card" reveal><SectionHeader title="Projects" subtitle="Public repositories, synced live from GitHub & Modrinth." href="https://github.com/I-No-oNe?tab=repositories" linkLabel="All repos" /><div id="repos" class="repos-grid" aria-busy={repos.length ? 'false' : 'true'} aria-live="polite" data-signature={reposSignature || undefined}>{repos.length
-        ? repos.map((repo) => {
+        ? repos.map((repo, index) => {
             const modrinthProject = findModrinthProject(repo.name);
-            return <div class="repo" data-repo-name={repo.name}>
+            return <div class="repo" data-repo-name={repo.name} style={`--i:${index}`}>
               <h3>{repo.name}</h3>
               <p>{repo.description || 'No description available.'}</p>
               <div class="repo-links">
