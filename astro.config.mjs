@@ -9,6 +9,7 @@ export default defineConfig({
     defaultStrategy: 'hover'
   },
   build: {
-    format: 'file'
+    format: 'file',
+    inlineStylesheets: 'always'
   }
 });

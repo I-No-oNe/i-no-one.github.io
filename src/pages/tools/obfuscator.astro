@@ -1,11 +1,11 @@
 ---
 import ToolsLayout from '../../layouts/ToolsLayout.astro';
 import Icon from '../../components/Icon.astro';
-import styles from '../../../tools/obfuscator/style.css?url';
+import '../../../tools/obfuscator/style.css';
 import logic from '../../../tools/obfuscator/script.js?url';
 ---
 
-<ToolsLayout active="obfuscator" title="Obfuscator" description="Encode and decode text locally with your own key." stylesheets={[styles]}>
+<ToolsLayout active="obfuscator" title="Obfuscator" description="Encode and decode text locally with your own key.">
   <section class="obf-studio tool-app-card">
     <div class="obf-pane obf-input-pane">
       <div class="obf-pane-head"><span class="obf-pane-icon"><Icon name="code" size={19} /></span><div><p class="obf-eyebrow">Source</p><h2>Text and key</h2></div></div>

@@ -1,11 +1,11 @@
 ---
 import ToolsLayout from '../../layouts/ToolsLayout.astro';
 import Icon from '../../components/Icon.astro';
-import styles from '../../../tools/pdf-utils/style.css?url';
+import '../../../tools/pdf-utils/style.css';
 import logic from '../../../tools/pdf-utils/script.js?url';
 ---
 
-<ToolsLayout active="pdf" title="PDF utils" description="Convert, merge, split, and OCR documents locally in your browser." stylesheets={[styles]}>
+<ToolsLayout active="pdf" title="PDF utils" description="Convert, merge, split, and OCR documents locally in your browser.">
   <div class="wrap pdf-app">
     <div class="tabs" role="tablist" aria-label="PDF operations">
       <button class="tab active" type="button" role="tab" aria-selected="true" tabindex="0" data-tab="convertTab">Convert</button>

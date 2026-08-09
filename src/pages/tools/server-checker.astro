@@ -1,11 +1,11 @@
 ---
 import ToolsLayout from '../../layouts/ToolsLayout.astro';
 import Icon from '../../components/Icon.astro';
-import styles from '../../../tools/server-checker/style.css?url';
+import '../../../tools/server-checker/style.css';
 import logic from '../../../tools/server-checker/script.js?url';
 ---
 
-<ToolsLayout active="server" title="Minecraft server checker" description="Check live status, version, player count, and MOTD." stylesheets={[styles]}>
+<ToolsLayout active="server" title="Minecraft server checker" description="Check live status, version, player count, and MOTD.">
   <div class="server-shell">
     <section class="server-workspace">
     <div class="server-query tool-app-card">

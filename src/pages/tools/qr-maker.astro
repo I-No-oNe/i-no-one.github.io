@@ -1,11 +1,11 @@
 ---
 import ToolsLayout from '../../layouts/ToolsLayout.astro';
 import Icon from '../../components/Icon.astro';
-import styles from '../../../tools/qr-maker/styles.css?url';
+import '../../../tools/qr-maker/styles.css';
 import logic from '../../../tools/qr-maker/script.js?url';
 ---
 
-<ToolsLayout active="qr" title="QR code maker" description="Generate and download a clean QR code from text or a URL." stylesheets={[styles]}>
+<ToolsLayout active="qr" title="QR code maker" description="Generate and download a clean QR code from text or a URL.">
   <section class="qr-studio tool-app-card">
     <div class="qr-compose">
       <div class="qr-compose-copy">

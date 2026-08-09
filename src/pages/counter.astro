@@ -3,12 +3,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import ActionButton from '../components/ActionButton.astro';
 import Icon from '../components/Icon.astro';
-import styles from '../../counter/styles.css?url';
+import '../../counter/styles.css';
 import logic from '../../counter/script.js?url';
 ---
 
 <BaseLayout title="FRC Israel Countdown · I-No-oNe" description="Live countdown for upcoming FRC Israel district events.">
-  <Fragment slot="head"><link rel="preconnect" href="https://api.statbotics.io" crossorigin /><link rel="stylesheet" href={styles} /></Fragment>
+  <Fragment slot="head"><link rel="preconnect" href="https://api.statbotics.io" crossorigin /></Fragment>
   <div class="topbar">
     <a class="side-brand" href="/"><img src="https://avatars.githubusercontent.com/u/145749961?s=96&v=4" alt="" /><span class="frc-brand-copy"><strong>I-No-oNe</strong><small>FRC countdown</small></span></a>
     <div class="topbar-right"><ActionButton href="/" class="home-button"><Icon name="arrow-left" size={16} /><span class="home-label">Home</span></ActionButton><ActionButton href="/donate/" variant="primary" class="donate-button"><span aria-hidden="true">☕</span><span class="donate-label">Donate</span></ActionButton><ThemeToggle /></div>

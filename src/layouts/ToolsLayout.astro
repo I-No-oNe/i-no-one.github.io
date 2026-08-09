@@ -3,19 +3,17 @@ import BaseLayout from './BaseLayout.astro';
 import ToolPageHeader from '../components/ToolPageHeader.astro';
 import ToolsNavigation from '../components/ToolsNavigation.astro';
 import ToolAlert from '../components/ToolAlert.astro';
-import shellStyles from '../styles/tools-shell.css?url';
+import '../styles/tools-shell.css';
 
 interface Props {
   active: 'overview' | 'qr' | 'pdf' | 'obfuscator' | 'server';
   title: string;
   description: string;
-  stylesheets?: string[];
 }
-const { active, title, description, stylesheets = [] } = Astro.props;
+const { active, title, description } = Astro.props;
 ---
 
 <BaseLayout title={`${title} · I-No-oNe`} description={description}>
-  <Fragment slot="head">{stylesheets.map((href) => <link rel="stylesheet" href={href} />)}<link rel="stylesheet" href={shellStyles} /></Fragment>
   <div class="layout">
     <ToolsNavigation active={active} />
     <main class="content"><div class="content-inner tool-page-enter"><ToolPageHeader active={active} title={title} description={description} /><div class="tool-page-body"><slot /></div></div></main>
