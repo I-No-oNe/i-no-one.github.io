@@ -51,7 +51,8 @@ nav ul li a:hover::after { width: 100%; }
 .profile-card {
     position: relative; overflow: hidden;
     border-radius: var(--radius); padding: 46px;
-    display: flex; gap: 42px; align-items: center;
+    display: flex; flex-direction: column; gap: 28px; align-items: center;
+    text-align: center;
     animation: rise .7s var(--ease) both;
 }
 .profile-glow {
@@ -72,7 +73,7 @@ nav ul li a:hover::after { width: 100%; }
 }
 .profile-info { flex: 1; position: relative; z-index: 1; }
 
-.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 16px; }
 .badge {
     display: inline-flex; align-items: center; gap: 7px;
     font-size: .78rem; font-weight: 600; color: var(--ink-2);
@@ -98,13 +99,13 @@ nav ul li a:hover::after { width: 100%; }
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.tagline { color: var(--muted); font-size: 1.08rem; margin: 12px 0 26px; max-width: 48ch; }
+.tagline { color: var(--muted); font-size: 1.08rem; margin: 12px auto 26px; max-width: 48ch; }
 
-.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
 /* ---------- Cards ---------- */
 .card {
-    position: relative; overflow: hidden;
+    position: relative; overflow: hidden; text-align: center;
     border-radius: var(--radius); padding: 34px; margin-bottom: 24px;
     transition: transform var(--speed) var(--ease), box-shadow var(--speed), border-color var(--speed);
 }
@@ -166,10 +167,10 @@ nav ul li a:hover::after { width: 100%; }
 .head-link { display: inline-flex; align-items: center; gap: 5px; font-size: .9rem; font-weight: 600; white-space: nowrap; }
 .head-link svg { flex: 0 0 auto; }
 
-.card > p { color: var(--muted); margin-bottom: 20px; }
+.card > p { color: var(--muted); margin: 0 auto 20px; max-width: 62ch; }
 .card > p:last-child { margin-bottom: 0; }
 
-.two-col .card { margin-bottom: 24px; display: flex; flex-direction: column; align-items: flex-start; }
+.two-col .card { margin-bottom: 24px; display: flex; flex-direction: column; align-items: center; }
 .two-col .card .card-head { width: 100%; align-items: center; text-align: center; }
 .two-col .card .btn { align-self: center; margin-top: auto; }
 
@@ -251,9 +252,7 @@ footer { border-top: 1px solid var(--line); margin-top: 28px; padding: 30px 0; }
 @media (max-width: 720px) {
     nav { display: none; }
     .hero { padding: 20px 0; }
-    .profile-card { flex-direction: column; text-align: center; padding: 34px 24px; gap: 24px; }
-    .badges, .cta { justify-content: center; }
-    .tagline { margin-left: auto; margin-right: auto; }
+    .profile-card { padding: 34px 24px; gap: 24px; }
     .profile-info h1 { font-size: 2.4rem; }
     .card-head { grid-template-columns: 1fr; }
     .card-head > :first-child, .card-head .head-link { grid-column: 1; justify-self: center; }
