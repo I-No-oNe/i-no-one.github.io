@@ -23,7 +23,6 @@ const { active, title, description, stylesheets = [] } = Astro.props;
   <ToolAlert />
   <script>
     const burger = document.querySelector('#nav-burger');
-    const closeButton = document.querySelector('#sidebar-close');
     const sidebar = document.querySelector('.sidebar');
     const scrim = document.querySelector('#nav-scrim');
     const setOpen = (open: boolean) => {
@@ -33,11 +32,10 @@ const { active, title, description, stylesheets = [] } = Astro.props;
       burger?.setAttribute('aria-label', open ? 'Close tools menu' : 'Open tools menu');
       document.body.classList.toggle('nav-open', open);
       if (open) window.setTimeout(() => {
-        if (sidebar?.classList.contains('open')) (closeButton as HTMLElement | null)?.focus();
+        if (sidebar?.classList.contains('open')) (sidebar.querySelector('.side-link.active') as HTMLElement | null)?.focus();
       }, 280);
     };
     burger?.addEventListener('click', () => setOpen(!sidebar?.classList.contains('open')));
-    closeButton?.addEventListener('click', () => { setOpen(false); (burger as HTMLElement | null)?.focus(); });
     scrim?.addEventListener('click', () => setOpen(false));
     sidebar?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (event) => {

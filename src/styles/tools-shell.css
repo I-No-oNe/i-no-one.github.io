@@ -218,6 +218,8 @@
 
 .tool-card h2 { font-size: 1.05rem; font-weight: 800; }
 .tool-card p { margin-top: 5px; color: var(--muted); font-size: .86rem; }
+.tool-card > div, .page-head-main > div, .workflow-title > span:last-child { min-width: 0; max-width: 100%; }
+.tool-card h2, .tool-card p, .page-head h1, .page-description, .side-link, .workflow-title { overflow-wrap: anywhere; }
 .tool-card-arrow { position: absolute; right: 18px; top: 18px; color: var(--accent-ink); }
 
 .tools-two-col { display: block; }
@@ -348,15 +350,15 @@
 
 @media (max-width: 780px) {
   .layout { display: block; padding: 0; }
-  button.nav-burger { top: auto; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); left: auto; width: 58px; min-width: 58px; height: 58px; padding: 0; gap: 0; justify-content: center; border-radius: 50%; box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo); }
+  button.nav-burger { top: auto; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); left: auto; width: 58px; min-width: 58px; height: 58px; padding: 0; gap: 0; justify-content: center; border-radius: 50%; box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo); transition: bottom .38s var(--ease), transform .3s var(--ease), border-color .25s, background .25s; }
+  button.nav-burger[aria-expanded='true'] { right: 26px; bottom: calc(min(620px, calc(100dvh - 20px)) - 61px); background: color-mix(in srgb, var(--bg) 88%, var(--glass-hi)); }
   .nav-burger-icon { transition: transform .35s var(--ease); }
   button.nav-burger[aria-expanded='true'] .nav-burger-icon { transform: rotate(45deg) scale(.94); }
   .nav-scrim.open { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
-  .layout > .sidebar { top: auto; right: 10px; bottom: 10px; left: 10px; width: min(520px, calc(100vw - 20px)); height: auto; max-height: min(82dvh, 680px); margin-inline: auto; padding: 9px 12px 12px; border-radius: 26px; transform: translateY(calc(100% + 20px)); animation: none; overscroll-behavior: contain; }
+  .layout > .sidebar { top: auto; right: 10px; bottom: 10px; left: 10px; width: min(520px, calc(100vw - 20px)); height: min(620px, calc(100dvh - 20px)); max-height: none; margin-inline: auto; padding: 9px 12px 12px; border-radius: 26px; background: color-mix(in srgb, var(--bg) 94%, var(--glass-hi)); backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%); transform: translateY(calc(100% + 20px)); animation: none; overscroll-behavior: contain; }
   .layout > .sidebar.open { transform: none; }
   .sidebar-handle { display: block; width: 42px; height: 5px; margin: 1px auto 7px; border-radius: 999px; background: var(--line-2); }
-  .sidebar-head { margin-bottom: 2px; }
-  .sidebar-close { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 42px; width: 42px; height: 42px; border: 1px solid var(--glass-brd); border-radius: 13px; background: var(--glass-2); color: var(--ink); box-shadow: inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo); cursor: pointer; }
+  .sidebar-head { min-height: 58px; margin-bottom: 2px; padding-right: 64px; }
   .side-link { min-height: 48px; }
   .layout > .content { min-height: 100svh; padding: 18px 14px max(92px, calc(env(safe-area-inset-bottom) + 76px)); }
   .page-head { grid-template-columns: 1fr; gap: 10px; margin-bottom: 18px; padding: 18px; border-radius: 21px; }
