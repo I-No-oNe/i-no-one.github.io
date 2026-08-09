@@ -381,9 +381,14 @@ footer a:hover {
 }
 
 @media (max-width: 600px) {
-    h1 {
-        font-size: 1.5rem;
-    }
+    .wrap { padding: 0 18px 70px; }
+    header { padding: 88px 0 58px; }
+    header h1 { font-size: clamp(2.45rem, 13vw, 3.25rem); line-height: .94; }
+    .subtitle { font-size: 1.02rem; }
+    .btns { margin-top: 34px; gap: 12px; }
+    .btn { min-height: 50px; display: inline-flex; align-items: center; justify-content: center; }
+    .section-head { margin: 72px 0 26px; }
+    th, td { padding: 15px 13px; }
 
     .btns {
         flex-direction: column;

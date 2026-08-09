@@ -60,6 +60,7 @@ function computeDisplayEvents() {
 function setFavicon(url) {
     let favicon = document.querySelector("link[rel='icon']") || document.createElement('link');
     favicon.rel = 'icon';
+    favicon.sizes = '512x512';
     favicon.href = url;
     document.head.appendChild(favicon);
 }
@@ -69,7 +70,7 @@ function setSeasonBranding() {
     const infoTextElement = document.getElementById('info-text');
     const tbaLinkElement = document.getElementById('tba-link');
     // keep the I-No-oNe logo as the tab icon for consistent branding
-    setFavicon('https://avatars.githubusercontent.com/u/145749961?s=64&v=4');
+    setFavicon('https://avatars.githubusercontent.com/u/145749961?s=512&v=4');
     infoTextElement.innerHTML = `📅 Showing <b>${CURRENT_FRC_YEAR}</b> FIRST Israel District Events (ISR)`;
     tbaLinkElement.href = `https://www.thebluealliance.com/events/isr/${CURRENT_FRC_YEAR}`;
 }

@@ -160,7 +160,7 @@ a:hover { color: var(--accent); }
 .nav-scrim { display: none; }
 
 /* Sidebar layout */
-.layout { display: flex; min-height: 100vh; }
+.layout { display: flex; min-height: 100svh; }
 .sidebar {
     position: sticky; top: 0; align-self: flex-start;
     width: 264px; height: 100vh; flex-shrink: 0;
@@ -201,10 +201,11 @@ a:hover { color: var(--accent); }
 .side-foot .theme-toggle { flex-shrink: 0; }
 
 .content { flex: 1; min-width: 0; padding: 40px 44px; display: flex; flex-direction: column; }
-.content-inner { max-width: 860px; margin: auto; width: 100%; }
+.content-inner { max-width: 860px; margin: 0 auto; width: 100%; }
 
 /* Cards */
 .panel {
+    position: relative; overflow: hidden;
     background: var(--glass);
     backdrop-filter: blur(var(--blur)) saturate(160%);
     -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
@@ -215,11 +216,12 @@ a:hover { color: var(--accent); }
 }
 
 /* Page entrance */
-@keyframes rise { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rise { from { opacity: 0; transform: translateY(12px) scale(.995); } to { opacity: 1; transform: none; } }
 .rise { animation: rise .6s var(--ease) both; }
 
 /* Mobile sidebar -> topbar */
 @media (max-width: 780px) {
+    body.nav-open { overflow: hidden; touch-action: none; }
     .nav-burger { display: inline-flex; }
     .nav-scrim {
         display: block; position: fixed; inset: 0; z-index: 105;
@@ -228,13 +230,17 @@ a:hover { color: var(--accent); }
     }
     .nav-scrim.open { opacity: 1; visibility: visible; }
     .sidebar {
-        position: fixed; top: 0; left: 0; height: 100vh; width: 276px;
+        position: fixed; top: 0; left: 0; height: 100dvh; width: 276px;
         padding-top: 70px;
         transform: translateX(-100%); transition: transform .32s var(--ease);
         z-index: 110; border-right: 1px solid var(--glass-brd);
     }
     .sidebar.open { transform: translateX(0); box-shadow: var(--shadow); }
     .content { padding: 74px 18px 28px; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn:active, .theme-toggle:active { transform: translateY(0) scale(.97); }
 }
 
 @media (prefers-reduced-motion: reduce) {

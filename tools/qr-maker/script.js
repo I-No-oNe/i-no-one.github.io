@@ -37,8 +37,9 @@ function downloadQR() {
 function setFavicon(url) {
     let favicon = document.querySelector("link[rel='icon']") || document.createElement('link');
     favicon.rel = 'icon';
+    favicon.sizes = '512x512';
     favicon.href = url;
     document.head.appendChild(favicon);
 }
 
-setFavicon('https://avatars.githubusercontent.com/u/145749961?v=4&size=64')
+setFavicon('https://avatars.githubusercontent.com/u/145749961?v=4&size=512')

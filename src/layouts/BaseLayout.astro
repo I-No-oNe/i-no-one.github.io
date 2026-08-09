@@ -21,7 +21,8 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0d1210" />
-    <link rel="icon" href="https://avatars.githubusercontent.com/u/145749961?s=64&v=4" type="image/png" />
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/145749961?s=512&v=4" type="image/png" sizes="512x512" />
+    <link rel="apple-touch-icon" href="https://avatars.githubusercontent.com/u/145749961?s=512&v=4" sizes="512x512" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -60,16 +61,19 @@ const {
         menuButton.setAttribute('aria-expanded', String(open));
         menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
         mobileNav?.classList.toggle('open', open);
+        document.body.classList.toggle('nav-open', open);
       });
       mobileNav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
         menuButton?.setAttribute('aria-expanded', 'false');
         mobileNav.classList.remove('open');
+        document.body.classList.remove('nav-open');
       }));
       document.addEventListener('keydown', (event) => {
         if (event.key !== 'Escape' || menuButton?.getAttribute('aria-expanded') !== 'true') return;
         menuButton.setAttribute('aria-expanded', 'false');
         menuButton.setAttribute('aria-label', 'Open navigation');
         mobileNav?.classList.remove('open');
+        document.body.classList.remove('nav-open');
         (menuButton as HTMLElement).focus();
       });
 

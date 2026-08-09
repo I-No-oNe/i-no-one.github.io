@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import ActionButton from '../components/ActionButton.astro';
 import styles from '../../counter/styles.css?url';
 import logic from '../../counter/script.js?url';
 ---
@@ -8,8 +9,8 @@ import logic from '../../counter/script.js?url';
 <BaseLayout title="FRC Israel Countdown · I-No-oNe" description="Live countdown for upcoming FRC Israel district events.">
   <Fragment slot="head"><link rel="stylesheet" href={styles} /></Fragment>
   <div class="topbar">
-    <a class="side-brand" href="/"><img src="https://avatars.githubusercontent.com/u/145749961?s=64&v=4" alt="" /><span>I-No-oNe</span></a>
-    <div class="topbar-right"><a class="btn" href="/">← Main site</a><a class="btn btn-primary" href="/donate.html">☕ Donate</a><ThemeToggle /></div>
+    <a class="side-brand" href="/"><img src="https://avatars.githubusercontent.com/u/145749961?s=96&v=4" alt="" /><span>I-No-oNe</span></a>
+    <div class="topbar-right"><ActionButton href="/" class="home-button"><span aria-hidden="true">←</span><span class="home-label">Home</span></ActionButton><ActionButton href="/donate.html" variant="primary">☕ Donate</ActionButton><ThemeToggle /></div>
   </div>
   <main class="container">
     <div class="info-banner"><span id="info-text">📅 Showing FRC Israel district events</span> · <a id="tba-link" href="#" target="_blank" rel="noopener noreferrer">View on The Blue Alliance</a></div>

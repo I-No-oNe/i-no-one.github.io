@@ -90,14 +90,20 @@
     .countdown-card { padding: 26px; }
 }
 @media (max-width: 560px) {
-    .topbar { flex-wrap: wrap; row-gap: 10px; }
-    .topbar .side-brand { flex: 1 1 auto; }
-    .topbar-right { margin-left: auto; }
+    .topbar { position: sticky; top: 10px; z-index: 20; margin: 10px; padding: 9px; border: 1px solid var(--glass-brd); border-radius: 18px; background: var(--glass); box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi); backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); }
+    .topbar .side-brand { padding: 0; }
+    .topbar .side-brand img { width: 36px; height: 36px; }
+    .topbar .side-brand span { display: none; }
+    .topbar-right { margin-left: auto; gap: 7px; }
+    .topbar-right .btn { min-height: 40px; padding: 9px 12px; }
+    .topbar-right .theme-toggle { width: 40px; height: 40px; }
+    .container { padding: 18px 14px 42px; }
 }
 @media (max-width: 480px) {
     .time-box { padding: 16px 8px; }
     .time-number { font-size: 1.8rem; }
-    .topbar .btn:not(.btn-primary) { display: none; }
+    .topbar .home-button { width: 40px; padding: 0; }
+    .topbar .home-label { display: none; }
     .event-title { font-size: 1.55rem; }
     .countdown-card { padding: 20px; }
 }

@@ -41,9 +41,10 @@ function setFavicon(url) {
         favicon.rel = 'icon';
         document.head.appendChild(favicon);
     }
+    favicon.sizes = '512x512';
     favicon.href = url;
 }
-setFavicon('https://avatars.githubusercontent.com/u/145749961?v=4&size=64');
+setFavicon('https://avatars.githubusercontent.com/u/145749961?v=4&size=512');
 
 // ------------------------------------------------------
 // ALERT SYSTEM

@@ -99,6 +99,7 @@ fetch('https://raw.githubusercontent.com/I-No-oNe/No-oNe-Addon/refs/heads/main/g
 function setFavicon(url) {
     let favicon = document.querySelector("link[rel='icon']") || document.createElement('link');
     favicon.rel = 'icon';
+    favicon.sizes = '512x512';
     favicon.href = url;
     document.head.appendChild(favicon);
 }
