@@ -9,11 +9,11 @@ interface Props {
 
 const { active } = Astro.props as Props;
 const links = [
-  { id: 'overview', href: '/tools.html', icon: 'grid', label: 'Overview' },
-  { id: 'qr', href: '/tools/qr-maker.html', icon: 'qr', label: 'QR Code Maker' },
-  { id: 'pdf', href: '/tools/pdf-utils.html', icon: 'file', label: 'PDF Utils' },
-  { id: 'obfuscator', href: '/tools/obfuscator.html', icon: 'lock', label: 'Obfuscator' },
-  { id: 'server', href: '/tools/server-checker.html', icon: 'server', label: 'Server Checker' }
+  { id: 'overview', href: '/tools/', icon: 'grid', label: 'Overview' },
+  { id: 'qr', href: '/tools/qr-maker/', icon: 'qr', label: 'QR Code Maker' },
+  { id: 'pdf', href: '/tools/pdf-utils/', icon: 'file', label: 'PDF Utils' },
+  { id: 'obfuscator', href: '/tools/obfuscator/', icon: 'lock', label: 'Obfuscator' },
+  { id: 'server', href: '/tools/server-checker/', icon: 'server', label: 'Server Checker' }
 ] as const;
 ---
 
@@ -29,5 +29,5 @@ const links = [
   {links.map((link) => <ToolNavItem href={link.href} icon={link.icon} label={link.label} active={active === link.id} />)}
   <span class="side-label">More</span>
   <ToolNavItem href="/" icon="home" label="Main site" />
-  <div class="side-foot"><a class="btn btn-primary side-donate" href="/donate.html">☕ Donate</a><ThemeToggle /></div>
+  <div class="side-foot"><a class="btn btn-primary side-donate" href="/donate/">☕ Donate</a><ThemeToggle /></div>
 </aside>

@@ -4,4 +4,4 @@ interface Props { title: string; subtitle?: string; href?: string; linkLabel?: s
 const { title, subtitle, href, linkLabel } = Astro.props;
 ---
 
-<div class="card-head section-header"><div><h2>{title}</h2>{subtitle && <p class="muted">{subtitle}</p>}</div>{href && linkLabel && <a href={href} class="head-link">{linkLabel}<Icon name="arrow" size={15} /></a>}</div>
+<div class="card-head section-header"><div><h2>{title}</h2>{subtitle && <p class="muted">{subtitle}</p>}</div>{href && linkLabel && <a href={href} class="head-link"><span>{linkLabel}</span><Icon name="arrow" size={15} /></a>}</div>

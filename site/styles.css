@@ -134,7 +134,8 @@ nav ul li a:hover::after { width: 100%; }
 }
 .card-head h2 { font-size: 1.55rem; font-weight: 800; letter-spacing: -.02em; }
 .card-head p { margin-top: 5px; font-size: .95rem; }
-.head-link { font-size: .9rem; font-weight: 600; white-space: nowrap; }
+.head-link { display: inline-flex; align-items: center; gap: 5px; font-size: .9rem; font-weight: 600; white-space: nowrap; }
+.head-link svg { flex: 0 0 auto; }
 
 .card > p { color: var(--muted); margin-bottom: 20px; }
 .card > p:last-child { margin-bottom: 0; }

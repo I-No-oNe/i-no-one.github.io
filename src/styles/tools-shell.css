@@ -13,7 +13,10 @@
   background: linear-gradient(145deg, color-mix(in srgb, var(--glass-hi) 18%, var(--glass)), var(--glass));
   box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo);
   animation: sidebar-enter .55s var(--ease) both;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.layout > .sidebar::-webkit-scrollbar { display: none; }
 
 .sidebar-head {
   display: flex;

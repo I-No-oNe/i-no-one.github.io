@@ -5,4 +5,4 @@ interface Props { href: string; icon: 'file' | 'grid' | 'home' | 'lock' | 'qr' |
 const { href, icon, label, active = false } = Astro.props;
 ---
 
-<a class:list={['side-link', { active }]} href={href} aria-current={active ? 'page' : undefined}><span class="ico"><Icon name={icon} size={18} /></span><span>{label}</span></a>
+<a class:list={['side-link', { active }]} href={href} aria-current={active ? 'page' : undefined} data-astro-prefetch="hover"><span class="ico"><Icon name={icon} size={18} /></span><span>{label}</span></a>

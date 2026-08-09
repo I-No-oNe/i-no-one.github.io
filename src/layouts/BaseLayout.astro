@@ -36,6 +36,12 @@ const {
           const match = document.cookie.match(/(?:^|; )theme=(dark|light)/);
           theme = match?.[1] || 'light';
         }
+        const cleanPath = window.location.pathname === '/index.html'
+          ? '/'
+          : window.location.pathname.replace(/\.html$/, '/');
+        if (cleanPath !== window.location.pathname) {
+          window.history.replaceState(null, '', `${cleanPath}${window.location.search}${window.location.hash}`);
+        }
         document.documentElement.dataset.theme = theme;
         document.documentElement.classList.add('js');
       })();

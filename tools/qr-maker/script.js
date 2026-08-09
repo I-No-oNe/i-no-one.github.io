@@ -1,28 +1,31 @@
 function generateQR() {
-    const text = document.getElementById('text').value;
+    const textInput = document.getElementById('text');
+    const text = textInput.value.trim();
     const qrCodeContainer = document.getElementById('qrcode');
     const spinner = document.getElementById('spinner');
     const downloadBtn = document.getElementById('downloadBtn');
+    const emptyState = document.getElementById('qr-empty');
     
     if (!text) {
         window.showToolAlert('Enter text or a URL before generating a QR code.');
-        document.getElementById('text').focus();
+        textInput.focus();
         return;
     }
 
     qrCodeContainer.innerHTML = '';
+    emptyState.hidden = true;
     spinner.style.display = 'block';
-    downloadBtn.style.display = 'none';
+    downloadBtn.hidden = true;
 
-    setTimeout(() => {
+    requestAnimationFrame(() => {
         new QRCode(qrCodeContainer, {
             text: text,
             width: 200,
             height: 200
         });
         spinner.style.display = 'none';
-        downloadBtn.style.display = 'inline-block';
-    }, 1500);
+        downloadBtn.hidden = false;
+    });
 }
 
 function downloadQR() {
@@ -35,12 +38,6 @@ function downloadQR() {
     }
 }
 
-function setFavicon(url) {
-    let favicon = document.querySelector("link[rel='icon']") || document.createElement('link');
-    favicon.rel = 'icon';
-    favicon.sizes = '512x512';
-    favicon.href = url;
-    document.head.appendChild(favicon);
-}
-
-setFavicon('https://avatars.githubusercontent.com/u/145749961?v=4&size=512')
+document.getElementById('text').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') generateQR();
+});
