@@ -10,8 +10,8 @@ import logic from '../../counter/script.js?url';
 <BaseLayout title="FRC Israel Countdown · I-No-oNe" description="Live countdown for upcoming FRC Israel district events.">
   <Fragment slot="head"><link rel="stylesheet" href={styles} /></Fragment>
   <div class="topbar">
-    <a class="side-brand" href="/"><img src="https://avatars.githubusercontent.com/u/145749961?s=96&v=4" alt="" /><span>I-No-oNe</span></a>
-    <div class="topbar-right"><ActionButton href="/" class="home-button"><Icon name="arrow-left" size={16} /><span class="home-label">Home</span></ActionButton><ActionButton href="/donate.html" variant="primary">☕ Donate</ActionButton><ThemeToggle /></div>
+    <a class="side-brand" href="/"><img src="https://avatars.githubusercontent.com/u/145749961?s=96&v=4" alt="" /><span class="frc-brand-copy"><strong>I-No-oNe</strong><small>FRC countdown</small></span></a>
+    <div class="topbar-right"><ActionButton href="/" class="home-button"><Icon name="arrow-left" size={16} /><span class="home-label">Home</span></ActionButton><ActionButton href="/donate.html" variant="primary" class="donate-button"><span aria-hidden="true">☕</span><span class="donate-label">Donate</span></ActionButton><ThemeToggle /></div>
   </div>
   <main class="container">
     <div class="info-banner"><span id="info-text">📅 Showing FRC Israel district events</span> · <a id="tba-link" href="#" target="_blank" rel="noopener noreferrer">View on The Blue Alliance</a></div>

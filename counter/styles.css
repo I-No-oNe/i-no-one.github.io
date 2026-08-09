@@ -2,17 +2,22 @@
 .topbar {
     display: flex; align-items: center; justify-content: space-between;
     position: sticky; top: 14px; z-index: 20;
-    gap: 14px; width: calc(100% - 44px); max-width: 856px; margin: 14px auto 0; padding: 10px 12px;
+    gap: 10px; width: calc(100% - 44px); max-width: 856px; margin: 12px auto 0; padding: 7px 9px;
     border: 1px solid var(--glass-brd); border-radius: 20px;
     background: color-mix(in srgb, var(--bg) 88%, var(--glass-hi));
     box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo);
     backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
 }
 .topbar-right { display: flex; align-items: center; gap: 10px; }
-.topbar .side-brand { min-width: 0; padding: 2px 6px; }
-.topbar .side-brand img { width: 38px; height: 38px; }
-.topbar-right .btn { min-height: 42px; }
-.topbar-right .theme-toggle { flex: 0 0 42px; width: 42px; height: 42px; }
+.topbar .side-brand { min-width: 0; padding: 0 4px; gap: 8px; }
+.topbar .side-brand img { width: 34px; height: 34px; }
+.frc-brand-copy { display: flex; flex-direction: column; min-width: 0; line-height: 1.05; }
+.frc-brand-copy strong { font-size: .9rem; white-space: nowrap; }
+.frc-brand-copy small { margin-top: 3px; color: var(--muted); font-size: .64rem; font-weight: 600; white-space: nowrap; }
+.topbar-right { gap: 6px; }
+.topbar-right .btn { min-height: 38px; padding: 8px 11px; }
+.topbar-right .theme-toggle { flex: 0 0 38px; width: 38px; height: 38px; }
+.donate-button { gap: 5px; }
 
 .container {
     position: relative; z-index: 1;
@@ -99,23 +104,28 @@
     .countdown-card { padding: 26px; }
 }
 @media (max-width: 560px) {
-    .topbar { top: 10px; width: auto; margin: 10px; padding: 8px; border-radius: 18px; }
+    .topbar { top: 8px; width: auto; margin: 8px 10px; padding: 6px; border-radius: 17px; }
     .topbar .side-brand { padding: 0; }
-    .topbar .side-brand img { width: 36px; height: 36px; }
-    .topbar .side-brand span { display: none; }
+    .topbar .side-brand img { width: 32px; height: 32px; }
     .topbar-right { margin-left: auto; gap: 7px; }
-    .topbar-right .btn { min-height: 40px; padding: 9px 12px; }
-    .topbar-right .theme-toggle { flex-basis: 40px; width: 40px; height: 40px; }
+    .topbar-right .btn { min-height: 36px; padding: 7px 10px; }
+    .topbar-right .theme-toggle { flex-basis: 36px; width: 36px; height: 36px; border-radius: 11px; }
     .container { padding: 18px 14px 42px; }
 }
 @media (max-width: 480px) {
     .time-box { padding: 16px 8px; }
     .time-number { font-size: 1.8rem; }
-    .topbar .home-button { width: 40px; padding: 0; }
+    .topbar .home-button { width: 36px; padding: 0; }
     .topbar .home-label { display: none; }
     .event-title { font-size: 1.55rem; }
     .countdown-card { padding: 20px; }
     .controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:100%; }
     .controls .btn { width:100%; }
     .controls .btn:last-child:nth-child(odd) { grid-column:1/-1; width:calc(50% - 5px); justify-self:center; }
+}
+@media (max-width: 350px) {
+    .topbar .donate-button { width: 36px; padding: 0; }
+    .topbar .donate-label { display: none; }
+    .frc-brand-copy strong { font-size: .84rem; }
+    .frc-brand-copy small { font-size: .6rem; }
 }
