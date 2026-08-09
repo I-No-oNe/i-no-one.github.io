@@ -11,11 +11,12 @@ import repoScript from '../../site/script.js?url';
 ---
 
 <BaseLayout title="I-No-oNe" description="I-No-oNe - Minecraft mod developer, maker of web tools and FRC gadgets. Open source on GitHub and Modrinth.">
+  <Fragment slot="head"><link rel="preconnect" href="https://avatars.githubusercontent.com" /><link rel="preconnect" href="https://api.github.com" crossorigin /><link rel="preconnect" href="https://api.modrinth.com" crossorigin /></Fragment>
   <SiteHeader />
   <main id="top">
     <section id="home" class="hero"><div class="container"><GlassPanel class="profile-card hero-panel">
       <div class="profile-glow" aria-hidden="true"></div>
-      <div class="avatar-wrap"><img src="https://avatars.githubusercontent.com/u/145749961?s=400&v=4" alt="I-No-oNe avatar" class="profile-avatar" /></div>
+      <div class="avatar-wrap"><img src="https://avatars.githubusercontent.com/u/145749961?s=400&v=4" alt="I-No-oNe avatar" class="profile-avatar" width="400" height="400" fetchpriority="high" decoding="async" /></div>
       <div class="profile-info"><div class="badges"><StatusBadge live>Heads-down on private work</StatusBadge><StatusBadge>Free time: personal software &amp; mods</StatusBadge></div><h1>I-No-oNe</h1><p class="tagline">Mod developer &amp; maker. I build Minecraft mods, handy web tools, and FRC gadgets - all open source on GitHub and Modrinth.</p><div class="cta"><ActionButton href="https://github.com/I-No-oNe" variant="primary" external>GitHub</ActionButton><ActionButton href="https://modrinth.com/user/I-No-oNe" external>Modrinth</ActionButton><ActionButton href="https://discord.com/users/1051897115447660697" external>Discord</ActionButton></div></div>
     </GlassPanel></div></section>
     <div class="container">

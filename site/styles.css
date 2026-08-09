@@ -165,12 +165,11 @@ nav ul li a:hover::after { width: 100%; }
 }
 .repo-enter { opacity: 0; transform: translateY(14px) scale(.985); }
 .repo-enter.repo-visible { opacity: 1; transform: none; }
-.repo-skeleton { min-height: 190px; pointer-events: none; animation: skeleton-breathe 1.8s var(--ease) infinite; animation-delay: var(--skeleton-delay,0ms); }
-.repo-skeleton span { display:block; height:12px; border-radius:999px; background:linear-gradient(100deg,color-mix(in srgb,var(--ink) 7%,transparent) 15%,color-mix(in srgb,var(--glass-hi) 78%,transparent) 50%,color-mix(in srgb,var(--ink) 7%,transparent) 85%);background-size:220% 100%;animation:skeleton-shimmer 1.8s ease-in-out infinite;background-position:120% 0; }
+.repo-skeleton { min-height: 190px; pointer-events: none; opacity:.76; }
+.repo-skeleton span { display:block; height:12px; border-radius:999px; background:linear-gradient(100deg,color-mix(in srgb,var(--ink) 7%,transparent) 15%,color-mix(in srgb,var(--glass-hi) 78%,transparent) 50%,color-mix(in srgb,var(--ink) 7%,transparent) 85%);background-size:220% 100%;animation:skeleton-shimmer 1.55s ease-in-out infinite;background-position:120% 0;animation-delay:var(--skeleton-delay,0ms); }
 .repo-skeleton span:first-child { width:46%; height:16px; }
 .repo-skeleton span:nth-child(2) { width:88%; margin-top:18px; }
 .repo-skeleton span:last-child { width:62%; margin-top:auto; }
-@keyframes skeleton-breathe { 0%,100% { opacity:.58; transform:translateY(0); } 50% { opacity:.9; transform:translateY(-2px); } }
 @keyframes skeleton-shimmer { to { background-position:-120% 0; } }
 .repo::before {
     content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;

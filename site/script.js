@@ -1,27 +1,68 @@
-document.addEventListener('DOMContentLoaded', async function () {
-    try {
-        // Fetch GitHub Repositories and Modrinth Projects
-        const [githubRepos, modrinthProjects] = await Promise.all([
-            fetch('https://api.github.com/users/I-No-oNe/repos').then(response => {
-                if (!response.ok) {
-                    throw new Error(`GitHub API error! status: ${response.status}`);
-                }
-                return response.json();
-            }),
-            fetch('https://api.modrinth.com/v2/user/iwsGxbBt/projects').then(response => {
-                if (!response.ok) {
-                    throw new Error(`Modrinth API error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-        ]);
+const PROJECT_CACHE_KEY = 'i-no-one:projects:v1';
+let projectCache = readProjectCache();
+let modrinthProjects = projectCache?.modrinth || [];
+let shownGithubSignature = '';
 
-        populateRepos(githubRepos, modrinthProjects);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        displayErrorMessage('Failed to load projects. Please try again later.');
+function readProjectCache() {
+    try { return JSON.parse(localStorage.getItem(PROJECT_CACHE_KEY) || 'null'); }
+    catch { return null; }
+}
+
+function saveProjectCache() {
+    try { localStorage.setItem(PROJECT_CACHE_KEY, JSON.stringify(projectCache)); }
+    catch {}
+}
+
+async function fetchJson(url) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    try {
+        const response = await fetch(url, { signal: controller.signal });
+        if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+        return response.json();
+    } finally {
+        clearTimeout(timeout);
     }
-});
+}
+
+function githubSignature(repos) {
+    return repos.map(repo => `${repo.id}:${repo.updated_at}`).join('|');
+}
+
+function showGithubRepos(repos) {
+    const signature = githubSignature(repos);
+    if (signature === shownGithubSignature) return;
+    shownGithubSignature = signature;
+    populateRepos(repos, modrinthProjects);
+}
+
+function initProjects() {
+    if (projectCache?.github?.length) showGithubRepos(projectCache.github);
+
+    fetchJson('https://api.github.com/users/I-No-oNe/repos')
+        .then(repos => repos.map(({ id, name, description, html_url, updated_at }) => ({ id, name, description, html_url, updated_at })))
+        .then(repos => {
+            projectCache = { ...(projectCache || {}), github: repos };
+            saveProjectCache();
+            showGithubRepos(repos);
+        })
+        .catch(error => {
+            console.error('GitHub projects failed:', error);
+            if (!shownGithubSignature) displayErrorMessage('Projects are temporarily unavailable.');
+        });
+
+    fetchJson('https://api.modrinth.com/v2/user/iwsGxbBt/projects')
+        .then(projects => projects.map(({ id, slug, title }) => ({ id, slug, title })))
+        .then(projects => {
+            modrinthProjects = projects;
+            projectCache = { ...(projectCache || {}), modrinth: projects };
+            saveProjectCache();
+            appendModrinthLinks(projects);
+        })
+        .catch(error => console.error('Modrinth projects failed:', error));
+}
+
+initProjects();
 
 function populateRepos(githubRepos, modrinthProjects) {
     const reposContainer = document.getElementById('repos');
@@ -40,8 +81,12 @@ function populateRepos(githubRepos, modrinthProjects) {
 
     githubRepos.forEach((repo, index) => {
         const repoElement = document.createElement('div');
-        repoElement.classList.add('repo', 'repo-enter');
-        repoElement.style.transitionDelay = Math.min(index * 45, 360) + 'ms';
+        repoElement.classList.add('repo');
+        repoElement.dataset.repoName = repo.name;
+        if (index < 9) {
+            repoElement.classList.add('repo-enter');
+            repoElement.style.transitionDelay = index * 30 + 'ms';
+        }
 
         const repoName = document.createElement('h3');
         repoName.textContent = repo.name;
@@ -82,6 +127,21 @@ function populateRepos(githubRepos, modrinthProjects) {
     requestAnimationFrame(() => requestAnimationFrame(() => {
         reposContainer.querySelectorAll('.repo-enter').forEach(repo => repo.classList.add('repo-visible'));
     }));
+}
+
+function appendModrinthLinks(projects) {
+    document.querySelectorAll('.repo[data-repo-name]').forEach(repoElement => {
+        if (repoElement.querySelector('.modrinth-link')) return;
+        const project = findMatchingModrinthProject(repoElement.dataset.repoName, projects);
+        if (!project) return;
+        const link = document.createElement('a');
+        link.href = `https://modrinth.com/project/${project.id}`;
+        link.textContent = 'View on Modrinth';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.className = 'modrinth-link';
+        repoElement.querySelector('.repo-links')?.appendChild(link);
+    });
 }
 
 function findMatchingModrinthProject(repoName, modrinthProjects) {
