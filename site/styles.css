@@ -106,7 +106,6 @@ nav ul li a:hover::after { width: 100%; }
 .card {
     position: relative; overflow: hidden;
     border-radius: var(--radius); padding: 34px; margin-bottom: 24px;
-    animation: rise .7s var(--ease) both;
     transition: transform var(--speed) var(--ease), box-shadow var(--speed), border-color var(--speed);
 }
 .card::before, .profile-card::before {
@@ -121,16 +120,16 @@ nav ul li a:hover::after { width: 100%; }
     border-color: var(--accent);
     box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi), 0 0 0 1px var(--accent-soft);
 }
-#projects { animation-delay: .06s; }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-#frc { animation-delay: .12s; }
-#tools { animation-delay: .16s; }
-#contact { animation-delay: .2s; }
 
+/* Three tracks so the title sits in the true centre of the card rather than the
+   centre of whatever space the side link leaves over. */
 .card-head {
-    display: flex; align-items: flex-end; justify-content: space-between;
-    gap: 16px; margin-bottom: 22px;
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: end;
+    gap: 16px; margin-bottom: 22px; text-align: center;
 }
+.card-head > :first-child { grid-column: 2; }
+.card-head .head-link { grid-column: 3; justify-self: end; }
 .card-head h2 { font-size: 1.55rem; font-weight: 800; letter-spacing: -.02em; }
 .card-head p { margin-top: 5px; font-size: .95rem; }
 .head-link { display: inline-flex; align-items: center; gap: 5px; font-size: .9rem; font-weight: 600; white-space: nowrap; }
@@ -144,9 +143,10 @@ nav ul li a:hover::after { width: 100%; }
 .two-col .card .btn { align-self: center; margin-top: auto; }
 
 .contact-card {
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 20px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: 20px;
 }
+.contact-card .cta { justify-content: center; }
 .contact-card h2 { font-size: 1.55rem; font-weight: 800; letter-spacing: -.02em; }
 .contact-card p { margin-top: 5px; }
 
@@ -158,12 +158,12 @@ nav ul li a:hover::after { width: 100%; }
     border-radius: var(--radius-sm); padding: 20px;
     background: var(--glass); border: 1px solid var(--glass-brd);
     box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi);
-    transition: transform .45s var(--ease), opacity .45s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
-    content-visibility: auto;
-    contain-intrinsic-size: auto 210px;
+    transition: transform .45s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
 }
-.repo-enter { opacity: 0; transform: translateY(14px) scale(.985); }
-.repo-enter.repo-visible { opacity: 1; transform: none; }
+/* Build-time cards deal themselves in; --i staggers the row without any JS.
+   Capped so a long repo list never leaves the last card waiting seconds. */
+.js .repo:not(.repo-skeleton) { animation: repo-deal .55s var(--ease) both; animation-delay: calc(140ms + min(var(--i, 0) * 45ms, 700ms)); }
+@keyframes repo-deal { from { opacity: 0; transform: translateY(16px) scale(.98); } }
 .repo-skeleton { min-height: 190px; pointer-events: none; opacity:.76; }
 .repo-skeleton span { display:block; height:12px; border-radius:999px; background:linear-gradient(100deg,color-mix(in srgb,var(--ink) 7%,transparent) 15%,color-mix(in srgb,var(--glass-hi) 78%,transparent) 50%,color-mix(in srgb,var(--ink) 7%,transparent) 85%);background-size:220% 100%;animation:skeleton-shimmer 1.55s ease-in-out infinite;background-position:120% 0;animation-delay:var(--skeleton-delay,0ms); }
 .repo-skeleton span:first-child { width:46%; height:16px; }
@@ -201,7 +201,7 @@ nav ul li a:hover::after { width: 100%; }
 .error-message { color: #d14343; }
 
 @media (prefers-reduced-motion: reduce) {
-    .repo-enter { opacity: 1; transform: none; }
+    .js .repo:not(.repo-skeleton) { animation: none; }
     .repo-skeleton, .repo-skeleton span { animation: none; }
 }
 
@@ -229,8 +229,8 @@ footer { border-top: 1px solid var(--line); margin-top: 28px; padding: 30px 0; }
     .badges, .cta { justify-content: center; }
     .tagline { margin-left: auto; margin-right: auto; }
     .profile-info h1 { font-size: 2.4rem; }
-    .card-head { flex-direction: column; align-items: flex-start; }
-    .contact-card { flex-direction: column; align-items: flex-start; }
+    .card-head { grid-template-columns: 1fr; }
+    .card-head > :first-child, .card-head .head-link { grid-column: 1; justify-self: center; }
     /* Keep the GitHub/Modrinth pair side by side. Each button takes its label
        width plus an equal share of the slack, so neither label is cramped; if a
        screen is too narrow for both, the row wraps rather than clipping. */
