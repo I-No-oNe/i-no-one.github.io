@@ -12,8 +12,6 @@
 .server-query,.server-output {
     padding: 22px!important;
     background: var(--glass);
-    backdrop-filter: saturate(160%);
-    -webkit-backdrop-filter: saturate(160%);
     border: 1px solid var(--glass-brd);
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi);

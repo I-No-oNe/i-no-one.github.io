@@ -16,7 +16,7 @@ import logic from '../../counter/script.js?url';
   <main class="container">
     <div class="info-banner"><span id="info-text">📅 Showing FRC Israel district events</span> · <a id="tba-link" href="#" target="_blank" rel="noopener noreferrer">View on The Blue Alliance</a></div>
     <section class="countdown-card"><h1 class="event-title" id="event-title">Countdown to event</h1><div class="event-location" id="event-location"></div><div class="event-dates" id="event-dates"></div><div id="countdown" class="countdown-grid"><div class="time-box"><span class="time-number" id="days">00</span><span class="time-label">Days</span></div><div class="time-box"><span class="time-number" id="hours">00</span><span class="time-label">Hours</span></div><div class="time-box"><span class="time-number" id="minutes">00</span><span class="time-label">Minutes</span></div><div class="time-box"><span class="time-number" id="seconds">00</span><span class="time-label">Seconds</span></div></div><div class="controls" id="controls"></div></section>
-    <section class="notes-section"><label class="sr-only" for="notes">Event notes</label><textarea id="notes" class="notes-textarea" placeholder="Write your event notes, strategy ideas, or team reminders here…"></textarea></section>
+    <section class="notes-section" data-reveal><label class="sr-only" for="notes">Event notes</label><textarea id="notes" class="notes-textarea" placeholder="Write your event notes, strategy ideas, or team reminders here…"></textarea></section>
   </main>
   <script is:inline src={logic} defer></script>
 </BaseLayout>

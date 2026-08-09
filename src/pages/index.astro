@@ -64,9 +64,9 @@ const reposSignature = repos.map((repo) => `${repo.id}:${repo.updated_at}`).join
     </GlassPanel></div></section>
     <div class="container">
       <GlassPanel as="section" id="projects" class="card" reveal><SectionHeader title="Projects" subtitle="Public repositories, synced live from GitHub & Modrinth." href="https://github.com/I-No-oNe?tab=repositories" linkLabel="All repos" /><div id="repos" class="repos-grid" aria-busy={repos.length ? 'false' : 'true'} aria-live="polite" data-signature={reposSignature || undefined}>{repos.length
-        ? repos.map((repo, index) => {
+        ? repos.map((repo) => {
             const modrinthProject = findModrinthProject(repo.name);
-            return <div class="repo" data-repo-name={repo.name} style={`--i:${index}`}>
+            return <div class="repo" data-repo-name={repo.name} data-reveal>
               <h3>{repo.name}</h3>
               <p>{repo.description || 'No description available.'}</p>
               <div class="repo-links">

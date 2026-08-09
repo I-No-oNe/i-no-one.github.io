@@ -92,11 +92,12 @@ function populateRepos(githubRepos, modrinthProjects) {
 
     const fragment = document.createDocumentFragment();
 
-    githubRepos.forEach((repo, index) => {
+    // Cards built here replace a grid that is already on screen, so they skip
+    // the reveal treatment the build-time markup carries.
+    githubRepos.forEach((repo) => {
         const repoElement = document.createElement('div');
         repoElement.classList.add('repo');
         repoElement.dataset.repoName = repo.name;
-        repoElement.style.setProperty('--i', index);
 
         const repoName = document.createElement('h3');
         repoName.textContent = repo.name;

@@ -36,7 +36,7 @@ const workflows = [
       <div class="tool-panel-head"><h2><span class="panel-dot"></span>Helpful links</h2></div>
       <div class="bookmark-list">{links.map(([label, href]) => <a href={href} target="_blank" rel="noopener noreferrer"><span>{label}</span><Icon name="arrow-up-right" size={15} /></a>)}</div>
     </section>
-    <section class="tool-panel panel">
+    <section class="tool-panel panel" data-reveal>
       <div class="tool-panel-head"><h2><span class="panel-dot"></span>CI workflows</h2></div>
       <div class="workflow-list">
         {workflows.map((workflow) => <WorkflowCard title={workflow.title} code={workflow.code} />)}

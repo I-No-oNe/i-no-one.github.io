@@ -120,6 +120,37 @@ nav ul li a:hover::after { width: 100%; }
     border-color: var(--accent);
     box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi), 0 0 0 1px var(--accent-soft);
 }
+/* Projects is the anchor surface, so it reads green-on-black rather than the
+   neutral grey the shared glass gives every other card. Everything here is
+   paint-time - gradients and inset strokes, no backdrop-filter, no blur - so
+   the deeper look costs one paint and nothing per frame.
+   The !important pair answers the one in global.css; an id beats a class among
+   important declarations, so this is the narrow way to win that cascade. */
+#projects {
+    background-color: color-mix(in srgb, var(--accent) 7%, var(--glass));
+    background-image:
+        linear-gradient(155deg, color-mix(in srgb, var(--glass-hi) 26%, transparent), transparent 38%),
+        radial-gradient(120% 88% at 2% -10%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 58%),
+        radial-gradient(104% 78% at 104% 110%, color-mix(in srgb, var(--accent-2) 22%, transparent), transparent 62%);
+    border-color: color-mix(in srgb, var(--accent) 32%, var(--glass-brd)) !important;
+    box-shadow:
+        var(--shadow),
+        inset 0 1px 0 var(--glass-hi),
+        inset 0 0 0 1px color-mix(in srgb, var(--accent) 10%, transparent),
+        0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent),
+        0 26px 60px color-mix(in srgb, var(--accent) 14%, transparent) !important;
+}
+#projects .card-head h2 {
+    background: linear-gradient(120deg, var(--ink), var(--accent-ink));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+/* Cards inside pick up just enough tint to belong to the green surface without
+   dropping the contrast the descriptions need. */
+#projects .repo {
+    background-color: color-mix(in srgb, var(--accent) 5%, var(--glass));
+    border-color: color-mix(in srgb, var(--accent) 24%, var(--glass-brd));
+}
+
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 
 /* Three tracks so the title sits in the true centre of the card rather than the
@@ -154,16 +185,12 @@ nav ul li a:hover::after { width: 100%; }
 .repos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(258px, 1fr)); gap: 16px; }
 .repo {
     position: relative; overflow: hidden;
-    display: flex; flex-direction: column;
+    display: flex; flex-direction: column; text-align: center;
     border-radius: var(--radius-sm); padding: 20px;
     background: var(--glass); border: 1px solid var(--glass-brd);
     box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi);
     transition: transform .45s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
 }
-/* Build-time cards deal themselves in; --i staggers the row without any JS.
-   Capped so a long repo list never leaves the last card waiting seconds. */
-.js .repo:not(.repo-skeleton) { animation: repo-deal .55s var(--ease) both; animation-delay: calc(140ms + min(var(--i, 0) * 45ms, 700ms)); }
-@keyframes repo-deal { from { opacity: 0; transform: translateY(16px) scale(.98); } }
 .repo-skeleton { min-height: 190px; pointer-events: none; opacity:.76; }
 .repo-skeleton span { display:block; height:12px; border-radius:999px; background:linear-gradient(100deg,color-mix(in srgb,var(--ink) 7%,transparent) 15%,color-mix(in srgb,var(--glass-hi) 78%,transparent) 50%,color-mix(in srgb,var(--ink) 7%,transparent) 85%);background-size:220% 100%;animation:skeleton-shimmer 1.55s ease-in-out infinite;background-position:120% 0;animation-delay:var(--skeleton-delay,0ms); }
 .repo-skeleton span:first-child { width:46%; height:16px; }
@@ -191,7 +218,7 @@ nav ul li a:hover::after { width: 100%; }
 .repo h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 7px; letter-spacing: -.01em; transition: color .3s var(--ease); }
 .repo:hover h3 { color: var(--accent-ink); }
 .repo p { color: var(--muted); font-size: .9rem; margin-bottom: 16px; flex: 1; }
-.repo-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.repo-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .repo-links a {
     font-size: .82rem; font-weight: 600; padding: 7px 13px; border-radius: 10px;
     border: 1px solid var(--line-2); background: var(--glass-2); color: var(--ink-2);
@@ -201,7 +228,6 @@ nav ul li a:hover::after { width: 100%; }
 .error-message { color: #d14343; }
 
 @media (prefers-reduced-motion: reduce) {
-    .js .repo:not(.repo-skeleton) { animation: none; }
     .repo-skeleton, .repo-skeleton span { animation: none; }
 }
 
