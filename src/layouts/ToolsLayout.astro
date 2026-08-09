@@ -33,7 +33,7 @@ const { active, title, description, stylesheets = [] } = Astro.props;
       document.body.classList.toggle('nav-open', open);
       if (open) window.setTimeout(() => {
         if (sidebar?.classList.contains('open')) (sidebar.querySelector('.side-link.active') as HTMLElement | null)?.focus();
-      }, 280);
+      }, 460);
     };
     burger?.addEventListener('click', () => setOpen(!sidebar?.classList.contains('open')));
     scrim?.addEventListener('click', () => setOpen(false));

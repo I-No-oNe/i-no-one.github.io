@@ -350,13 +350,13 @@
 
 @media (max-width: 780px) {
   .layout { display: block; padding: 0; }
-  button.nav-burger { top: auto; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); left: auto; width: 58px; min-width: 58px; height: 58px; padding: 0; gap: 0; justify-content: center; border-radius: 50%; box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo); transition: bottom .38s var(--ease), transform .3s var(--ease), border-color .25s, background .25s; }
+  button.nav-burger { top: auto; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); left: auto; width: 58px; min-width: 58px; height: 58px; padding: 0; gap: 0; justify-content: center; border-radius: 50%; box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo); transition: bottom .5s var(--ease), transform .36s var(--ease), border-color .25s, background .3s; }
   button.nav-burger[aria-expanded='true'] { right: 26px; bottom: calc(min(620px, calc(100dvh - 20px)) - 61px); background: color-mix(in srgb, var(--bg) 88%, var(--glass-hi)); }
   .nav-burger-icon { transition: transform .35s var(--ease); }
   button.nav-burger[aria-expanded='true'] .nav-burger-icon { transform: rotate(45deg) scale(.94); }
   .nav-scrim.open { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
-  .layout > .sidebar { top: auto; right: 10px; bottom: 10px; left: 10px; width: min(520px, calc(100vw - 20px)); height: min(620px, calc(100dvh - 20px)); max-height: none; margin-inline: auto; padding: 9px 12px 12px; border-radius: 26px; background: color-mix(in srgb, var(--bg) 94%, var(--glass-hi)); backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%); transform: translateY(calc(100% + 20px)); animation: none; overscroll-behavior: contain; }
-  .layout > .sidebar.open { transform: none; }
+  .layout > .sidebar { top: auto; right: 10px; bottom: 10px; left: 10px; width: min(520px, calc(100vw - 20px)); height: min(620px, calc(100dvh - 20px)); max-height: none; margin-inline: auto; padding: 9px 12px 12px; border-radius: 26px; background: color-mix(in srgb, var(--bg) 94%, var(--glass-hi)); backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%); opacity: .35; transform: translateY(calc(100% + 20px)) scale(.985); transform-origin: bottom center; transition: transform .52s var(--ease), opacity .3s ease-out; animation: none; overscroll-behavior: contain; will-change: transform, opacity; }
+  .layout > .sidebar.open { opacity: 1; transform: none; }
   .sidebar-handle { display: block; width: 42px; height: 5px; margin: 1px auto 7px; border-radius: 999px; background: var(--line-2); }
   .sidebar-head { min-height: 58px; margin-bottom: 2px; padding-right: 64px; }
   .side-link { min-height: 48px; }
