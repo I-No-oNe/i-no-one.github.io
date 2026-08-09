@@ -96,8 +96,8 @@
   border-radius: 24px;
   background: linear-gradient(145deg, color-mix(in srgb, var(--glass-hi) 20%, var(--glass)), var(--glass) 58%, color-mix(in srgb, var(--accent-soft) 18%, var(--glass)));
   box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo);
-  backdrop-filter: blur(var(--blur)) saturate(180%);
-  -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
+  backdrop-filter: saturate(180%);
+  -webkit-backdrop-filter: saturate(180%);
   animation: component-enter .4s var(--ease) both;
 }
 
@@ -186,8 +186,8 @@
   background: linear-gradient(145deg, color-mix(in srgb, var(--glass-hi) 18%, var(--glass)), var(--glass));
   box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo);
   color: var(--ink);
-  backdrop-filter: blur(var(--blur)) saturate(175%);
-  -webkit-backdrop-filter: blur(var(--blur)) saturate(175%);
+  backdrop-filter: saturate(175%);
+  -webkit-backdrop-filter: saturate(175%);
   transition: transform .4s var(--ease), border-color .35s, box-shadow .4s var(--ease);
   animation: component-enter .4s var(--ease) both;
 }
