@@ -2,7 +2,7 @@
 
 .container { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
 
-section[id] { scroll-margin-top: 90px; }
+section[id] { scroll-margin-top: 96px; }
 
 /* ---------- Header ---------- */
 header {

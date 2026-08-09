@@ -56,6 +56,12 @@ const {
 
       const menuButton = document.querySelector('#menu-toggle');
       const mobileNav = document.querySelector('#mobile-nav');
+      const closeMobileNav = () => {
+        menuButton?.setAttribute('aria-expanded', 'false');
+        menuButton?.setAttribute('aria-label', 'Open navigation');
+        mobileNav?.classList.remove('open');
+        document.body.classList.remove('nav-open');
+      };
       menuButton?.addEventListener('click', () => {
         const open = menuButton.getAttribute('aria-expanded') !== 'true';
         menuButton.setAttribute('aria-expanded', String(open));
@@ -63,17 +69,23 @@ const {
         mobileNav?.classList.toggle('open', open);
         document.body.classList.toggle('nav-open', open);
       });
-      mobileNav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-        menuButton?.setAttribute('aria-expanded', 'false');
-        mobileNav.classList.remove('open');
-        document.body.classList.remove('nav-open');
+      mobileNav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMobileNav));
+      document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((link) => link.addEventListener('click', (event) => {
+        const url = new URL(link.href, window.location.href);
+        const currentPath = window.location.pathname.replace(/\/index\.html$/, '/');
+        const targetPath = url.pathname.replace(/\/index\.html$/, '/');
+        if (!url.hash || url.origin !== window.location.origin || targetPath !== currentPath) return;
+        const target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+        if (!target) return;
+        event.preventDefault();
+        closeMobileNav();
+        window.history.pushState(null, '', url.hash);
+        const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+        requestAnimationFrame(() => requestAnimationFrame(() => target.scrollIntoView({ behavior, block: 'start' })));
       }));
       document.addEventListener('keydown', (event) => {
         if (event.key !== 'Escape' || menuButton?.getAttribute('aria-expanded') !== 'true') return;
-        menuButton.setAttribute('aria-expanded', 'false');
-        menuButton.setAttribute('aria-label', 'Open navigation');
-        mobileNav?.classList.remove('open');
-        document.body.classList.remove('nav-open');
+        closeMobileNav();
         (menuButton as HTMLElement).focus();
       });
 
