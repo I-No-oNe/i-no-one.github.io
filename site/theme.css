@@ -84,37 +84,26 @@ body {
 a { color: var(--accent-ink); text-decoration: none; }
 a:hover { color: var(--accent); }
 
-/* Light aurora */
-.aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-.blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .68; will-change: transform; }
-.blob-1 { width: 46vw; height: 46vw; top: -12vw; left: -8vw; background: radial-gradient(circle at 30% 30%, var(--aur-1), transparent 65%); animation: drift1 22s var(--ease) infinite alternate; }
-.blob-2 { width: 42vw; height: 42vw; top: 8vw; right: -12vw; background: radial-gradient(circle at 60% 40%, var(--aur-2), transparent 65%); animation: drift2 26s var(--ease) infinite alternate; }
-.blob-3 { width: 38vw; height: 38vw; bottom: -14vw; left: 30vw; background: radial-gradient(circle at 50% 50%, var(--aur-3), transparent 65%); animation: drift3 30s var(--ease) infinite alternate; }
-.aurora::before, .aurora::after { content: none; }
-@keyframes drift1 { to { transform: translate(10vw, 8vw) scale(1.15); } }
-@keyframes drift2 { to { transform: translate(-8vw, 10vw) scale(1.1); } }
-@keyframes drift3 { to { transform: translate(6vw, -10vw) scale(1.2); } }
-
-/* Dark mesh: visible depth without a flat black canvas or hard color circles. */
-[data-theme="dark"] .aurora::before {
-    content: ''; position: absolute; inset: -14%;
+/* Aurora: one composited gradient layer. Radial gradients are already soft, so
+   no blur() and no scale() - the layer only translates and never re-rasterises. */
+.aurora {
+    position: fixed; inset: -20%; z-index: -1; pointer-events: none;
     background:
-        radial-gradient(ellipse 58% 48% at 8% 5%, var(--aur-1), transparent 68%),
-        radial-gradient(ellipse 52% 44% at 96% 24%, var(--aur-2), transparent 70%),
-        radial-gradient(ellipse 54% 40% at 48% 104%, var(--aur-3), transparent 72%);
-    filter: blur(18px); transform: translate3d(0,0,0) scale(1.02);
-    animation: mesh-drift 20s var(--ease) infinite alternate;
+        radial-gradient(ellipse 46% 42% at 14% 12%, var(--aur-1), transparent 66%),
+        radial-gradient(ellipse 42% 38% at 88% 26%, var(--aur-2), transparent 68%),
+        radial-gradient(ellipse 44% 40% at 52% 96%, var(--aur-3), transparent 70%);
+    animation: aurora-drift 28s var(--ease) infinite alternate;
 }
+@keyframes aurora-drift { to { transform: translate3d(2.5%, -2%, 0); } }
+
 [data-theme="dark"] .aurora::after {
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(135deg, rgba(255,255,255,.12), transparent 28%, transparent 72%, rgba(255,255,255,.04));
 }
-[data-theme="dark"] .aurora .blob { display: none; }
-@keyframes mesh-drift { to { transform: translate3d(2.5%, -1.5%, 0) scale(1.06); } }
 
 @media (prefers-reduced-motion: reduce) {
     ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
-    .blob, [data-theme="dark"] .aurora::before { animation: none; }
+    .aurora { animation: none; }
 }
 
 /* Buttons */
@@ -124,7 +113,6 @@ a:hover { color: var(--accent); }
     font-weight: 600; font-size: .92rem; line-height: 1;
     padding: 12px 20px; border-radius: 14px;
     border: 1px solid var(--glass-brd); background: var(--glass);
-    backdrop-filter: saturate(175%); -webkit-backdrop-filter: saturate(175%);
     color: var(--ink); cursor: pointer;
     text-align: center; min-height: 44px;
     transition: transform .32s var(--ease), border-color var(--speed), box-shadow .32s var(--ease), color var(--speed), background var(--speed);
@@ -226,8 +214,6 @@ a:hover { color: var(--accent); }
 .panel {
     position: relative; overflow: hidden;
     background: var(--glass);
-    backdrop-filter: saturate(160%);
-    -webkit-backdrop-filter: saturate(160%);
     border: 1px solid var(--glass-brd);
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi);
