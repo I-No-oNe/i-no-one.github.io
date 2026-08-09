@@ -41,7 +41,7 @@ header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-t
 
 @media(max-width:720px){
   :root{--blur:12px}.shell{padding-inline:16px}
-  .aurora{background:radial-gradient(circle at 8% 8%,var(--aur-1),transparent 42%),radial-gradient(circle at 100% 36%,var(--aur-2),transparent 48%),radial-gradient(circle at 48% 100%,var(--aur-3),transparent 46%)}
+  .aurora{background:radial-gradient(circle at 8% 8%,var(--aur-1),transparent 34%),radial-gradient(circle at 100% 36%,var(--aur-2),transparent 40%),radial-gradient(circle at 48% 100%,var(--aur-3),transparent 38%)}
   .aurora .blob{display:none}
   header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-textarea,.tool-app-card,.search-box,.history-container{backdrop-filter:blur(12px) saturate(155%);-webkit-backdrop-filter:blur(12px) saturate(155%)}
   :where(.server-tag,.controls button,.tab,.btn-p,.btn-s){min-height:44px}

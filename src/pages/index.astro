@@ -10,19 +10,19 @@ import Icon from '../components/Icon.astro';
 import repoScript from '../../site/script.js?url';
 ---
 
-<BaseLayout title="I-No-oNe" description="I-No-oNe — Minecraft mod developer, maker of web tools and FRC gadgets. Open source on GitHub and Modrinth.">
+<BaseLayout title="I-No-oNe" description="I-No-oNe - Minecraft mod developer, maker of web tools and FRC gadgets. Open source on GitHub and Modrinth.">
   <SiteHeader />
   <main id="top">
     <section id="home" class="hero"><div class="container"><GlassPanel class="profile-card hero-panel">
       <div class="profile-glow" aria-hidden="true"></div>
       <div class="avatar-wrap"><img src="https://avatars.githubusercontent.com/u/145749961?s=400&v=4" alt="I-No-oNe avatar" class="profile-avatar" /></div>
-      <div class="profile-info"><div class="badges"><StatusBadge live>Heads-down on private work</StatusBadge><StatusBadge>Free time: personal software &amp; mods</StatusBadge></div><h1>I-No-oNe</h1><p class="tagline">Mod developer &amp; maker. I build Minecraft mods, handy web tools, and FRC gadgets—all open source on GitHub and Modrinth.</p><div class="cta"><ActionButton href="https://github.com/I-No-oNe" variant="primary" external>GitHub</ActionButton><ActionButton href="https://modrinth.com/user/I-No-oNe" external>Modrinth</ActionButton><ActionButton href="https://discord.com/users/1051897115447660697" external>Discord</ActionButton></div></div>
+      <div class="profile-info"><div class="badges"><StatusBadge live>Heads-down on private work</StatusBadge><StatusBadge>Free time: personal software &amp; mods</StatusBadge></div><h1>I-No-oNe</h1><p class="tagline">Mod developer &amp; maker. I build Minecraft mods, handy web tools, and FRC gadgets - all open source on GitHub and Modrinth.</p><div class="cta"><ActionButton href="https://github.com/I-No-oNe" variant="primary" external>GitHub</ActionButton><ActionButton href="https://modrinth.com/user/I-No-oNe" external>Modrinth</ActionButton><ActionButton href="https://discord.com/users/1051897115447660697" external>Discord</ActionButton></div></div>
     </GlassPanel></div></section>
     <div class="container">
       <GlassPanel as="section" id="projects" class="card" reveal><SectionHeader title="Projects" subtitle="Public repositories, synced live from GitHub & Modrinth." href="https://github.com/I-No-oNe?tab=repositories" linkLabel="All repos" /><div id="repos" class="repos-grid" aria-busy="true" aria-live="polite">{Array.from({ length: 6 }, (_, index) => <div class="repo repo-skeleton" aria-hidden="true" style={`--skeleton-delay:${index * 70}ms`}><span></span><span></span><span></span></div>)}</div></GlassPanel>
       <div class="two-col">
-        <GlassPanel as="section" id="frc" class="card" reveal delay={80}><SectionHeader title="FRC" /><p>The FIRST® Robotics Competition stages short games played by robots—designed and built by high-school teams and engineer mentors, then driven in live competition.</p><ActionButton href="/counter/" variant="primary">Season countdown <Icon name="arrow" size={16} /></ActionButton></GlassPanel>
-        <GlassPanel as="section" id="tools" class="card" reveal delay={140}><SectionHeader title="Tools" /><p>A small collection of web tools I actually use—QR maker, PDF utils, obfuscator, server checker and more.</p><ActionButton href="/tools/" variant="primary">Open tools <Icon name="arrow" size={16} /></ActionButton></GlassPanel>
+        <GlassPanel as="section" id="frc" class="card" reveal delay={80}><SectionHeader title="FRC" /><p>The FIRST® Robotics Competition stages short games played by robots - designed and built by high-school teams and engineer mentors, then driven in live competition.</p><ActionButton href="/counter/" variant="primary">Season countdown <Icon name="arrow" size={16} /></ActionButton></GlassPanel>
+        <GlassPanel as="section" id="tools" class="card" reveal delay={140}><SectionHeader title="Tools" /><p>A small collection of web tools I actually use - QR maker, PDF utils, obfuscator, server checker and more.</p><ActionButton href="/tools/" variant="primary">Open tools <Icon name="arrow" size={16} /></ActionButton></GlassPanel>
       </div>
       <GlassPanel as="section" id="contact" class="card contact-card" reveal><div><h2>Let's build something</h2><p class="muted">Got a question, a bug, or an idea? Reach out.</p></div><div class="cta"><ActionButton href="https://discord.com/users/1051897115447660697" variant="primary" external>Message on Discord</ActionButton><ActionButton href="https://discord.gg/QHFSDPajd6" external>Join server</ActionButton></div></GlassPanel>
     </div>

@@ -1,33 +1,39 @@
 ---
 import ToolsLayout from '../../layouts/ToolsLayout.astro';
+import Icon from '../../components/Icon.astro';
 import styles from '../../../tools/obfuscator/style.css?url';
 import logic from '../../../tools/obfuscator/script.js?url';
 ---
 
 <ToolsLayout active="obfuscator" title="Obfuscator" description="Encode and decode text locally with your own key." stylesheets={[styles]}>
-  <div class="container tool-app-card">
-    <div class="input-group">
-      <label for="inputText">Input text</label>
-      <textarea id="inputText" class="field" placeholder="Enter text to encode or paste encoded text to decode…" autocomplete="off"></textarea>
+  <section class="obf-studio tool-app-card">
+    <div class="obf-pane obf-input-pane">
+      <div class="obf-pane-head"><span class="obf-pane-icon"><Icon name="code" size={19} /></span><div><p class="obf-eyebrow">Source</p><h2>Text and key</h2></div></div>
+      <div class="input-group">
+        <label for="inputText">Input text</label>
+        <textarea id="inputText" class="field" placeholder="Write text to encode or paste encoded text to decode…" autocomplete="off"></textarea>
+      </div>
+      <div class="input-group key-group">
+        <label for="key">Private key</label>
+        <input type="password" id="key" class="field" placeholder="Choose a key only you know" autocomplete="off" />
+      </div>
+      <p class="obf-local"><Icon name="lock" size={14} /> Everything stays in this browser tab.</p>
+      <div class="button-group">
+        <button class="btn btn-primary btn-encode" type="button" onclick="encode()">Encode</button>
+        <button class="btn btn-decode" type="button" onclick="decode()">Decode</button>
+      </div>
     </div>
-    <div class="input-group">
-      <label for="key">Encryption key</label>
-      <input type="text" id="key" class="field" placeholder="Enter your private key…" autocomplete="off" />
-    </div>
-    <div class="button-group">
-      <button class="btn btn-primary btn-encode" type="button" onclick="encode()">Encode</button>
-      <button class="btn btn-decode" type="button" onclick="decode()">Decode</button>
-    </div>
-    <div class="output-container">
+    <div class="obf-pane output-container">
+      <div class="obf-pane-head"><span class="obf-pane-icon"><Icon name="lock" size={19} /></span><div><p class="obf-eyebrow">Result</p><h2>Ready to use</h2></div></div>
       <div class="input-group">
         <label for="outputText">Output</label>
-        <textarea id="outputText" class="field" placeholder="Output appears here…" readonly autocomplete="off"></textarea>
+        <textarea id="outputText" class="field" placeholder="Your encoded or decoded text appears here." readonly autocomplete="off"></textarea>
       </div>
       <div class="action-buttons">
-        <button class="btn copy-btn" type="button" onclick="copyOutput()">Copy output</button>
-        <button class="btn download-btn" type="button" onclick="downloadHistory()">Download history</button>
+        <button class="btn copy-btn" type="button" onclick="copyOutput()"><Icon name="copy" size={16} /> Copy output</button>
+        <button class="btn download-btn" type="button" onclick="downloadHistory()"><Icon name="download" size={16} /> Save history</button>
       </div>
     </div>
-  </div>
-  <script is:inline src={logic}></script>
+  </section>
+  <script is:inline src={logic} defer></script>
 </ToolsLayout>

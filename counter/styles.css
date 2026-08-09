@@ -7,6 +7,7 @@
     background: color-mix(in srgb, var(--bg) 88%, var(--glass-hi));
     box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo);
     backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+    animation: frc-enter .32s var(--ease) both;
 }
 .topbar-right { display: flex; align-items: center; gap: 10px; }
 .topbar .side-brand { min-width: 0; padding: 0 4px; gap: 8px; }
@@ -32,6 +33,7 @@
     box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi);
     border-radius: 16px; padding: 14px 20px; margin-bottom: 26px;
     text-align: center; font-size: .95rem; color: var(--ink-2);
+    animation: frc-enter .34s var(--ease) both;
 }
 .info-banner a { color: var(--accent-ink); font-weight: 600; }
 .info-banner a:hover { text-decoration: underline; }
@@ -43,6 +45,7 @@
     box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi);
     border-radius: var(--radius); padding: 40px; margin-bottom: 28px;
     text-align: center;
+    animation: frc-enter .38s var(--ease) both;
 }
 
 .event-title { font-size: 2.4rem; font-weight: 900; letter-spacing: -.02em; margin-bottom: 10px; }
@@ -64,13 +67,14 @@
 .time-label { font-size: .82rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
 
 /* Event selection buttons */
-.controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; min-height:44px; }
 .controls .btn {
     min-height: 44px; padding: 11px 22px; font-size: .95rem; font-weight: 600;
     background: var(--glass-2); color: var(--ink); border: 1px solid var(--line-2);
     border-radius: 12px; cursor: pointer;
     transition: transform .25s var(--ease), border-color .25s, background .25s, color .25s;
     font-family: inherit;
+    max-width:100%;overflow-wrap:anywhere;text-wrap:balance;
 }
 .controls .btn:hover { transform: translateY(-2px); border-color: var(--accent); }
 .controls .btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
@@ -96,6 +100,8 @@
     color: var(--accent-ink);
 }
 .results:empty { display: none; }
+
+@keyframes frc-enter { from { transform:translateY(6px); } to { transform:none; } }
 
 @media (max-width: 768px) {
     .countdown-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }

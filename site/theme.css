@@ -26,9 +26,9 @@
     --speed: .24s;
     --ease: cubic-bezier(.22, 1, .36, 1);
 
-    --aur-1: rgba(22, 163, 74, .40);
-    --aur-2: rgba(14, 165, 163, .34);
-    --aur-3: rgba(101, 199, 120, .30);
+    --aur-1: rgba(22, 163, 74, .20);
+    --aur-2: rgba(14, 165, 163, .16);
+    --aur-3: rgba(101, 199, 120, .14);
     --code-bg: rgba(244, 249, 246, .72);
     --code-ink: #183b25;
     --font: 'Inter', system-ui, sans-serif;
@@ -56,15 +56,21 @@
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, .5), 0 12px 26px rgba(0, 0, 0, .4);
     --header-bg: rgba(8, 9, 12, .55);
 
-    --aur-1: rgba(22, 163, 74, .34);
-    --aur-2: rgba(20, 180, 178, .26);
-    --aur-3: rgba(16, 120, 90, .28);
+    --aur-1: rgba(22, 163, 74, .20);
+    --aur-2: rgba(20, 180, 178, .15);
+    --aur-3: rgba(16, 120, 90, .14);
     --code-bg: rgba(5, 10, 8, .74);
     --code-ink: #d6f5df;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+::view-transition-old(tool-content) { animation: route-out .14s ease-out both; }
+::view-transition-new(tool-content) { animation: route-in .24s var(--ease) both; }
+@keyframes route-out { to { opacity: 0; transform: translateY(-3px); } }
+@keyframes route-in { from { opacity: 0; transform: translateY(6px); } }
 body {
     font-family: var(--font);
     background: var(--bg);
@@ -79,7 +85,7 @@ a:hover { color: var(--accent); }
 
 /* Aurora background */
 .aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-.blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .9; will-change: transform; }
+.blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .68; will-change: transform; }
 .blob-1 { width: 46vw; height: 46vw; top: -12vw; left: -8vw;
     background: radial-gradient(circle at 30% 30%, var(--aur-1), transparent 65%);
     animation: drift1 22s var(--ease) infinite alternate; }
@@ -92,6 +98,10 @@ a:hover { color: var(--accent); }
 @keyframes drift1 { to { transform: translate(10vw, 8vw) scale(1.15); } }
 @keyframes drift2 { to { transform: translate(-8vw, 10vw) scale(1.1); } }
 @keyframes drift3 { to { transform: translate(6vw, -10vw) scale(1.2); } }
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
 
 /* Glass surface */
 .glass {

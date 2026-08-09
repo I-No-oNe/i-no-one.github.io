@@ -9,7 +9,7 @@ interface Props {
 }
 
 const {
-  title = 'I-No-oNe — Developer & Maker',
+  title = 'I-No-oNe - Developer & Maker',
   description = 'Minecraft mod developer, web tool maker, and FRC builder. Open-source projects on GitHub and Modrinth.'
 } = Astro.props;
 ---
@@ -21,11 +21,10 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0d1210" />
+    <meta name="color-scheme" content="light dark" />
+    <style is:inline>html{background:#eef1ee}html[data-theme="dark"]{background:#08090c}</style>
     <link rel="icon" href="https://avatars.githubusercontent.com/u/145749961?s=512&v=4" type="image/png" sizes="512x512" />
     <link rel="apple-touch-icon" href="https://avatars.githubusercontent.com/u/145749961?s=512&v=4" sizes="512x512" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <slot name="head" />
     <title>{title}</title>
     <script is:inline>

@@ -56,21 +56,10 @@ function computeDisplayEvents() {
     displayEvents = upcoming.length > 0 ? upcoming : events;
 }
 
-// --- Favicon ---
-function setFavicon(url) {
-    let favicon = document.querySelector("link[rel='icon']") || document.createElement('link');
-    favicon.rel = 'icon';
-    favicon.sizes = '512x512';
-    favicon.href = url;
-    document.head.appendChild(favicon);
-}
-
 // --- Season branding ---
 function setSeasonBranding() {
     const infoTextElement = document.getElementById('info-text');
     const tbaLinkElement = document.getElementById('tba-link');
-    // keep the I-No-oNe logo as the tab icon for consistent branding
-    setFavicon('https://avatars.githubusercontent.com/u/145749961?s=512&v=4');
     infoTextElement.innerHTML = `📅 Showing <b>${CURRENT_FRC_YEAR}</b> FIRST Israel District Events (ISR)`;
     tbaLinkElement.href = `https://www.thebluealliance.com/events/isr/${CURRENT_FRC_YEAR}`;
 }
@@ -82,9 +71,12 @@ function createEventButtons() {
     displayEvents.forEach((event, index) => {
         const btn = document.createElement('button');
         btn.className = 'btn';
+        btn.type = 'button';
         btn.textContent = event.short_name;
+        btn.title = event.name;
+        btn.setAttribute('aria-pressed', String(index === currentEventIndex));
         btn.onclick = () => displayEvent(index);
-        if (index === 0) btn.classList.add('active');
+        if (index === currentEventIndex) btn.classList.add('active');
         controls.appendChild(btn);
     });
 }
@@ -96,6 +88,7 @@ function displayEvent(index) {
 
     document.querySelectorAll('.controls .btn').forEach((btn, i) => {
         btn.classList.toggle('active', i === index);
+        btn.setAttribute('aria-pressed', String(i === index));
     });
 
     document.getElementById('event-title').textContent = event.name;
@@ -164,15 +157,24 @@ function saveNotes() {
     localStorage.setItem(`frcIsrael${CURRENT_FRC_YEAR}Notes`, notesData);
 }
 
-// --- Init ---
-async function init() {
-    await loadEvents();
+function renderEvents(preferredKey) {
     computeDisplayEvents();
-    setSeasonBranding();
+    const preferredIndex = preferredKey ? displayEvents.findIndex(event => event.key === preferredKey) : -1;
+    currentEventIndex = preferredIndex >= 0 ? preferredIndex : 0;
     createEventButtons();
-    displayEvent(0);
-    loadNotes();
-    document.getElementById('notes').addEventListener('input', saveNotes);
+    displayEvent(currentEventIndex);
 }
 
-window.onload = init;
+// Paint fallback data immediately, then refresh it without blocking first render.
+function init() {
+    setSeasonBranding();
+    renderEvents();
+    loadNotes();
+    document.getElementById('notes').addEventListener('input', saveNotes);
+    loadEvents().then(() => {
+        const selectedKey = displayEvents[currentEventIndex]?.key;
+        renderEvents(selectedKey);
+    });
+}
+
+init();

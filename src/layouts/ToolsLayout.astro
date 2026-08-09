@@ -23,6 +23,7 @@ const { active, title, description, stylesheets = [] } = Astro.props;
   <ToolAlert />
   <script>
     const burger = document.querySelector('#nav-burger');
+    const burgerLabel = burger?.querySelector('.nav-burger-label');
     const sidebar = document.querySelector('.sidebar');
     const scrim = document.querySelector('#nav-scrim');
     const setOpen = (open: boolean) => {
@@ -30,6 +31,7 @@ const { active, title, description, stylesheets = [] } = Astro.props;
       scrim?.classList.toggle('open', open);
       burger?.setAttribute('aria-expanded', String(open));
       burger?.setAttribute('aria-label', open ? 'Close tools menu' : 'Open tools menu');
+      if (burgerLabel) burgerLabel.textContent = open ? 'Close' : 'Tools';
       document.body.classList.toggle('nav-open', open);
       if (open) window.setTimeout(() => {
         if (sidebar?.classList.contains('open')) (sidebar.querySelector('.side-link.active') as HTMLElement | null)?.focus();
@@ -37,7 +39,10 @@ const { active, title, description, stylesheets = [] } = Astro.props;
     };
     burger?.addEventListener('click', () => setOpen(!sidebar?.classList.contains('open')));
     scrim?.addEventListener('click', () => setOpen(false));
-    sidebar?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+    sidebar?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+      document.body.classList.add('tool-route-leaving');
+      setOpen(false);
+    }));
     document.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape' || !sidebar?.classList.contains('open')) return;
       setOpen(false);

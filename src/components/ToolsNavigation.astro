@@ -17,10 +17,13 @@ const links = [
 ] as const;
 ---
 
-<button id="nav-burger" class="nav-burger" type="button" aria-label="Open tools menu" aria-controls="tools-sidebar" aria-expanded="false">
-  <span class="nav-burger-icon" aria-hidden="true"><Icon name="grid" size={18} /></span>
-  <span class="sr-only">Browse tools</span>
-</button>
+<div class="mobile-tools-bar">
+  <a class="mobile-tools-brand" href="/"><img src="https://avatars.githubusercontent.com/u/145749961?s=96&v=4" alt="" /><span><strong>I-No-oNe</strong><small>Web tools</small></span></a>
+  <button id="nav-burger" class="nav-burger" type="button" aria-label="Open tools menu" aria-controls="tools-sidebar" aria-expanded="false">
+    <span class="nav-burger-icon" aria-hidden="true"><Icon name="grid" size={18} /></span>
+    <span class="nav-burger-label">Tools</span>
+  </button>
+</div>
 <div id="nav-scrim" class="nav-scrim"></div>
 <aside id="tools-sidebar" class="sidebar" aria-label="Tools navigation">
   <span class="sidebar-handle" aria-hidden="true"></span>

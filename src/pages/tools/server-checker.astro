@@ -1,19 +1,23 @@
 ---
 import ToolsLayout from '../../layouts/ToolsLayout.astro';
+import Icon from '../../components/Icon.astro';
 import styles from '../../../tools/server-checker/style.css?url';
 import logic from '../../../tools/server-checker/script.js?url';
 ---
 
 <ToolsLayout active="server" title="Minecraft server checker" description="Check live status, version, player count, and MOTD." stylesheets={[styles]}>
-  <div class="container">
-    <div class="search-box tool-app-card">
+  <div class="server-shell">
+    <section class="server-workspace">
+    <div class="server-query tool-app-card">
+      <div class="server-query-head"><span class="server-query-icon"><Icon name="server" size={21} /></span><div><p class="server-eyebrow">Java edition</p><h2>Check a server</h2></div></div>
+      <p class="server-query-copy">Enter an address to see live status, players, version, and connection details.</p>
       <div class="input-group">
         <div class="input-wrapper"><label for="hostInput">Server address</label><input type="text" id="hostInput" class="field" placeholder="hypixel.net" /></div>
         <div class="input-wrapper port-wrapper"><label for="portInput">Port</label><input type="number" id="portInput" class="field port-input" placeholder="25565" value="25565" /></div>
       </div>
       <button class="btn btn-primary minecraft-btn" type="button" onclick="checkServer()"><span class="btn-text">Check server</span></button>
       <div class="popular-servers">
-        <span class="label">Try a popular server</span>
+        <span class="label">Quick picks</span>
         <div class="server-tags">
           <button class="server-tag" type="button" onclick="setServer('hypixel.net',25565)">Hypixel</button>
           <button class="server-tag" type="button" onclick="setServer('2b2t.org',25565)">2b2t</button>
@@ -22,11 +26,14 @@ import logic from '../../../tools/server-checker/script.js?url';
         </div>
       </div>
     </div>
+    <div class="server-output tool-app-card">
+      <div class="results" id="results" aria-live="polite"><div class="server-empty"><span class="server-empty-icon"><Icon name="server" size={30} /></span><h3>Waiting for an address</h3><p>Run a check and the live server report will appear here.</p></div></div>
+    </div>
+    </section>
     <div id="historyContainer" class="history-container">
       <div class="history-header"><h3>Recent servers</h3><button onclick="clearHistory()" class="clear-history-btn" type="button">Clear history</button></div>
       <div id="historyList" class="history-list"></div>
     </div>
-    <div class="results" id="results" aria-live="polite"></div>
   </div>
-  <script is:inline src={logic}></script>
+  <script is:inline src={logic} defer></script>
 </ToolsLayout>

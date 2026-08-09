@@ -50,24 +50,117 @@ const fmt = b => b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).t
 const fIcon = n => ({pdf:'📄',jpg:'🖼',jpeg:'🖼',png:'🖼',gif:'🖼',bmp:'🖼',tiff:'🖼',tif:'🖼',txt:'📝',doc:'📃',docx:'📃'}[n.split('.').pop().toLowerCase()]||'📁');
 
 function showAlert(msg, type='success') {
-    const el = document.getElementById('alert');
-    el.textContent = msg; el.className = 'alert show '+type;
-    clearTimeout(el._t); el._t = setTimeout(()=>el.className='alert',3800);
+    window.showToolAlert(msg, type === 'error' ? 'error' : 'success');
 }
 const showProc = (id, on) => document.getElementById(id).classList.toggle('show', on);
 
 // Tabs
 document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(x=>{
+        x.classList.remove('active');
+        x.setAttribute('aria-selected', 'false');
+        x.tabIndex = -1;
+    });
     document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active'); document.getElementById(b.dataset.tab).classList.add('active');
+    b.classList.add('active');
+    b.setAttribute('aria-selected', 'true');
+    b.tabIndex = 0;
+    document.getElementById(b.dataset.tab).classList.add('active');
 }));
+
+document.querySelector('.tabs').addEventListener('keydown', event => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    const tabs = [...document.querySelectorAll('.tab')];
+    const current = tabs.indexOf(document.activeElement);
+    if (current < 0) return;
+    event.preventDefault();
+    tabs[(current + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length].click();
+    document.querySelector('.tab[aria-selected="true"]').focus();
+});
+
+// Themed, keyboard-friendly dropdowns backed by native selects.
+function closeCustomSelects(except) {
+    document.querySelectorAll('.custom-select.open').forEach(dropdown => {
+        if (dropdown === except) return;
+        dropdown.classList.remove('open');
+        dropdown.querySelector('.custom-select-trigger').setAttribute('aria-expanded', 'false');
+    });
+}
+
+document.querySelectorAll('.pdf-app select').forEach(select => {
+    const wrapper = document.createElement('div');
+    const trigger = document.createElement('button');
+    const menu = document.createElement('div');
+    const label = document.querySelector(`label[for="${select.id}"]`)?.textContent?.trim() || 'Choose an option';
+
+    wrapper.className = 'custom-select';
+    trigger.type = 'button';
+    trigger.className = 'custom-select-trigger';
+    trigger.setAttribute('aria-label', label);
+    trigger.setAttribute('aria-haspopup', 'listbox');
+    trigger.setAttribute('aria-expanded', 'false');
+    menu.className = 'custom-select-menu';
+    menu.setAttribute('role', 'listbox');
+
+    [...select.options].forEach(option => {
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'custom-select-option';
+        item.dataset.value = option.value;
+        item.textContent = option.textContent;
+        item.setAttribute('role', 'option');
+        item.setAttribute('aria-selected', String(option.selected));
+        item.addEventListener('click', () => {
+            select.value = option.value;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            sync();
+            closeCustomSelects();
+            trigger.focus();
+        });
+        menu.appendChild(item);
+    });
+
+    const sync = () => {
+        trigger.textContent = select.selectedOptions[0]?.textContent || '';
+        menu.querySelectorAll('.custom-select-option').forEach(item => {
+            item.setAttribute('aria-selected', String(item.dataset.value === select.value));
+        });
+    };
+    trigger.addEventListener('click', () => {
+        const opening = !wrapper.classList.contains('open');
+        closeCustomSelects(wrapper);
+        wrapper.classList.toggle('open', opening);
+        trigger.setAttribute('aria-expanded', String(opening));
+        if (opening) menu.querySelector('[aria-selected="true"]')?.focus();
+    });
+    wrapper.addEventListener('keydown', event => {
+        const options = [...menu.querySelectorAll('.custom-select-option')];
+        const current = options.indexOf(document.activeElement);
+        if (event.key === 'Escape') {
+            closeCustomSelects();
+            trigger.focus();
+        } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault();
+            const direction = event.key === 'ArrowDown' ? 1 : -1;
+            options[(current + direction + options.length) % options.length]?.focus();
+        }
+    });
+    select.addEventListener('change', sync);
+    select.classList.add('custom-select-native');
+    select.parentNode.insertBefore(wrapper, select);
+    wrapper.append(select, trigger, menu);
+    sync();
+});
+
+document.addEventListener('click', event => {
+    if (!event.target.closest('.custom-select')) closeCustomSelects();
+});
 
 // Preview
 function showPreview(blob, name) {
     const url = URL.createObjectURL(blob);
     document.getElementById('previewFrame').innerHTML = `<iframe src="${url}#toolbar=1"></iframe>`;
-    document.getElementById('previewInfo').textContent = name+' — '+fmt(blob.size);
+    document.getElementById('previewInfo').textContent = name+' - '+fmt(blob.size);
     document.getElementById('statusDot').classList.add('loaded');
     const btn = document.getElementById('btnDownload');
     btn.style.display = 'inline-block';
@@ -160,7 +253,7 @@ async function renderMergeList(){
     const n=mergeFiles.length;
     document.getElementById('stMerge').style.display=n?'flex':'none';
     document.getElementById('cnMerge').textContent=n;
-    document.getElementById('pgMerge').textContent=tp||'—';
+    document.getElementById('pgMerge').textContent=tp||'-';
     document.getElementById('szMerge').textContent=fmt(mergeFiles.reduce((a,f)=>a+f.size,0));
     document.getElementById('btnMerge').disabled=n<2;
     document.getElementById('btnClearMerge').disabled=!n;
@@ -238,7 +331,7 @@ document.getElementById('btnSplit').addEventListener('click',async()=>{
                 const np=await PDFDocument.create();(await np.copyPages(src,groups[gi])).forEach(p=>np.addPage(p));
                 const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([await np.save()],{type:'application/pdf'})); a.download=`split-part-${gi+1}.pdf`; a.click();
             }
-            showAlert(`Split into ${groups.length} files — check downloads!`);
+        showAlert(`Split into ${groups.length} files - check downloads!`);
         }
     }catch(e){showAlert('Split failed: '+e.message,'error');}
     finally{showProc('procSplit',false);document.getElementById('btnSplit').disabled=false;}

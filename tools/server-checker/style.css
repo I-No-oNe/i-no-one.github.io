@@ -1,37 +1,49 @@
 /* Minecraft Server Checker - themed */
 .dirt-background { display: none; }
 
-.container { max-width: 760px; margin: 6px auto; }
+.server-shell { max-width: 940px; margin: 6px auto; }
+.server-workspace { display:grid;gap:14px; }
 
 .header { text-align: center; margin-bottom: 26px; }
 .minecraft-logo h1 { font-size: 2.2rem; font-weight: 900; letter-spacing: -.02em; }
 .minecraft-logo h2 { font-size: 1.05rem; font-weight: 600; color: var(--ink-2); margin-top: 2px; }
 .subtitle { color: var(--muted); margin-top: 8px; }
 
-.search-box {
-    padding: 26px;
+.server-query,.server-output {
+    padding: 22px!important;
     background: var(--glass);
     backdrop-filter: blur(var(--blur)) saturate(160%);
     -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
     border: 1px solid var(--glass-brd);
     border-radius: var(--radius);
-    box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi);
-    margin-bottom: 22px;
+    box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi);
 }
+.server-query { display:grid;grid-template-columns:minmax(0,1fr) 168px;column-gap:14px;align-items:end; }
+.server-query-head { display:flex;align-items:center;gap:11px;margin-bottom:12px; }
+.server-query-icon,.server-empty-icon { display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--glass-brd);background:var(--glass);color:var(--accent-ink);box-shadow:inset 0 1px 0 var(--glass-hi); }
+.server-query-icon { flex:0 0 42px;width:42px;height:42px;border-radius:14px; }
+.server-eyebrow { color:var(--accent-ink);font-size:.67rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;line-height:1; }
+.server-query h2 { margin-top:4px;font-size:1.25rem;line-height:1.2; }
+.server-query-copy { grid-column:1/-1;margin:-5px 0 17px;color:var(--muted);font-size:.86rem;line-height:1.55; }
+.server-output { min-height:300px; }
+.server-empty { min-height:366px;display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:310px;margin:auto;text-align:center; }
+.server-empty-icon { width:66px;height:66px;margin-bottom:16px;border-radius:21px;box-shadow:0 10px 24px var(--accent-soft),inset 0 1px 0 var(--glass-hi); }
+.server-empty h3 { font-size:1rem; }
+.server-empty p { margin-top:7px;color:var(--muted);font-size:.82rem;line-height:1.5; }
 
-.input-group { display: flex; gap: 12px; margin-bottom: 16px; }
+.input-group { display: flex; gap: 12px; margin:0; }
 .input-wrapper { flex: 1; display: flex; flex-direction: column; }
 .port-wrapper { flex: 0 0 120px; }
 .input-wrapper label {
     font-size: .8rem; font-weight: 600; color: var(--ink-2); margin-bottom: 6px;
 }
 
-.minecraft-btn { width: 100%; font-size: 1.05rem; padding: 14px; }
+.minecraft-btn { width: 100%; min-height:47px;font-size:.94rem;padding:12px; }
 
-.popular-servers { margin-top: 20px; }
+.popular-servers { grid-column:1/-1;display:flex;align-items:center;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line); }
 .popular-servers .label {
-    display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .06em; color: var(--muted); margin-bottom: 10px;
+    display:block;flex:0 0 auto;font-size:.7rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--muted);margin:0;
 }
 .server-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .server-tag {
@@ -45,7 +57,7 @@
 /* History */
 .history-container {
     display: none;
-    padding: 20px; margin-bottom: 22px;
+    padding: 18px 20px; margin-top: 16px; margin-bottom: 22px;
     background: var(--glass); border: 1px solid var(--glass-brd); border-radius: var(--radius);
     backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
     box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi);
@@ -75,15 +87,14 @@
 .history-remove:hover { color: #e0554b; }
 
 /* Results */
-.results { display: none; }
-.results.show { display: block; animation: rise .5s var(--ease) both; }
+.results { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-width:0; }
+.results.show { animation: rise .4s var(--ease) both; }
+.server-empty,.status-header,.error,.loading { grid-column:1/-1; }
 
 .status-header {
     display: flex; align-items: center; gap: 12px;
-    padding: 18px 22px; margin-bottom: 16px;
-    background: var(--glass); border: 1px solid var(--glass-brd); border-radius: var(--radius);
-    backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
-    box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi);
+    padding: 13px 4px 17px; margin-bottom: 2px;
+    background:transparent;border:0;border-bottom:1px solid var(--line-2);border-radius:0;
 }
 .status-indicator { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 .status-indicator.online { background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
@@ -98,10 +109,8 @@
 .share-btn:hover { border-color: var(--accent); color: var(--accent-ink); }
 
 .info-section {
-    padding: 20px 22px; margin-bottom: 14px;
-    background: var(--glass); border: 1px solid var(--glass-brd); border-radius: var(--radius);
-    backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
-    box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi);
+    min-width:0;padding:17px;margin:0;
+    background:color-mix(in srgb,var(--glass-2) 72%,transparent);border:1px solid var(--line);border-radius:16px;
 }
 .info-section h3 {
     font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
@@ -115,12 +124,13 @@
 }
 .favicon-img { width: 64px; height: 64px; border-radius: 12px; image-rendering: pixelated; }
 
-.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
 .info-item {
-    padding: 12px 14px; border-radius: 12px;
-    background: var(--glass-2); border: 1px solid var(--line-2);
+    min-width:0;padding:10px 11px;border-radius:11px;
+    background:color-mix(in srgb,var(--glass-2) 58%,transparent);border:1px solid var(--line);
     font-size: .9rem;
 }
+.info-item,.info-content { overflow-wrap:anywhere; }
 .info-item strong { color: var(--ink); }
 
 .player-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
@@ -151,3 +161,6 @@
     .port-wrapper { flex: 1; }
     .server-tag { min-height:44px; }
 }
+@media(max-width:780px){.server-query{grid-template-columns:1fr}.server-query-copy,.popular-servers{grid-column:1}.minecraft-btn{margin-top:12px}.server-output{min-height:340px}.server-empty{min-height:286px}}
+@media(max-width:620px){.results{grid-template-columns:1fr}.popular-servers{align-items:flex-start;flex-direction:column}.server-tags{width:100%}}
+@media(max-width:480px){.server-query,.server-output{padding:18px 16px!important}.server-workspace{gap:10px}.server-tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.server-tag{width:100%}.status-header{align-items:center;flex-wrap:wrap}.share-btn{margin-left:auto}.info-grid{grid-template-columns:1fr}}

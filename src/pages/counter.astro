@@ -8,7 +8,7 @@ import logic from '../../counter/script.js?url';
 ---
 
 <BaseLayout title="FRC Israel Countdown · I-No-oNe" description="Live countdown for upcoming FRC Israel district events.">
-  <Fragment slot="head"><link rel="stylesheet" href={styles} /></Fragment>
+  <Fragment slot="head"><link rel="preconnect" href="https://api.statbotics.io" crossorigin /><link rel="stylesheet" href={styles} /></Fragment>
   <div class="topbar">
     <a class="side-brand" href="/"><img src="https://avatars.githubusercontent.com/u/145749961?s=96&v=4" alt="" /><span class="frc-brand-copy"><strong>I-No-oNe</strong><small>FRC countdown</small></span></a>
     <div class="topbar-right"><ActionButton href="/" class="home-button"><Icon name="arrow-left" size={16} /><span class="home-label">Home</span></ActionButton><ActionButton href="/donate/" variant="primary" class="donate-button"><span aria-hidden="true">☕</span><span class="donate-label">Donate</span></ActionButton><ThemeToggle /></div>
@@ -18,5 +18,5 @@ import logic from '../../counter/script.js?url';
     <section class="countdown-card"><h1 class="event-title" id="event-title">Countdown to event</h1><div class="event-location" id="event-location"></div><div class="event-dates" id="event-dates"></div><div id="countdown" class="countdown-grid"><div class="time-box"><span class="time-number" id="days">00</span><span class="time-label">Days</span></div><div class="time-box"><span class="time-number" id="hours">00</span><span class="time-label">Hours</span></div><div class="time-box"><span class="time-number" id="minutes">00</span><span class="time-label">Minutes</span></div><div class="time-box"><span class="time-number" id="seconds">00</span><span class="time-label">Seconds</span></div></div><div class="controls" id="controls"></div></section>
     <section class="notes-section"><label class="sr-only" for="notes">Event notes</label><textarea id="notes" class="notes-textarea" placeholder="Write your event notes, strategy ideas, or team reminders here…"></textarea></section>
   </main>
-  <script is:inline src={logic}></script>
+  <script is:inline src={logic} defer></script>
 </BaseLayout>

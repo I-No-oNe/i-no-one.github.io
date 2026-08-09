@@ -1,25 +1,26 @@
 ---
 import ToolsLayout from '../../layouts/ToolsLayout.astro';
+import Icon from '../../components/Icon.astro';
 import styles from '../../../tools/pdf-utils/style.css?url';
 import logic from '../../../tools/pdf-utils/script.js?url';
 ---
 
 <ToolsLayout active="pdf" title="PDF utils" description="Convert, merge, split, and OCR documents locally in your browser." stylesheets={[styles]}>
   <div class="wrap pdf-app">
-    <div id="alert" class="alert" aria-live="polite"></div>
-
     <div class="tabs" role="tablist" aria-label="PDF operations">
-      <button class="tab active" type="button" data-tab="convertTab">Convert</button>
-      <button class="tab" type="button" data-tab="mergeTab">Merge</button>
-      <button class="tab" type="button" data-tab="htmlTab">HTML</button>
-      <button class="tab" type="button" data-tab="splitTab">Split</button>
-      <button class="tab" type="button" data-tab="ocrTab">OCR</button>
+      <button class="tab active" type="button" role="tab" aria-selected="true" tabindex="0" data-tab="convertTab">Convert</button>
+      <button class="tab" type="button" role="tab" aria-selected="false" tabindex="-1" data-tab="mergeTab">Merge</button>
+      <button class="tab" type="button" role="tab" aria-selected="false" tabindex="-1" data-tab="htmlTab">HTML</button>
+      <button class="tab" type="button" role="tab" aria-selected="false" tabindex="-1" data-tab="splitTab">Split</button>
+      <button class="tab" type="button" role="tab" aria-selected="false" tabindex="-1" data-tab="ocrTab">OCR</button>
     </div>
+    <div class="pdf-workspace">
+    <div class="pdf-operation-stack">
 
     <div class="tab-content active" id="convertTab">
       <div class="card">
         <div class="card-title"><span class="dot"></span>Files to convert</div>
-        <div class="drop-zone" id="dzConvert"><div class="drop-icon">▧</div><div class="drop-text">Drop images or documents here</div><div class="drop-hint">or <a href="#" id="brConvert">browse files</a> · JPG PNG GIF TXT DOCX</div></div>
+        <div class="drop-zone" id="dzConvert"><span class="drop-icon"><Icon name="file" size={29} /></span><div class="drop-text">Drop images or documents here</div><div class="drop-hint">or <a href="#" id="brConvert">browse files</a> · JPG PNG GIF TXT DOCX</div></div>
         <input type="file" id="fiConvert" accept=".jpg,.jpeg,.png,.gif,.txt,.docx,.doc" multiple />
         <div class="file-list" id="flConvert"></div>
         <div class="stats" id="stConvert" style="display:none;"><span>Files: <strong id="cnConvert">0</strong></span><span>Size: <strong id="szConvert">0 KB</strong></span><button class="clear-btn" id="btnClearConvert" disabled>Clear all</button></div>
@@ -36,7 +37,7 @@ import logic from '../../../tools/pdf-utils/script.js?url';
     <div class="tab-content" id="mergeTab">
       <div class="card">
         <div class="card-title"><span class="dot"></span>PDFs to merge <small>drag to reorder</small></div>
-        <div class="drop-zone" id="dzMerge"><div class="drop-icon">▤</div><div class="drop-text">Drop PDF files here</div><div class="drop-hint">or <a href="#" id="brMerge">browse files</a></div></div>
+        <div class="drop-zone" id="dzMerge"><span class="drop-icon"><Icon name="file" size={29} /></span><div class="drop-text">Drop PDF files here</div><div class="drop-hint">or <a href="#" id="brMerge">browse files</a></div></div>
         <input id="fiMerge" type="file" multiple accept=".pdf,application/pdf" />
         <div class="file-list" id="flMerge"></div>
         <div class="stats" id="stMerge" style="display:none;"><span>PDFs: <strong id="cnMerge">0</strong></span><span>Pages: <strong id="pgMerge">0</strong></span><span>Size: <strong id="szMerge">0 KB</strong></span><button class="clear-btn" id="btnClearMerge" disabled>Clear all</button></div>
@@ -62,7 +63,7 @@ import logic from '../../../tools/pdf-utils/script.js?url';
     <div class="tab-content" id="splitTab">
       <div class="card">
         <div class="card-title"><span class="dot"></span>Split PDF</div>
-        <div class="drop-zone" id="dzSplit"><div class="drop-icon">▥</div><div class="drop-text">Drop one PDF here</div><div class="drop-hint">or <a href="#" id="brSplit">browse file</a></div></div>
+        <div class="drop-zone" id="dzSplit"><span class="drop-icon"><Icon name="file" size={29} /></span><div class="drop-text">Drop one PDF here</div><div class="drop-hint">or <a href="#" id="brSplit">browse file</a></div></div>
         <input type="file" id="fiSplit" accept=".pdf" />
         <div id="splitControls" class="split-inner" style="display:none;">
           <div class="controls"><div class="cg split-method"><label for="splitMethod">Split method</label><select id="splitMethod"><option value="range">Extract range</option><option value="pages">Specific pages</option><option value="every">Every N pages</option></select></div></div>
@@ -78,7 +79,7 @@ import logic from '../../../tools/pdf-utils/script.js?url';
     <div class="tab-content" id="ocrTab">
       <div class="card">
         <div class="card-title"><span class="dot"></span>Extract text with OCR</div>
-        <div class="drop-zone" id="dzOcr"><div class="drop-icon">⌕</div><div class="drop-text">Drop a PDF or image here</div><div class="drop-hint">or <a href="#" id="brOcr">browse file</a> · PDF JPG PNG BMP TIFF</div></div>
+        <div class="drop-zone" id="dzOcr"><span class="drop-icon"><Icon name="file" size={29} /></span><div class="drop-text">Drop a PDF or image here</div><div class="drop-hint">or <a href="#" id="brOcr">browse file</a> · PDF JPG PNG BMP TIFF</div></div>
         <input type="file" id="fiOcr" accept=".pdf,.jpg,.jpeg,.png,.gif,.bmp,.tiff,.tif,image/*,application/pdf" />
         <div class="controls">
           <div class="cg"><label for="ocrFmt">Output</label><select id="ocrFmt"><option value="text">Plain text</option><option value="hocr">hOCR (HTML)</option></select></div>
@@ -96,11 +97,13 @@ import logic from '../../../tools/pdf-utils/script.js?url';
         <div class="processing" id="procOcr"><div class="spinner"></div><span id="procOcrLabel">Preparing…</span></div>
       </div>
     </div>
+    </div>
 
     <div class="card preview-card">
       <div class="preview-header"><div class="card-title"><span class="dot"></span>Preview</div><div class="preview-actions"><div class="preview-info"><span class="status-dot" id="statusDot"></span><span id="previewInfo">No document loaded</span></div><button id="btnDownload" class="btn-s" style="display:none;">Download</button></div></div>
-      <div id="previewFrame"><div class="empty-preview"><div class="icon">▤</div><p>Your converted PDF appears here.</p></div></div>
+      <div id="previewFrame"><div class="empty-preview"><span class="icon"><Icon name="file" size={32} /></span><strong>Preview ready</strong><p>Your converted PDF appears here.</p></div></div>
+    </div>
     </div>
   </div>
-  <script is:inline src={logic}></script>
+  <script is:inline src={logic} defer></script>
 </ToolsLayout>

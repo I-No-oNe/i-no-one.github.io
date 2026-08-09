@@ -1,64 +1,7 @@
 let history = [];
 
-// Clear all UI fields + history
-function resetAll() {
-    document.getElementById('inputText').value = '';
-    document.getElementById('key').value = '';
-    document.getElementById('outputText').value = '';
-    history = [];
-}
-
-// Reset on first load
-window.addEventListener('load', () => {
-    resetAll();
-    sessionStorage.setItem('pageLoaded', 'true');
-});
-
-// Reset when coming back via navigation cache
-window.addEventListener('pageshow', () => {
-    resetAll();
-});
-
-// Reset on tab close / reload
-window.addEventListener('beforeunload', () => {
-    resetAll();
-});
-
-// Reset if user switches tab away and comes back (first time only)
-document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && !sessionStorage.getItem('pageLoaded')) {
-        resetAll();
-    }
-});
-
-// ------------------------------------------------------
-// FAVICON
-// ------------------------------------------------------
-function setFavicon(url) {
-    let favicon = document.querySelector("link[rel='icon']");
-    if (!favicon) {
-        favicon = document.createElement('link');
-        favicon.rel = 'icon';
-        document.head.appendChild(favicon);
-    }
-    favicon.sizes = '512x512';
-    favicon.href = url;
-}
-setFavicon('https://avatars.githubusercontent.com/u/145749961?v=4&size=512');
-
-// ------------------------------------------------------
-// ALERT SYSTEM
-// ------------------------------------------------------
 function showAlert(message, type = 'success') {
-    const alert = document.createElement('div');
-    alert.className = `alert alert-${type}`;
-    alert.textContent = message;
-    document.body.appendChild(alert);
-
-    setTimeout(() => {
-        alert.style.animation = 'slideInRight 0.4s ease-out reverse';
-        setTimeout(() => alert.remove(), 400);
-    }, 2500);
+    window.showToolAlert(message, type === 'error' ? 'error' : 'success');
 }
 
 // ------------------------------------------------------
