@@ -33,15 +33,16 @@ function populateRepos(githubRepos, modrinthProjects) {
 
     if (githubRepos.length === 0) {
         reposContainer.innerHTML = '<p>No GitHub repositories found.</p>';
+        reposContainer.setAttribute('aria-busy', 'false');
         return;
     }
 
-    reposContainer.replaceChildren();
+    const fragment = document.createDocumentFragment();
 
     githubRepos.forEach((repo, index) => {
         const repoElement = document.createElement('div');
-        repoElement.classList.add('repo');
-        repoElement.style.animationDelay = Math.min(index * 0.04, 0.4) + 's';
+        repoElement.classList.add('repo', 'repo-enter');
+        repoElement.style.transitionDelay = Math.min(index * 45, 360) + 'ms';
 
         const repoName = document.createElement('h3');
         repoName.textContent = repo.name;
@@ -74,8 +75,14 @@ function populateRepos(githubRepos, modrinthProjects) {
         }
 
         repoElement.appendChild(repoLinks);
-        reposContainer.appendChild(repoElement);
+        fragment.appendChild(repoElement);
     });
+
+    reposContainer.replaceChildren(fragment);
+    reposContainer.setAttribute('aria-busy', 'false');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        reposContainer.querySelectorAll('.repo-enter').forEach(repo => repo.classList.add('repo-visible'));
+    }));
 }
 
 function findMatchingModrinthProject(repoName, modrinthProjects) {
@@ -100,6 +107,7 @@ function displayErrorMessage(message) {
     const reposContainer = document.getElementById('repos');
     if (reposContainer) {
         reposContainer.innerHTML = `<p class="error-message">${message}</p>`;
+        reposContainer.setAttribute('aria-busy', 'false');
     }
 }
 

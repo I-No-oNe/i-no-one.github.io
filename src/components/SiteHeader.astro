@@ -1,5 +1,6 @@
 ---
 import ActionButton from './ActionButton.astro';
+import Icon from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 ---
 
@@ -15,8 +16,13 @@ import ThemeToggle from './ThemeToggle.astro';
   </div>
   <nav id="mobile-nav" class="mobile-site-nav" aria-label="Mobile navigation">
     <div class="container"><div class="mobile-menu-panel">
-      <div class="mobile-link-grid"><a href="/#projects">Projects <span>→</span></a><a href="/#frc">FRC <span>→</span></a><a href="/#tools">Tools <span>→</span></a><a href="/#contact">Contact <span>→</span></a></div>
-      <div class="mobile-menu-actions"><ActionButton href="/addon.html">Add-on</ActionButton><ActionButton href="/donate.html" variant="primary">☕ Donate</ActionButton></div>
+      <div class="mobile-link-grid">
+        <a href="/#projects"><span class="mobile-link-main"><span class="mobile-link-icon"><Icon name="code" size={17} /></span>Projects</span><Icon name="arrow" size={15} /></a>
+        <a href="/#frc"><span class="mobile-link-main"><span class="mobile-link-icon"><Icon name="tools" size={17} /></span>FRC</span><Icon name="arrow" size={15} /></a>
+        <a href="/#tools"><span class="mobile-link-main"><span class="mobile-link-icon"><Icon name="grid" size={17} /></span>Tools</span><Icon name="arrow" size={15} /></a>
+        <a href="/#contact"><span class="mobile-link-main"><span class="mobile-link-icon"><Icon name="discord" size={17} /></span>Contact</span><Icon name="arrow" size={15} /></a>
+      </div>
+      <div class="mobile-menu-actions"><ActionButton href="/addon.html"><Icon name="code" size={16} /> Add-on</ActionButton><ActionButton href="/donate.html" variant="primary"><Icon name="heart" size={16} /> Donate</ActionButton></div>
     </div></div>
   </nav>
 </header>
