@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         ]);
 
         populateRepos(githubRepos, modrinthProjects);
-        initializeNavigation();
     } catch (error) {
         console.error('Error fetching data:', error);
         displayErrorMessage('Failed to load projects. Please try again later.');
@@ -109,26 +108,4 @@ function displayErrorMessage(message) {
         reposContainer.innerHTML = `<p class="error-message">${message}</p>`;
         reposContainer.setAttribute('aria-busy', 'false');
     }
-}
-
-function initializeNavigation() {
-    const navLinks = document.querySelectorAll('nav ul li a');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                smoothScroll(targetSection);
-            }
-        });
-    });
-}
-
-function smoothScroll(target) {
-    window.scrollTo({
-        top: target.offsetTop - 80, // header height + margin
-        behavior: 'smooth'
-    });
 }

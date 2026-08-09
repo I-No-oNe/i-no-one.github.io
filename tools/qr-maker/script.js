@@ -5,7 +5,8 @@ function generateQR() {
     const downloadBtn = document.getElementById('downloadBtn');
     
     if (!text) {
-        alert('Please enter text or URL');
+        window.showToolAlert('Enter text or a URL before generating a QR code.');
+        document.getElementById('text').focus();
         return;
     }
 

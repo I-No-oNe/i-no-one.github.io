@@ -9,3 +9,23 @@ const { title, code } = Astro.props as Props;
   <summary><span class="workflow-title"><span class="workflow-icon"><Icon name="code" size={17} /></span><span>{title}<small>GitHub Actions</small></span></span><span class="workflow-plus" aria-hidden="true"></span></summary>
   <div class="workflow-content"><div class="workflow-content-inner"><pre><code>{code}</code></pre></div></div>
 </details>
+
+<script>
+  document.querySelectorAll<HTMLDetailsElement>('.workflow-card').forEach((card) => {
+    if (card.dataset.animated === 'true') return;
+    card.dataset.animated = 'true';
+    const summary = card.querySelector('summary');
+    let closeTimer = 0;
+    summary?.addEventListener('click', (event) => {
+      event.preventDefault();
+      window.clearTimeout(closeTimer);
+      if (card.classList.contains('is-open')) {
+        card.classList.remove('is-open');
+        closeTimer = window.setTimeout(() => card.removeAttribute('open'), 420);
+        return;
+      }
+      card.setAttribute('open', '');
+      requestAnimationFrame(() => card.classList.add('is-open'));
+    });
+  });
+</script>

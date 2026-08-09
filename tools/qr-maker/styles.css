@@ -1,8 +1,12 @@
 /* QR Maker - themed */
 .container {
     max-width: 560px;
+    min-height: 340px;
     margin: 10px auto;
     padding: 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
     background: var(--glass);
     backdrop-filter: blur(var(--blur)) saturate(160%);
@@ -17,10 +21,16 @@
 
 .input-section {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: min(420px, 100%);
     gap: 10px;
-    margin-bottom: 8px;
+    margin: 0 auto 10px;
 }
-.input-section .field { flex: 1; }
+.input-section .field { width: 100%; min-width: 0; text-align: center; }
+.input-section .btn { width: min(210px, 100%); justify-content: center; }
+.privacy-note { text-align: center; }
 
 .loading-spinner {
     display: none;
@@ -44,7 +54,8 @@
     box-shadow: var(--shadow-sm);
 }
 .qrcode img, .qrcode canvas { display: block; }
+#downloadBtn { align-self: center; }
 
 @media (max-width: 480px) {
-    .input-section { flex-direction: column; }
+    .container { min-height: 320px; padding: 24px 18px; }
 }

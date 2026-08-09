@@ -146,16 +146,6 @@
 }
 @keyframes sc-spin { to { transform: rotate(360deg); } }
 
-/* Notification toast */
-.notification {
-    position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 120%);
-    padding: 13px 22px; border-radius: 12px; z-index: 1000;
-    background: var(--accent); color: #fff; font-weight: 600;
-    box-shadow: var(--shadow); opacity: 0;
-    transition: transform .4s var(--ease), opacity .3s;
-}
-.notification.show { transform: translate(-50%, 0); opacity: 1; }
-
 @media (max-width: 520px) {
     .input-group { flex-direction: column; }
     .port-wrapper { flex: 1; }

@@ -29,8 +29,8 @@
     --aur-1: rgba(22, 163, 74, .40);
     --aur-2: rgba(14, 165, 163, .34);
     --aur-3: rgba(101, 199, 120, .30);
-    --code-bg: #0b0f0d;
-    --code-ink: #d6f5df;
+    --code-bg: rgba(244, 249, 246, .72);
+    --code-ink: #183b25;
     --font: 'Inter', system-ui, sans-serif;
 }
 
@@ -59,6 +59,8 @@
     --aur-1: rgba(22, 163, 74, .34);
     --aur-2: rgba(20, 180, 178, .26);
     --aur-3: rgba(16, 120, 90, .28);
+    --code-bg: rgba(5, 10, 8, .74);
+    --code-ink: #d6f5df;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

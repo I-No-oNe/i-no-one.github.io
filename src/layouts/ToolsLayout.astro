@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import ToolPageHeader from '../components/ToolPageHeader.astro';
 import ToolsNavigation from '../components/ToolsNavigation.astro';
+import ToolAlert from '../components/ToolAlert.astro';
 import shellStyles from '../styles/tools-shell.css?url';
 
 interface Props {
@@ -19,6 +20,7 @@ const { active, title, description, stylesheets = [] } = Astro.props;
     <ToolsNavigation active={active} />
     <main class="content"><div class="content-inner tool-page-enter"><ToolPageHeader active={active} title={title} description={description} /><div class="tool-page-body"><slot /></div></div></main>
   </div>
+  <ToolAlert />
   <script>
     const burger = document.querySelector('#nav-burger');
     const closeButton = document.querySelector('#sidebar-close');
@@ -43,5 +45,25 @@ const { active, title, description, stylesheets = [] } = Astro.props;
       setOpen(false);
       (burger as HTMLElement | null)?.focus();
     });
+
+    const alertElement = document.querySelector<HTMLElement>('#tool-alert');
+    const alertMessage = document.querySelector<HTMLElement>('#tool-alert-message');
+    const alertClose = document.querySelector<HTMLButtonElement>('#tool-alert-close');
+    let alertTimer = 0;
+    const hideToolAlert = () => {
+      alertElement?.classList.remove('show');
+      window.clearTimeout(alertTimer);
+      window.setTimeout(() => { if (alertElement && !alertElement.classList.contains('show')) alertElement.hidden = true; }, 320);
+    };
+    window.showToolAlert = (message: string, type: 'error' | 'success' = 'error') => {
+      if (!alertElement || !alertMessage) return;
+      window.clearTimeout(alertTimer);
+      alertMessage.textContent = message;
+      alertElement.dataset.type = type;
+      alertElement.hidden = false;
+      requestAnimationFrame(() => alertElement.classList.add('show'));
+      alertTimer = window.setTimeout(hideToolAlert, 3600);
+    };
+    alertClose?.addEventListener('click', hideToolAlert);
   </script>
 </BaseLayout>

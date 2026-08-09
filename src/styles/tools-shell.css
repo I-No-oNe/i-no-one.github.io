@@ -82,7 +82,7 @@
 .page-head {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr;
   gap: 8px 22px;
   margin-bottom: 22px;
   padding: 22px 24px;
@@ -155,35 +155,6 @@
   max-width: 62ch;
   color: var(--muted);
   font-size: .96rem;
-}
-
-.page-note {
-  position: relative;
-  z-index: 1;
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  align-self: center;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 36px;
-  padding: 8px 12px;
-  border: 1px solid var(--glass-brd);
-  border-radius: 999px;
-  background: var(--glass-2);
-  color: var(--ink-2);
-  font-size: .74rem;
-  font-weight: 700;
-  white-space: nowrap;
-  box-shadow: inset 0 1px 0 var(--glass-hi);
-}
-
-.page-note-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
 .tool-page-body > * {
@@ -303,11 +274,11 @@
 .workflow-plus { position: relative; flex: 0 0 32px; width: 32px; height: 32px; border: 1px solid var(--glass-brd); border-radius: 10px; background: var(--glass); }
 .workflow-plus::before, .workflow-plus::after { content: ''; position: absolute; top: 50%; left: 50%; width: 12px; height: 2px; border-radius: 2px; background: var(--ink-2); transform: translate(-50%, -50%); transition: transform .3s var(--ease), opacity .2s; }
 .workflow-plus::after { transform: translate(-50%, -50%) rotate(90deg); }
-.workflow-card[open] .workflow-plus::after { transform: translate(-50%, -50%) rotate(0); opacity: 0; }
+.workflow-card.is-open .workflow-plus::after { transform: translate(-50%, -50%) rotate(0); opacity: 0; }
 .workflow-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s var(--ease); }
-.workflow-card[open] .workflow-content { grid-template-rows: 1fr; }
+.workflow-card.is-open .workflow-content { grid-template-rows: 1fr; }
 .workflow-content-inner { min-height: 0; overflow: hidden; }
-.workflow-content pre { max-height: 340px; overflow: auto; margin: 0; padding: 18px; border-top: 1px solid var(--line); background: var(--code-bg); color: var(--code-ink); font: 12px/1.65 'JetBrains Mono', monospace; }
+.workflow-content pre { max-height: 340px; overflow: auto; margin: 0; padding: 18px; border-top: 1px solid var(--glass-brd); background: linear-gradient(145deg, color-mix(in srgb, var(--glass-hi) 18%, var(--code-bg)), var(--code-bg)); color: var(--code-ink); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--glass-hi) 60%, transparent); font: 12px/1.65 'JetBrains Mono', monospace; }
 
 .tool-app-card {
   border: 1px solid var(--glass-brd) !important;
@@ -324,8 +295,37 @@
 .split-method { width: min(360px, 100%); }
 .preview-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
-.nav-burger-lines { display: flex; flex-direction: column; gap: 4px; margin-left: auto; }
-.nav-burger-lines i { display: block; width: 16px; height: 2px; border-radius: 2px; background: currentColor; }
+.nav-burger-icon { display: inline-flex; align-items: center; justify-content: center; }
+.sidebar-handle { display: none; }
+
+.tool-alert {
+  position: fixed;
+  z-index: 1300;
+  right: 18px;
+  bottom: 18px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  width: min(390px, calc(100vw - 28px));
+  padding: 12px 12px 12px 14px;
+  border: 1px solid color-mix(in srgb, #e0554b 38%, var(--glass-brd));
+  border-radius: 17px;
+  background: color-mix(in srgb, var(--glass) 91%, #e0554b 9%);
+  color: var(--ink);
+  box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  opacity: 0;
+  transform: translateY(14px) scale(.98);
+  transition: opacity .28s var(--ease), transform .32s var(--ease);
+}
+.tool-alert.show { opacity: 1; transform: none; }
+.tool-alert[data-type='success'] { border-color: color-mix(in srgb, var(--accent) 42%, var(--glass-brd)); background: color-mix(in srgb, var(--glass) 91%, var(--accent) 9%); }
+.tool-alert-icon { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 11px; background: color-mix(in srgb, #e0554b 14%, var(--glass-2)); color: #d14343; }
+.tool-alert[data-type='success'] .tool-alert-icon { background: var(--accent-soft); color: var(--accent-ink); }
+.tool-alert-message { font-size: .88rem; font-weight: 650; line-height: 1.4; }
+.tool-alert-close { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 0; border-radius: 11px; background: var(--glass-2); color: var(--ink-2); cursor: pointer; }
 
 @keyframes component-enter {
   from { opacity: 0; transform: translateY(14px) scale(.992); }
@@ -348,21 +348,21 @@
 
 @media (max-width: 780px) {
   .layout { display: block; padding: 0; }
-  button.nav-burger { top: max(12px, env(safe-area-inset-top)); left: 12px; width: auto; min-width: 124px; height: 48px; padding: 6px 10px 6px 7px; gap: 8px; justify-content: flex-start; border-radius: 16px; }
-  button.nav-burger img { width: 34px; height: 34px; flex: 0 0 34px; border: 1px solid var(--line-2); border-radius: 50%; }
-  button.nav-burger > span:not(.nav-burger-lines) { font-weight: 800; font-size: .86rem; }
+  button.nav-burger { top: auto; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); left: auto; width: 58px; min-width: 58px; height: 58px; padding: 0; gap: 0; justify-content: center; border-radius: 50%; box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo); }
+  .nav-burger-icon { transition: transform .35s var(--ease); }
+  button.nav-burger[aria-expanded='true'] .nav-burger-icon { transform: rotate(45deg) scale(.94); }
   .nav-scrim.open { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
-  .layout > .sidebar { top: 10px; bottom: 10px; left: 10px; width: min(300px, calc(100vw - 20px)); height: auto; max-height: calc(100dvh - 20px); padding: 12px; border-radius: 24px; transform: translateX(calc(-100% - 16px)); animation: none; overscroll-behavior: contain; }
+  .layout > .sidebar { top: auto; right: 10px; bottom: 10px; left: 10px; width: min(520px, calc(100vw - 20px)); height: auto; max-height: min(82dvh, 680px); margin-inline: auto; padding: 9px 12px 12px; border-radius: 26px; transform: translateY(calc(100% + 20px)); animation: none; overscroll-behavior: contain; }
   .layout > .sidebar.open { transform: none; }
+  .sidebar-handle { display: block; width: 42px; height: 5px; margin: 1px auto 7px; border-radius: 999px; background: var(--line-2); }
   .sidebar-head { margin-bottom: 2px; }
   .sidebar-close { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 42px; width: 42px; height: 42px; border: 1px solid var(--glass-brd); border-radius: 13px; background: var(--glass-2); color: var(--ink); box-shadow: inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo); cursor: pointer; }
   .side-link { min-height: 48px; }
-  .layout > .content { min-height: 100svh; padding: 78px 14px max(30px, env(safe-area-inset-bottom)); }
+  .layout > .content { min-height: 100svh; padding: 18px 14px max(92px, calc(env(safe-area-inset-bottom) + 76px)); }
   .page-head { grid-template-columns: 1fr; gap: 10px; margin-bottom: 18px; padding: 18px; border-radius: 21px; }
   .page-head-icon { flex-basis: 44px; width: 44px; height: 44px; border-radius: 14px; }
   .page-head h1 { font-size: clamp(1.9rem, 9vw, 2.35rem); text-wrap: balance; }
   .page-description { grid-column: 1; font-size: .93rem; line-height: 1.5; text-wrap: pretty; }
-  .page-note { grid-column: 1; grid-row: auto; justify-self: start; min-height: 34px; }
   .tool-card-grid { grid-template-columns: 1fr; }
   .tool-card { min-height: 138px; }
   .tool-panel { padding: 22px 18px; }
@@ -380,9 +380,11 @@
   .tabs .tab { min-height: 44px; }
   .bookmark-list a { min-height: 44px; }
   .workflow-card summary { min-height: 68px; }
+  .tool-alert { right: 14px; bottom: max(82px, calc(env(safe-area-inset-bottom) + 72px)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .layout > .sidebar, .page-head, .tool-page-body > *, .tool-card { animation: none !important; }
   .workflow-content, .workflow-plus::before, .workflow-plus::after { transition: none !important; }
+  .tool-alert { transition: none !important; }
 }

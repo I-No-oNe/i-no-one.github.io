@@ -27,14 +27,14 @@ const workflows = [
   <div class="tool-card-grid">
     {tools.map((tool) => <a class="tool-card" href={tool.href}>
       <span class="tool-card-icon"><Icon name={tool.icon} size={20} /></span>
-      <span class="tool-card-arrow" aria-hidden="true">↗</span>
+      <span class="tool-card-arrow"><Icon name="arrow-up-right" size={18} /></span>
       <div><h2>{tool.title}</h2><p>{tool.description}</p></div>
     </a>)}
   </div>
   <div class="tools-two-col">
     <section class="tool-panel panel">
       <div class="tool-panel-head"><h2><span class="panel-dot"></span>Helpful links</h2></div>
-      <div class="bookmark-list">{links.map(([label, href]) => <a href={href} target="_blank" rel="noopener noreferrer"><span>{label}</span>↗</a>)}</div>
+      <div class="bookmark-list">{links.map(([label, href]) => <a href={href} target="_blank" rel="noopener noreferrer"><span>{label}</span><Icon name="arrow-up-right" size={15} /></a>)}</div>
     </section>
     <section class="tool-panel panel">
       <div class="tool-panel-head"><h2><span class="panel-dot"></span>CI workflows</h2></div>

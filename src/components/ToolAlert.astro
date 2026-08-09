@@ -1,0 +1,9 @@
+---
+import Icon from './Icon.astro';
+---
+
+<div id="tool-alert" class="tool-alert" role="status" aria-live="polite" aria-atomic="true" hidden>
+  <span class="tool-alert-icon" aria-hidden="true"><Icon name="alert" size={18} /></span>
+  <span id="tool-alert-message" class="tool-alert-message"></span>
+  <button id="tool-alert-close" class="tool-alert-close" type="button" aria-label="Dismiss message"><Icon name="close" size={16} /></button>
+</div>

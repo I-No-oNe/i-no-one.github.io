@@ -91,7 +91,8 @@ function generateShareLink() {
     const port = parseInt(document.getElementById('portInput').value) || 25565;
 
     if (!host) {
-        alert('Please enter a server address first');
+        window.showToolAlert('Enter a server address before copying a share link.');
+        document.getElementById('hostInput').focus();
         return;
     }
 
@@ -108,13 +109,7 @@ function generateShareLink() {
 }
 
 function showNotification(message) {
-    const notification = document.getElementById('notification');
-    notification.textContent = message;
-    notification.classList.add('show');
-
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 3000);
+    window.showToolAlert(message, 'success');
 }
 
 // Check for URL parameters on load
@@ -154,7 +149,8 @@ async function checkServer() {
     const resultsDiv = document.getElementById('results');
 
     if (!host) {
-        alert('Please enter a server address');
+        window.showToolAlert('Enter a server address to run a check.');
+        document.getElementById('hostInput').focus();
         return;
     }
 

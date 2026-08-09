@@ -10,5 +10,6 @@ interface Window {
   mammoth: any;
   PDFLib: any;
   pdfjsLib: any;
+  showToolAlert(message: string, type?: 'error' | 'success'): void;
   Tesseract: any;
 }
