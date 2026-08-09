@@ -8,11 +8,11 @@ interface Props {
 
 const { active } = Astro.props as Props;
 const links = [
-  { id: 'overview', href: '/tools.html', icon: '🧰', label: 'Overview' },
-  { id: 'qr', href: '/tools/qr-maker.html', icon: '🔳', label: 'QR Code Maker' },
-  { id: 'pdf', href: '/tools/pdf-utils.html', icon: '📄', label: 'PDF Utils' },
-  { id: 'obfuscator', href: '/tools/obfuscator.html', icon: '🔐', label: 'Obfuscator' },
-  { id: 'server', href: '/tools/server-checker.html', icon: '⛏️', label: 'Server Checker' }
+  { id: 'overview', href: '/tools.html', icon: 'grid', label: 'Overview' },
+  { id: 'qr', href: '/tools/qr-maker.html', icon: 'qr', label: 'QR Code Maker' },
+  { id: 'pdf', href: '/tools/pdf-utils.html', icon: 'file', label: 'PDF Utils' },
+  { id: 'obfuscator', href: '/tools/obfuscator.html', icon: 'lock', label: 'Obfuscator' },
+  { id: 'server', href: '/tools/server-checker.html', icon: 'server', label: 'Server Checker' }
 ] as const;
 ---
 
@@ -27,6 +27,6 @@ const links = [
   <span class="side-label">Tools</span>
   {links.map((link) => <ToolNavItem href={link.href} icon={link.icon} label={link.label} active={active === link.id} />)}
   <span class="side-label">More</span>
-  <ToolNavItem href="/" icon="←" label="Main site" />
+  <ToolNavItem href="/" icon="home" label="Main site" />
   <div class="side-foot"><a class="btn btn-primary side-donate" href="/donate.html">☕ Donate</a><ThemeToggle /></div>
 </aside>

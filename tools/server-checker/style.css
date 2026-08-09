@@ -35,7 +35,7 @@
 }
 .server-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .server-tag {
-    padding: 7px 14px; border-radius: 999px; cursor: pointer;
+    display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding: 7px 14px; border-radius: 999px; cursor: pointer;
     font-size: .85rem; font-weight: 600; color: var(--ink-2);
     background: var(--glass-2); border: 1px solid var(--line-2);
     transition: border-color var(--speed), color var(--speed), transform var(--speed);
@@ -159,4 +159,5 @@
 @media (max-width: 520px) {
     .input-group { flex-direction: column; }
     .port-wrapper { flex: 1; }
+    .server-tag { min-height:44px; }
 }

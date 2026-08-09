@@ -52,7 +52,7 @@
 /* Event selection buttons */
 .controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 .controls .btn {
-    padding: 11px 22px; font-size: .95rem; font-weight: 600;
+    min-height: 44px; padding: 11px 22px; font-size: .95rem; font-weight: 600;
     background: var(--glass-2); color: var(--ink); border: 1px solid var(--line-2);
     border-radius: 12px; cursor: pointer;
     transition: transform .25s var(--ease), border-color .25s, background .25s, color .25s;
@@ -106,4 +106,7 @@
     .topbar .home-label { display: none; }
     .event-title { font-size: 1.55rem; }
     .countdown-card { padding: 20px; }
+    .controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:100%; }
+    .controls .btn { width:100%; }
+    .controls .btn:last-child:nth-child(odd) { grid-column:1/-1; width:calc(50% - 5px); justify-self:center; }
 }

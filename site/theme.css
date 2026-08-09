@@ -11,11 +11,12 @@
     --accent-ink: #0f7a37;
     --accent-soft: rgba(22, 163, 74, .14);
 
-    --glass: rgba(255, 255, 255, .64);
-    --glass-2: rgba(255, 255, 255, .48);
-    --glass-brd: rgba(255, 255, 255, .82);
-    --glass-hi: rgba(255, 255, 255, .9);
-    --blur: 16px;
+    --glass: rgba(250, 253, 251, .56);
+    --glass-2: rgba(255, 255, 255, .38);
+    --glass-brd: rgba(255, 255, 255, .78);
+    --glass-hi: rgba(255, 255, 255, .98);
+    --glass-lo: rgba(70, 92, 80, .12);
+    --blur: 20px;
 
     --shadow: 0 1px 2px rgba(20, 22, 26, .05), 0 20px 46px rgba(20, 22, 26, .10);
     --shadow-sm: 0 1px 2px rgba(20, 22, 26, .05), 0 10px 24px rgba(20, 22, 26, .07);
@@ -45,10 +46,11 @@
     --accent-ink: #4ade80;
     --accent-soft: rgba(43, 217, 104, .16);
 
-    --glass: rgba(22, 26, 32, .64);
-    --glass-2: rgba(22, 26, 32, .48);
-    --glass-brd: rgba(255, 255, 255, .15);
-    --glass-hi: rgba(255, 255, 255, .16);
+    --glass: rgba(18, 22, 27, .56);
+    --glass-2: rgba(28, 33, 40, .4);
+    --glass-brd: rgba(255, 255, 255, .16);
+    --glass-hi: rgba(255, 255, 255, .22);
+    --glass-lo: rgba(0, 0, 0, .34);
 
     --shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 24px 50px rgba(0, 0, 0, .55);
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, .5), 0 12px 26px rgba(0, 0, 0, .4);
@@ -91,11 +93,11 @@ a:hover { color: var(--accent); }
 
 /* Glass surface */
 .glass {
-    background: var(--glass);
-    backdrop-filter: blur(var(--blur)) saturate(160%);
-    -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--glass-hi) 22%, var(--glass)), var(--glass) 48%, color-mix(in srgb, var(--accent-soft) 18%, var(--glass)));
+    backdrop-filter: blur(var(--blur)) saturate(180%) brightness(1.03);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(180%) brightness(1.03);
     border: 1px solid var(--glass-brd);
-    box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi);
+    box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi), inset 1px 0 0 color-mix(in srgb,var(--glass-hi) 65%,transparent), inset 0 -1px 0 var(--glass-lo);
 }
 
 /* Buttons */
@@ -103,11 +105,12 @@ a:hover { color: var(--accent); }
     position: relative; overflow: hidden;
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     font-weight: 600; font-size: .92rem; line-height: 1;
-    padding: 12px 20px; border-radius: 12px;
+    padding: 12px 20px; border-radius: 14px;
     border: 1px solid var(--glass-brd); background: var(--glass);
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(14px) saturate(175%); -webkit-backdrop-filter: blur(14px) saturate(175%);
     color: var(--ink); cursor: pointer;
-    transition: transform var(--speed) var(--ease), border-color var(--speed), box-shadow var(--speed), color var(--speed);
+    text-align: center; min-height: 44px;
+    transition: transform .32s var(--ease), border-color var(--speed), box-shadow .32s var(--ease), color var(--speed), background var(--speed);
     font-family: inherit;
 }
 .btn::after {
@@ -115,7 +118,7 @@ a:hover { color: var(--accent); }
     background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.45) 50%, transparent 80%);
     transform: translateX(-120%); transition: transform .6s var(--ease);
 }
-.btn:hover { transform: translateY(-2px); border-color: var(--muted); box-shadow: var(--shadow-sm); color: var(--ink); }
+.btn:hover { transform: translateY(-2px) scale(1.012); border-color: color-mix(in srgb,var(--glass-hi) 65%,var(--muted)); box-shadow:var(--shadow-sm),inset 0 1px 0 var(--glass-hi),inset 0 -1px 0 var(--glass-lo); color: var(--ink); }
 .btn:hover::after { transform: translateX(120%); }
 [data-theme="dark"] .btn::after { background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.16) 50%, transparent 80%); }
 .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 8px 22px var(--accent-soft); }

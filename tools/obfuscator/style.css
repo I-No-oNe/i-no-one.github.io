@@ -35,18 +35,17 @@
 /* toast alerts (created by script) */
 .alert {
     position: fixed; top: 20px; right: 20px; z-index: 1000;
+    max-width: min(360px, calc(100vw - 40px));
     padding: 13px 20px; border-radius: 12px;
     font-weight: 600; color: #fff;
     box-shadow: var(--shadow);
-    animation: slideInRight 0.4s ease-out;
+    animation: toastIn 0.35s var(--ease);
 }
 .alert-success { background: var(--accent); }
 .alert-error { background: #e0554b; }
-@keyframes slideInRight {
-    from { opacity: 0; transform: translateX(40px); }
-    to { opacity: 1; transform: translateX(0); }
-}
+@keyframes toastIn { from { opacity: 0; transform: translateY(-10px) scale(.98); } to { opacity: 1; transform: none; } }
 
 @media (max-width: 520px) {
     .button-group, .action-buttons { flex-direction: column; }
+    .alert { top: auto; right: 14px; bottom: max(14px, env(safe-area-inset-bottom)); left: 14px; max-width: none; text-align: center; }
 }

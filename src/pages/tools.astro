@@ -1,5 +1,13 @@
 ---
 import ToolsLayout from '../layouts/ToolsLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const tools = [
+  { href: '/tools/qr-maker.html', icon: 'qr', title: 'QR Code Maker', description: 'Turn a link or note into a downloadable QR code.' },
+  { href: '/tools/pdf-utils.html', icon: 'file', title: 'PDF Utils', description: 'Handle everyday PDF jobs without uploading your files.' },
+  { href: '/tools/obfuscator.html', icon: 'lock', title: 'Obfuscator', description: 'Encode a short message with a key you choose.' },
+  { href: '/tools/server-checker.html', icon: 'server', title: 'Server Checker', description: 'Check a Minecraft server before launching the game.' }
+] as const;
 
 const links = [
   ['Rat Scanner', 'https://isthisarat.com/'], ['Markdown Editor', 'https://dillinger.io/'],
@@ -14,7 +22,14 @@ const workflows = [
 ];
 ---
 
-<ToolsLayout active="overview" title="Tools" description="Small, focused utilities that run directly in your browser.">
+<ToolsLayout active="overview" title="Tools" description="Useful things I built for quick jobs. Fast, private, and no account required.">
+  <div class="tool-card-grid">
+    {tools.map((tool) => <a class="tool-card" href={tool.href}>
+      <span class="tool-card-icon"><Icon name={tool.icon} size={20} /></span>
+      <span class="tool-card-arrow" aria-hidden="true">↗</span>
+      <div><h2>{tool.title}</h2><p>{tool.description}</p></div>
+    </a>)}
+  </div>
   <div class="tools-two-col">
     <section class="tool-panel panel">
       <div class="tool-panel-head"><h2><span class="panel-dot"></span>Helpful links</h2></div>

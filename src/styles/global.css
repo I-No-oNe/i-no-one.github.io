@@ -18,11 +18,12 @@
 
 /* Lightweight liquid-glass enhancement: one blur per major surface, static highlights. */
 header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-textarea,.tool-app-card,.search-box,.history-container{
-  backdrop-filter:blur(var(--blur)) saturate(155%);-webkit-backdrop-filter:blur(var(--blur)) saturate(155%);
+  backdrop-filter:blur(var(--blur)) saturate(180%) brightness(1.03);-webkit-backdrop-filter:blur(var(--blur)) saturate(180%) brightness(1.03);
 }
 .profile-card,.card,.panel,.countdown-card,.info-banner,.tool-app-card,.search-box,.history-container{
   border-color:var(--glass-brd)!important;
-  box-shadow:var(--shadow),inset 0 1px 0 var(--glass-hi),inset 1px 0 0 color-mix(in srgb,var(--glass-hi) 55%,transparent)!important;
+  background-image:linear-gradient(145deg,color-mix(in srgb,var(--glass-hi) 22%,transparent),transparent 42%,color-mix(in srgb,var(--accent-soft) 18%,transparent));
+  box-shadow:var(--shadow),inset 0 1px 0 var(--glass-hi),inset 1px 0 0 color-mix(in srgb,var(--glass-hi) 60%,transparent),inset 0 -1px 0 var(--glass-lo)!important;
 }
 .panel::before,.tool-app-card::before,.countdown-card::before,.info-banner::before{
   content:'';position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;background:linear-gradient(145deg,color-mix(in srgb,var(--glass-hi) 80%,transparent),transparent 34%);opacity:.58
@@ -30,20 +31,23 @@ header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-t
 .tool-app-card,.countdown-card,.info-banner{position:relative;overflow:hidden}
 .panel>*,.tool-app-card>*,.countdown-card>*,.info-banner>*{position:relative;z-index:1}
 .theme-toggle,.btn,.field,.notes-textarea,.time-box,.workflow-list details,.bookmark-list a{
-  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--glass-hi) 70%,transparent);
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--glass-hi) 78%,transparent),inset 0 -1px 0 var(--glass-lo);
 }
+:where(.mobile-menu-toggle,.nav-burger,.server-tag,.clear-history-btn,.controls button,.tab,.btn-p,.btn-s){display:inline-flex;align-items:center;justify-content:center;text-align:center;line-height:1.1}
+:where(.server-tag,.controls button,.tab,.btn-p,.btn-s){min-height:42px}
 
 @media(max-width:720px){
-  :root{--blur:9px}.shell{padding-inline:16px}
+  :root{--blur:12px}.shell{padding-inline:16px}
   .aurora{background:radial-gradient(circle at 8% 8%,var(--aur-1),transparent 42%),radial-gradient(circle at 100% 36%,var(--aur-2),transparent 48%),radial-gradient(circle at 48% 100%,var(--aur-3),transparent 46%)}
   .aurora .blob{display:none}
-  header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-textarea,.tool-app-card,.search-box,.history-container{backdrop-filter:blur(9px) saturate(135%);-webkit-backdrop-filter:blur(9px) saturate(135%)}
+  header,.sidebar,.profile-card,.card,.panel,.countdown-card,.info-banner,.notes-textarea,.tool-app-card,.search-box,.history-container{backdrop-filter:blur(12px) saturate(155%);-webkit-backdrop-filter:blur(12px) saturate(155%)}
+  :where(.server-tag,.controls button,.tab,.btn-p,.btn-s){min-height:44px}
   .pdf-app .card{backdrop-filter:none;-webkit-backdrop-filter:none}
   .profile-card{padding:28px 18px;gap:20px}.profile-avatar{width:130px;height:130px}.profile-info h1{font-size:2.15rem}.tagline{font-size:.98rem}.profile-card .cta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:10px}.profile-card .cta .btn{width:100%;min-height:44px}.profile-card .cta .btn:last-child{grid-column:1/-1;width:min(160px,100%);justify-self:center}
   .card{padding:28px 20px}.contact-card .cta{width:100%}.contact-card .cta .btn{min-height:44px}
 }
 @media(max-width:380px){
-  .nav-bar{gap:7px;padding-inline:12px}.nav-actions{gap:6px}.nav-btn{min-height:38px;padding:7px 9px;font-size:.76rem}.theme-toggle{width:38px;height:38px}.mobile-menu-toggle{width:38px;height:38px;flex-basis:38px}.brand-avatar{width:34px;height:34px}.site-header .brand span{font-size:.96rem}
+  .nav-bar{gap:7px;padding-inline:12px}.nav-actions{gap:6px}.nav-btn{min-height:42px;padding:7px 9px;font-size:.76rem}.theme-toggle{width:42px;height:42px}.mobile-menu-toggle{width:42px;height:42px;flex-basis:42px}.brand-avatar{width:34px;height:34px}.site-header .brand span{font-size:.96rem}
   .profile-card{padding-inline:15px}.badges{gap:7px}.badge{padding:6px 9px;font-size:.72rem}.profile-info h1{font-size:2rem}.tagline{font-size:.94rem}.card{padding-inline:17px}.card-head h2{font-size:1.45rem}
 }
 @media(hover:hover) and (pointer:fine){.glass-panel{transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease)}.mobile-link-grid a:hover{border-color:var(--accent);transform:translateY(-1px)}}
