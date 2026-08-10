@@ -226,6 +226,15 @@ footer { border-top: 1px solid var(--line); margin-top: 28px; padding: 30px 0; }
     .hero { padding: 20px 0; }
     .profile-card { padding: 34px 24px; gap: 24px; }
     .profile-info h1 { font-size: 2.4rem; }
+    #projects.card {
+        padding-inline: 0;
+        overflow: visible;
+        border-color: transparent !important;
+        background-color: transparent;
+        background-image: none !important;
+        box-shadow: none !important;
+    }
+    #projects.card::before { display: none; }
     .card-head { grid-template-columns: 1fr; }
     .card-head > :first-child, .card-head .head-link { grid-column: 1; justify-self: center; }
     /* Keep the GitHub/Modrinth pair side by side. Each button takes its label
