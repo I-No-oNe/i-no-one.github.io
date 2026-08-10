@@ -152,6 +152,19 @@ nav ul li a:hover::after { width: 100%; }
 .contact-card p { margin-top: 5px; }
 
 /* ---------- Repos ---------- */
+#projects {
+    --glass: rgba(228, 248, 235, .68);
+    --glass-2: rgba(220, 244, 229, .56);
+    --glass-brd: rgba(246, 255, 249, .9);
+    --glass-lo: rgba(30, 112, 64, .15);
+}
+[data-theme="dark"] #projects {
+    --glass: rgba(11, 35, 21, .68);
+    --glass-2: rgba(17, 48, 29, .54);
+    --glass-brd: rgba(164, 232, 185, .2);
+    --glass-hi: rgba(211, 255, 224, .22);
+    --glass-lo: rgba(0, 9, 3, .42);
+}
 .repos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(258px, 1fr)); gap: 16px; }
 .repo {
     position: relative; overflow: hidden;
@@ -159,7 +172,7 @@ nav ul li a:hover::after { width: 100%; }
     border-radius: var(--radius-sm); padding: 20px;
     background: var(--glass); border: 1px solid var(--glass-brd);
     box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-hi);
-    transition: transform .45s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+    transition: transform .32s var(--ease), box-shadow .32s var(--ease), border-color .28s var(--ease);
 }
 .repo-skeleton { min-height: 190px; pointer-events: none; opacity:.76; }
 .repo-skeleton span { display:block; height:12px; border-radius:999px; background:linear-gradient(100deg,color-mix(in srgb,var(--ink) 7%,transparent) 15%,color-mix(in srgb,var(--glass-hi) 78%,transparent) 50%,color-mix(in srgb,var(--ink) 7%,transparent) 85%);background-size:220% 100%;animation:skeleton-shimmer 1.55s ease-in-out infinite;background-position:120% 0;animation-delay:var(--skeleton-delay,0ms); }
@@ -172,19 +185,11 @@ nav ul li a:hover::after { width: 100%; }
     background: linear-gradient(135deg, var(--glass-hi), transparent 46%);
     opacity: .5;
 }
-.repo::after {
-    content: ''; position: absolute; top: 0; left: 0; z-index: 0;
-    width: 55%; height: 100%; pointer-events: none;
-    background: linear-gradient(100deg, transparent, var(--glass-hi), transparent);
-    transform: translateX(-200%) skewX(-16deg);
-    opacity: 0; transition: transform .85s var(--ease), opacity .3s var(--ease);
-}
 .repo > * { position: relative; z-index: 1; }
 .repo:hover {
-    transform: translateY(-8px); border-color: var(--accent);
-    box-shadow: var(--shadow), 0 0 0 1px var(--accent-soft), 0 22px 44px var(--accent-soft), inset 0 1px 0 var(--glass-hi);
+    transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent) 62%, var(--glass-brd));
+    box-shadow: var(--shadow), 0 0 0 1px var(--accent-soft), 0 14px 30px var(--accent-soft), inset 0 1px 0 var(--glass-hi);
 }
-.repo:hover::after { transform: translateX(240%) skewX(-16deg); opacity: 1; }
 .repo h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 7px; letter-spacing: -.01em; transition: color .3s var(--ease); }
 .repo:hover h3 { color: var(--accent-ink); }
 .repo p { color: var(--muted); font-size: .9rem; margin-bottom: 16px; flex: 1; }
@@ -232,4 +237,8 @@ footer { border-top: 1px solid var(--line); margin-top: 28px; padding: 30px 0; }
 }
 @media (max-width: 460px) {
     .nav-btn { padding: 7px 10px; font-size: .78rem; }
+}
+
+@media (hover: none) {
+    .repo:hover { transform: none; }
 }
