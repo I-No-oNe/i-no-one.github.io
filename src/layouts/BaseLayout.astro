@@ -68,7 +68,16 @@ const socialImage = new URL('/favicon.png', Astro.site);
     <script>
       const root = document.documentElement;
       const themeButton = document.querySelector('#theme-toggle');
+      let themeAnimation: Animation | undefined;
       themeButton?.addEventListener('click', () => {
+        themeAnimation?.cancel();
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          themeAnimation = themeButton.animate([
+            { transform: 'rotate(0deg) scale(1)' },
+            { transform: 'rotate(-12deg) scale(.94)', offset: .4 },
+            { transform: 'rotate(0deg) scale(1)' }
+          ], { duration: 280, easing: 'ease-out' });
+        }
         const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
         root.dataset.theme = next;
         try { localStorage.setItem('theme', next); } catch {}

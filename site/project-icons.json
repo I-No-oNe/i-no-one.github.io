@@ -1,0 +1,95 @@
+{
+  "Attack-Blocker": {
+    "file": "/project-icons/attack-blocker.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/Attack-Blocker/201f00cfef14729efe290c94173e4ed07e6f1c67/src/main/resources/assets/attack-blocker/icon.png"
+  },
+  "Auto-Disconnect": {
+    "file": "/project-icons/auto-disconnect.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/Auto-Disconnect/2f1cf867eb9c0360fc7f069c73ca80a70ee0017c/src/main/resources/assets/auto-disconnect/icon.png"
+  },
+  "ClickCrystals": {
+    "file": "/project-icons/clickcrystals.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/ClickCrystals/54db9499d07244fb1e95e07843a2432f0105a124/src/main/resources/assets/clickcrystals/icon.png"
+  },
+  "Death-Effects": {
+    "file": "/project-icons/death-effects.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/Death-Effects/b0bda01492136fe81205eaee4433bb38ba5bb9e3/src/main/resources/assets/death-effects/icon.png"
+  },
+  "Free-Camera": {
+    "file": "/project-icons/free-camera.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/Free-Camera/120b277f862ddb7b7629e010db1cf797435628ea/src/main/resources/assets/freecamera/icon.png"
+  },
+  "Glowing-entities": {
+    "file": "/project-icons/glowing-entities.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/Glowing-entities/6f6de7c4caf7ffa1fc6c6016f1a13083132b7dbb/src/main/resources/assets/glowing_entities/icon.png"
+  },
+  "Hit-Color": {
+    "file": "/project-icons/hit-color.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/Hit-Color/2b7719d7b53319f7457195b588fffe9ccc699136/src/main/resources/assets/hit-color/icon.png"
+  },
+  "I-No-oNe": {
+    "file": "/project-icons/i-no-one.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/I-No-oNe/e713c927e0a661a274dc0c03fc01735cdb591849/images/site_icon.png"
+  },
+  "i-no-one.github.io": {
+    "file": "/project-icons/i-no-one.github.io.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/i-no-one.github.io/ab4869a2edb50f2bc5e3be54d365b44a750e1ee4/public/favicon.png"
+  },
+  "i_no_am-Private-Pack": {
+    "file": "/project-icons/i_no_am-private-pack.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/i_no_am-Private-Pack/48a3cf0f1ce004665b4dc6a4e2fd1731d87ef111/%C2%A70%C2%A72%C2%A7n%C2%A7li_no_am%20Private%20pack/pack.png"
+  },
+  "Mod-by-no-one": {
+    "file": "/project-icons/mod-by-no-one.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/Mod-by-no-one/2e1745ff9f32ff2f2d5c81c2ad7d79249af072e0/src/main/resources/assets/no-one-mod/icon.png"
+  },
+  "No-oNe-Addon": {
+    "file": "/project-icons/no-one-addon.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/No-oNe-Addon/78bd8906473e9af2df463ff6d50495e4c90c813f/src/main/resources/assets/no-one-addon/icon.png"
+  },
+  "No-Render": {
+    "file": "/project-icons/no-render.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/No-Render/e31243197101c570fb73a821de0e5d5b9e0c50a5/src/main/resources/assets/no-render/icon.png"
+  },
+  "PVP-Counter": {
+    "file": "/project-icons/pvp-counter.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/PVP-Counter/2f3a98e5fa3ad98af98af57af46e7d9316de85a3/src/main/resources/assets/pvp-counter/icon.png"
+  },
+  "Safe-Walk": {
+    "file": "/project-icons/safe-walk.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/Safe-Walk/3c8674a7b50f25d28efe3f5b47dce1e2a853f99b/src/main/resources/assets/safe-walk/icon.png"
+  },
+  "View-Model": {
+    "file": "/project-icons/view-model.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/View-Model/1111a6115d7faffbc9d343ccfb3fd27514718a06/src/main/resources/assets/viewmodel/icon.png"
+  },
+  "whatsapp-contacts-exporter": {
+    "file": "/project-icons/whatsapp-contacts-exporter.png",
+    "source": "https://raw.githubusercontent.com/I-No-oNe/whatsapp-contacts-exporter/b9d01a098219bad3e3336f05a0b165d124898caf/icons/icon128.png"
+  },
+  "baileys-agent-kit": {
+    "file": "/project-icons/baileys-agent-kit.svg",
+    "kind": "purpose-based symbol",
+    "description": "automation symbol; repository has no dedicated logo"
+  },
+  "Keybinds-Shortcut": {
+    "file": "/project-icons/keybinds-shortcut.svg",
+    "kind": "purpose-based symbol",
+    "description": "keyboard symbol; repository has no dedicated logo"
+  },
+  "Pictures-Utils": {
+    "file": "/project-icons/pictures-utils.svg",
+    "kind": "purpose-based symbol",
+    "description": "images symbol; repository has no dedicated logo"
+  },
+  "Steps-Recorder-Converter": {
+    "file": "/project-icons/steps-recorder-converter.svg",
+    "kind": "purpose-based symbol",
+    "description": "recording symbol; repository has no dedicated logo"
+  },
+  "TuneX": {
+    "file": "/project-icons/tunex.svg",
+    "kind": "purpose-based symbol",
+    "description": "music symbol; repository has no dedicated logo"
+  }
+}

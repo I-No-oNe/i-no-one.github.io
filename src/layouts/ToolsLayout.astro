@@ -22,29 +22,57 @@ const { active, title, description } = Astro.props;
   <script>
     const burger = document.querySelector('#nav-burger');
     const burgerLabel = burger?.querySelector('.nav-burger-label');
-    const sidebar = document.querySelector('.sidebar');
+    const sidebar = document.querySelector<HTMLElement>('.sidebar');
     const scrim = document.querySelector('#nav-scrim');
-    const setOpen = (open: boolean) => {
+    const content = document.querySelector<HTMLElement>('.content');
+    const mobileBar = document.querySelector<HTMLElement>('.mobile-tools-bar');
+    const mobile = window.matchMedia('(max-width: 780px)');
+    const setOpen = (open: boolean, restoreFocus = true) => {
+      open = open && mobile.matches;
       sidebar?.classList.toggle('open', open);
       scrim?.classList.toggle('open', open);
       burger?.setAttribute('aria-expanded', String(open));
       burger?.setAttribute('aria-label', open ? 'Close tools menu' : 'Open tools menu');
       if (burgerLabel) burgerLabel.textContent = open ? 'Close' : 'Tools';
       document.body.classList.toggle('nav-open', open);
-      if (open) window.setTimeout(() => {
-        if (sidebar?.classList.contains('open')) (sidebar.querySelector('.side-link.active') as HTMLElement | null)?.focus();
-      }, 460);
+      if (sidebar) {
+        sidebar.inert = mobile.matches && !open;
+        if (open) {
+          sidebar.setAttribute('role', 'dialog');
+          sidebar.setAttribute('aria-modal', 'true');
+        } else {
+          sidebar.removeAttribute('role');
+          sidebar.removeAttribute('aria-modal');
+        }
+      }
+      if (content) content.inert = open;
+      if (mobileBar) mobileBar.inert = open;
+      if (open) sidebar?.querySelector<HTMLElement>('.side-link.active')?.focus({ preventScroll: true });
+      else if (restoreFocus) (burger as HTMLElement | null)?.focus({ preventScroll: true });
     };
+    setOpen(false, false);
+    mobile.addEventListener('change', () => setOpen(false, false));
     burger?.addEventListener('click', () => setOpen(!sidebar?.classList.contains('open')));
     scrim?.addEventListener('click', () => setOpen(false));
+    sidebar?.querySelector('.sidebar-close')?.addEventListener('click', () => setOpen(false));
     sidebar?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
       document.body.classList.add('tool-route-leaving');
-      setOpen(false);
+      setOpen(false, false);
     }));
     document.addEventListener('keydown', (event) => {
-      if (event.key !== 'Escape' || !sidebar?.classList.contains('open')) return;
-      setOpen(false);
-      (burger as HTMLElement | null)?.focus();
+      if (!sidebar?.classList.contains('open')) return;
+      if (event.key === 'Escape') setOpen(false);
+      if (event.key !== 'Tab') return;
+      const items = [...sidebar.querySelectorAll<HTMLElement>('a[href], button')].filter(item => item.getClientRects().length);
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
     });
 
     const alertElement = document.querySelector<HTMLElement>('#tool-alert');

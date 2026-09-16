@@ -150,7 +150,9 @@ a:hover { color: var(--accent); }
     color: var(--ink-2); cursor: pointer;
     transition: color var(--speed), border-color var(--speed), transform var(--speed);
 }
-.theme-toggle:hover { color: var(--ink); border-color: var(--muted); transform: translateY(-1px) rotate(-8deg); }
+@media (hover: hover) and (pointer: fine) {
+    .theme-toggle:hover { color: var(--ink); border-color: var(--muted); }
+}
 .theme-toggle .icon-moon { display: none; }
 [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
 [data-theme="dark"] .theme-toggle .icon-moon { display: inline; }

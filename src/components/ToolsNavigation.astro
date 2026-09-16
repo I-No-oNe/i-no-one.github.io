@@ -26,7 +26,7 @@ const links = [
 </div>
 <div id="nav-scrim" class="nav-scrim"></div>
 <aside id="tools-sidebar" class="sidebar" aria-label="Tools navigation">
-  <span class="sidebar-handle" aria-hidden="true"></span>
+  <div class="sidebar-mobile-head"><strong>Choose a tool</strong><button class="sidebar-close" type="button" aria-label="Close tools menu"><Icon name="close" size={20} /></button></div>
   <div class="sidebar-head"><a class="side-brand" href="/"><img src="/avatar-96.png" alt="" /><span>I-No-oNe</span></a></div>
   <span class="side-label">Tools</span>
   {links.map((link) => <ToolNavItem href={link.href} icon={link.icon} label={link.label} active={active === link.id} />)}

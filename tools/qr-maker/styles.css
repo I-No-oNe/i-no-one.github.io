@@ -68,3 +68,8 @@
 @media (prefers-reduced-motion: reduce) {
     .qr-empty, .qrcode { animation: none; }
 }
+
+.qrcode[hidden]{display:none}
+#qr-status:empty{display:none}
+.qrcode img,.qrcode canvas{max-width:100%;height:auto}
+.qrcode{max-width:100%}

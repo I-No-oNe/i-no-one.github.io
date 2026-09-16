@@ -27,7 +27,7 @@ import logic from '../../../tools/qr-maker/script.js?url';
         <p>Enter something first, then generate a ready-to-download QR code.</p>
       </div>
       <div class="loading-spinner" id="spinner" aria-label="Generating QR code"></div>
-      <div id="qrcode" class="qrcode" aria-live="polite"></div>
+      <div id="qrcode" class="qrcode" role="img" aria-label="Generated QR code" hidden></div><p id="qr-status" class="privacy-note" role="status"></p>
       <button id="downloadBtn" class="btn qr-download" type="button" onclick="downloadQR()" hidden><Icon name="download" size={16} /> Download PNG</button>
     </div>
   </section>
